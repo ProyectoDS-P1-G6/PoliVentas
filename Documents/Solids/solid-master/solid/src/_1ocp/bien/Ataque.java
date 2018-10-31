@@ -12,4 +12,6 @@ package _1ocp.bien;
  */
 public abstract class Ataque {
     abstract double ataque();
+    
+    //metodo abstracto
 }
