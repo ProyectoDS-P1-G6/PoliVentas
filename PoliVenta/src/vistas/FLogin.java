@@ -5,13 +5,13 @@
  */
 package vistas;
 
-import controllers.IntefaceAcceso;
+
+import controllers.InterfaceAccesos;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -31,9 +31,9 @@ public class FLogin {
     protected TextField tfusuario;
     protected PasswordField pfcontrasena;
     protected Button btniniciar, btnregistro;
-    protected IntefaceAcceso interAcceso;
+    protected InterfaceAccesos interAcceso;
 
-    public FLogin(IntefaceAcceso intAcceso) {
+    public FLogin(InterfaceAccesos intAcceso) {
         iniciarFLogin();
         this.interAcceso=intAcceso;
     }
@@ -55,12 +55,9 @@ public class FLogin {
     }
     
     public void iniciarBotones(){
-        this.btniniciar.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                interAcceso.login();
-                System.out.println("Ingresado");
-            }
+        this.btniniciar.setOnAction((ActionEvent event) -> {
+            interAcceso.login();
+            System.out.println("Ingresado");
         });
     }
     

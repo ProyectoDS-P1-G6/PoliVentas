@@ -9,6 +9,6 @@ package controllers;
  *
  * @author Usuario
  */
-public interface InterfaceVenta {
+public class GestionAdministrador implements InterfaceAdministrador {
     
 }

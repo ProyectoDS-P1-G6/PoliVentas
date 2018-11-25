@@ -9,9 +9,8 @@ package controllers;
  *
  * @author Usuario
  */
-public interface IntefaceAcceso {
+public interface InterfaceAccesos {
     public void recibirUsuario();
     public void recibirContraseña();
     public void login();
-   
 }

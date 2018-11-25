@@ -5,7 +5,8 @@
  */
 package poliventas;
 
-import controllers.GestionAcceso;
+import controllers.GestionAccesos;
+import controllers.GestionCompras;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -29,7 +30,8 @@ public class PoliVentas extends Application{
      * @param args the command line arguments
      * @throws java.lang.Exception
      */
-    private GestionAcceso accesoLogin;
+    private GestionAccesos accesoLogin;
+    private GestionCompras compras;
     public static FGUIview ventanaPrincipal;
     
     @Override
@@ -48,6 +50,6 @@ public class PoliVentas extends Application{
         
     }
     public void initInterface(){
-        this.accesoLogin = new GestionAcceso();
+        this.accesoLogin = new GestionAccesos();
     }
 }

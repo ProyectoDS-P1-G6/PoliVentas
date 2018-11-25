@@ -12,7 +12,7 @@ import vistas.FComprador;
  * @author Usuario
  */
 public class GestionCompras implements InterfaceCompra{
-    private FComprador comprador = new FComprador();
+    private final FComprador comprador = new FComprador();
     
     @Override
     public void efectuarBusqueda() {

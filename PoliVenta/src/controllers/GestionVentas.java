@@ -9,6 +9,6 @@ package controllers;
  *
  * @author Usuario
  */
-public class GestionVentas {
+public class GestionVentas implements InterfaceVenta{
     
 }
