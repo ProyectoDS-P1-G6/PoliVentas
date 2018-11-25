@@ -3,19 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package Auxiliares;
 
 /**
  *
  * @author Usuario
  */
-public class VendedorModel extends UsuarioModel{
-
-    @Override
-    public void buscar() {
-        super.buscar(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
-    
+public abstract class OperacionesUsuarios {
+    public abstract void buscar();
 }

@@ -61,7 +61,7 @@ public class FAdministrador {
         this.cbPendienteCarga = new CheckBox();
         this.cbPendienteCarga.setText("Pendiente de Carga: ");
         this.cbSensilla = new CheckBox();
-        this.cbSensilla.setText("Sensilla: ");
+        this.cbSensilla.setText("Sencilla: ");
         
     }
 

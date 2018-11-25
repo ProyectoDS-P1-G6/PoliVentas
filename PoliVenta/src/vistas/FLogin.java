@@ -5,6 +5,9 @@
  */
 package vistas;
 
+import controllers.IntefaceAcceso;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -28,10 +31,11 @@ public class FLogin {
     protected TextField tfusuario;
     protected PasswordField pfcontrasena;
     protected Button btniniciar, btnregistro;
-    
+    protected IntefaceAcceso interAcceso;
 
-    public FLogin() {
+    public FLogin(IntefaceAcceso intAcceso) {
         iniciarFLogin();
+        this.interAcceso=intAcceso;
     }
 
     public void iniciarComponentes() {
@@ -47,11 +51,22 @@ public class FLogin {
         this.btniniciar.setText("Iniciar");
         this.btnregistro = new Button();
         this.btnregistro.setText("Registrarse");
-        
+               
     }
-
+    
+    public void iniciarBotones(){
+        this.btniniciar.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                interAcceso.login();
+                System.out.println("Ingresado");
+            }
+        });
+    }
+    
     public final void iniciarFLogin() {
         iniciarComponentes();
+        iniciarBotones();
         this.panelLogin = new BorderPane();
         
         this.contenedor = new GridPane();

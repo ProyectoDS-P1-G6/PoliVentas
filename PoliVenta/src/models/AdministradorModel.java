@@ -5,8 +5,6 @@
  */
 package models;
 
-import Auxiliares.UsuarioModel;
-
 /**
  *
  * @author Usuario
@@ -14,8 +12,10 @@ import Auxiliares.UsuarioModel;
 public class AdministradorModel extends UsuarioModel{
 
     @Override
-    public void busqueda() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void buscar() {
+        super.buscar(); //To change body of generated methods, choose Tools | Templates.
     }
+    
+  
     
 }
