@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="PoliVenta">
+  <ClassDiagramComponents>
+    <Class name="Constantes" package="Auxiliares" visibility="public" xPosition="6599.0" yPosition="2852.0">
+      <Fields>
+        <Field name="COMPRADOR" type="String" visibility="private"/>
+        <Field name="VENDEDOR" type="String" visibility="private"/>
+        <Field name="ADMINISTRADOR" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="MetodoPago" package="Auxiliares" visibility="public" isAbstract="true" xPosition="3734.0" yPosition="1305.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="pagar" returnType="void" visibility="public" isAbstract="true">
+          <Argument type="double" name="monto"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="OperacionesUsuarios" package="Auxiliares" visibility="public" isAbstract="true" xPosition="3015.0" yPosition="1958.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="buscar" returnType="void" visibility="public" isAbstract="true"/>
+      </Methods>
+    </Class>
+    <Class name="Crud" package="controllers" visibility="public" isAbstract="true" xPosition="3095.0" yPosition="1528.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="registrar" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="Crear" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="eliminar" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="actualizar" returnType="void" visibility="public" isAbstract="true"/>
+      </Methods>
+    </Class>
+    <Class name="GestionAcceso" package="controllers" visibility="public" xPosition="3144.0" yPosition="609.0">
+      <Fields>
+        <Field name="usuario" type="UsuarioModel" visibility="private" isFinal="true"/>
+        <Field name="fregistro" type="FRegistro" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="recibirUsuario" returnType="void" visibility="public"/>
+        <Method name="recibirContrasena" returnType="void" visibility="public"/>
+        <Method name="login" returnType="void" visibility="public"/>
+        <Method name="cerrarCesion" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GestionAdministrador" package="controllers" visibility="public" isAbstract="true" xPosition="4009.0" yPosition="1054.0">
+      <Fields>
+        <Field name="administrador" type="FAdministrador" visibility="private" isFinal="true"/>
+        <Field name="modeloAdmin" type="AdministradorModel" visibility="private" isFinal="true"/>
+        <Field name="modeloArticulo" type="ArticuloModel" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="administrarUsuarios" returnType="void" visibility="public"/>
+        <Method name="esfectuarBusqueda" returnType="void" visibility="public"/>
+        <Method name="gestionarCompras" returnType="void" visibility="public"/>
+        <Method name="administrarProductos" returnType="void" visibility="public"/>
+        <Method name="recibirUsuario" returnType="void" visibility="public"/>
+        <Method name="cerrarCesion" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GestionCompras" package="controllers" visibility="public" xPosition="4750.0" yPosition="1045.0">
+      <Fields>
+        <Field name="comprador" type="FComprador" visibility="private" isFinal="true"/>
+        <Field name="pedidos" type="Pedidos" visibility="private" isFinal="true"/>
+        <Field name="productos" type="ArticuloModel" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="efectuarBusqueda" returnType="void" visibility="public"/>
+        <Method name="seleccionarTipoBusqueda" returnType="void" visibility="public"/>
+        <Method name="verMisPedidos" returnType="void" visibility="public"/>
+        <Method name="verComprasPendientes" returnType="void" visibility="public"/>
+        <Method name="verHistorial" returnType="void" visibility="public"/>
+        <Method name="articulosMasBuscados" returnType="void" visibility="public"/>
+        <Method name="NuevosArticulos" returnType="void" visibility="public"/>
+        <Method name="cerrarCesion" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GestionRegistro" package="controllers" visibility="public" xPosition="3095.0" yPosition="1281.0">
+      <Fields>
+        <Field name="fregistro" type="FRegistro" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="registrar" returnType="void" visibility="public"/>
+        <Method name="Crear" returnType="void" visibility="public"/>
+        <Method name="eliminar" returnType="void" visibility="public"/>
+        <Method name="actualizar" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="GestionReportes" package="controllers" visibility="public" xPosition="4061.0" yPosition="2004.0">
+      <Fields>
+        <Field name="comprador" type="CompradorModel" visibility="private"/>
+        <Field name="vendedor" type="VendedorModel" visibility="private"/>
+        <Field name="pedido" type="Pedidos" visibility="private"/>
+        <Field name="admin" type="AdministradorModel" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="GestionVentas" package="controllers" visibility="public" xPosition="5118.0" yPosition="1728.0">
+      <Fields>
+        <Field name="fvendedor" type="FVendedor" visibility="private" isFinal="true"/>
+        <Field name="vendedor" type="VendedorModel" visibility="private" isFinal="true"/>
+        <Field name="pedido" type="Pedidos" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="verMisVentas" returnType="void" visibility="public"/>
+        <Method name="verResumenVentas" returnType="void" visibility="public"/>
+        <Method name="verMisProductos" returnType="void" visibility="public"/>
+        <Method name="efectuarBusqueda" returnType="void" visibility="public"/>
+        <Method name="seleccionarTipoBusqueda" returnType="void" visibility="public"/>
+        <Method name="verMisPedidos" returnType="void" visibility="public"/>
+        <Method name="verComprasPendientes" returnType="void" visibility="public"/>
+        <Method name="verHistorial" returnType="void" visibility="public"/>
+        <Method name="articulosMasBuscados" returnType="void" visibility="public"/>
+        <Method name="NuevosArticulos" returnType="void" visibility="public"/>
+        <Method name="cerrarCesion" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="AdministradorModel" package="models" visibility="public" xPosition="4042.0" yPosition="1789.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="buscar" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="ArticuloModel" package="models" visibility="public" xPosition="4360.0" yPosition="1052.0">
+      <Fields>
+        <Field name="nomArticulo" type="String" visibility="private"/>
+        <Field name="cateArticulo" type="String" visibility="private"/>
+        <Field name="precioArticulo" type="double" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getNomArticulo" returnType="String" visibility="public"/>
+        <Method name="setNomArticulo" returnType="void" visibility="public">
+          <Argument type="String" name="nomArticulo"/>
+        </Method>
+        <Method name="getCateArticulo" returnType="String" visibility="public"/>
+        <Method name="setCateArticulo" returnType="void" visibility="public">
+          <Argument type="String" name="cateArticulo"/>
+        </Method>
+        <Method name="getPrecioArticulo" returnType="double" visibility="public"/>
+        <Method name="setPrecioArticulo" returnType="void" visibility="public">
+          <Argument type="double" name="precioArticulo"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CompradorModel" package="models" visibility="public" xPosition="3692.0" yPosition="1571.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="buscar" returnType="void" visibility="public"/>
+        <Method name="pagar" returnType="void" visibility="public">
+          <Argument type="MetodoPago" name="formaPago"/>
+          <Argument type="double" name="monto"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PagoEfectivo" package="models" visibility="public" xPosition="3459.0" yPosition="1313.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="pagar" returnType="void" visibility="public">
+          <Argument type="double" name="monto"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PagoVirtual" package="models" visibility="public" xPosition="3459.0" yPosition="1453.0">
+      <Fields>
+        <Field name="saldo" type="double" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="pagar" returnType="void" visibility="public">
+          <Argument type="double" name="monto"/>
+        </Method>
+        <Method name="recargar" returnType="void" visibility="public">
+          <Argument type="double" name="monto"/>
+        </Method>
+        <Method name="getSaldo" returnType="double" visibility="public"/>
+        <Method name="setSaldo" returnType="void" visibility="public">
+          <Argument type="double" name="saldo"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Pedidos" package="models" visibility="public" xPosition="4219.0" yPosition="1442.0">
+      <Fields>
+        <Field name="detalleCompra" type="ListView&lt;ArticuloModel&gt;" visibility="private"/>
+        <Field name="comprador" type="CompradorModel" visibility="private"/>
+        <Field name="vendedor" type="VendedorModel" visibility="private"/>
+        <Field name="estado" type="Boolean" visibility="private"/>
+        <Field name="totalFacturado" type="float" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="ListView&lt;ArticuloModel&gt;" name="detalleCompra"/>
+          <Argument type="CompradorModel" name="comprador"/>
+          <Argument type="VendedorModel" name="vendedor"/>
+          <Argument type="Boolean" name="estado"/>
+          <Argument type="float" name="totalFacturado"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getDetalleCompra" returnType="ListView&lt;ArticuloModel&gt;" visibility="public"/>
+        <Method name="setDetalleCompra" returnType="void" visibility="public">
+          <Argument type="ListView&lt;ArticuloModel&gt;" name="detalleCompra"/>
+        </Method>
+        <Method name="getComprador" returnType="CompradorModel" visibility="public"/>
+        <Method name="setComprador" returnType="void" visibility="public">
+          <Argument type="CompradorModel" name="comprador"/>
+        </Method>
+        <Method name="getVendedor" returnType="VendedorModel" visibility="public"/>
+        <Method name="setVendedor" returnType="void" visibility="public">
+          <Argument type="VendedorModel" name="vendedor"/>
+        </Method>
+        <Method name="getEstado" returnType="Boolean" visibility="public"/>
+        <Method name="setEstado" returnType="void" visibility="public">
+          <Argument type="Boolean" name="estado"/>
+        </Method>
+        <Method name="getTotalFacturado" returnType="float" visibility="public"/>
+        <Method name="setTotalFacturado" returnType="void" visibility="public">
+          <Argument type="float" name="totalFacturado"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="UsuarioModel" package="models" visibility="public" xPosition="3233.0" yPosition="1728.0">
+      <Fields>
+        <Field name="rol" type="String" visibility="private"/>
+        <Field name="nombres" type="String" visibility="private"/>
+        <Field name="apellidos" type="String" visibility="private"/>
+        <Field name="email" type="String" visibility="private"/>
+        <Field name="direccion" type="String" visibility="private"/>
+        <Field name="cedula" type="String" visibility="private"/>
+        <Field name="matricula" type="String" visibility="private"/>
+        <Field name="telefono" type="int" visibility="private"/>
+        <Field name="whatsapp" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="buscar" returnType="void" visibility="public"/>
+        <Method name="getRol" returnType="String" visibility="public"/>
+        <Method name="setRol" returnType="void" visibility="public">
+          <Argument type="String" name="rol"/>
+        </Method>
+        <Method name="getNombres" returnType="String" visibility="public"/>
+        <Method name="setNombres" returnType="void" visibility="public">
+          <Argument type="String" name="nombres"/>
+        </Method>
+        <Method name="getApellidos" returnType="String" visibility="public"/>
+        <Method name="setApellidos" returnType="void" visibility="public">
+          <Argument type="String" name="apellidos"/>
+        </Method>
+        <Method name="getEmail" returnType="String" visibility="public"/>
+        <Method name="setEmail" returnType="void" visibility="public">
+          <Argument type="String" name="email"/>
+        </Method>
+        <Method name="getDireccion" returnType="String" visibility="public"/>
+        <Method name="setDireccion" returnType="void" visibility="public">
+          <Argument type="String" name="direccion"/>
+        </Method>
+        <Method name="getCedula" returnType="String" visibility="public"/>
+        <Method name="setCedula" returnType="void" visibility="public">
+          <Argument type="String" name="cedula"/>
+        </Method>
+        <Method name="getMatricula" returnType="String" visibility="public"/>
+        <Method name="setMatricula" returnType="void" visibility="public">
+          <Argument type="String" name="matricula"/>
+        </Method>
+        <Method name="getTelefono" returnType="int" visibility="public"/>
+        <Method name="setTelefono" returnType="void" visibility="public">
+          <Argument type="int" name="telefono"/>
+        </Method>
+        <Method name="isWhatsapp" returnType="boolean" visibility="public"/>
+        <Method name="setWhatsapp" returnType="void" visibility="public">
+          <Argument type="boolean" name="whatsapp"/>
+        </Method>
+        <Method name="comprobarUsuario" returnType="boolean" visibility="public">
+          <Argument type="UsuarioModel" name="usuario"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="VendedorModel" package="models" visibility="public" xPosition="4576.0" yPosition="2032.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="buscar" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PoliVentas" package="poliventas" visibility="public" xPosition="4750.0" yPosition="578.0">
+      <Fields>
+        <Field name="accesoLogin" type="GestionAcceso" visibility="private"/>
+        <Field name="compras" type="GestionCompras" visibility="private"/>
+        <Field name="ventanaPrincipal" type="FGUIview" visibility="public" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="primaryStage"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+        <Method name="initInterface" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="FAdministrador" package="vistas" visibility="public" xPosition="3714.0" yPosition="961.0">
+      <Fields>
+        <Field name="panelAdmin" type="BorderPane" visibility="protected"/>
+        <Field name="panelLateralmenu" type="VBox" visibility="protected"/>
+        <Field name="panelCentralMuestra" type="VBox" visibility="protected"/>
+        <Field name="contenedor" type="GridPane" visibility="protected"/>
+        <Field name="lbuscar" type="Label" visibility="protected"/>
+        <Field name="tfBuscar" type="TextField" visibility="protected"/>
+        <Field name="btnAdmUsuarios" type="Button" visibility="protected"/>
+        <Field name="cbSensilla" type="CheckBox" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="iniciarComponentes" returnType="void" visibility="public"/>
+        <Method name="iniciarFRegistro" returnType="void" visibility="public" isFinal="true"/>
+        <Method name="getPanelAdmin" returnType="BorderPane" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="FComprador" package="vistas" visibility="public" xPosition="5135.0" yPosition="1313.0">
+      <Fields>
+        <Field name="panelAdmin" type="BorderPane" visibility="protected"/>
+        <Field name="panelLateralmenu" type="VBox" visibility="protected"/>
+        <Field name="panelCentralGeneral" type="VBox" visibility="protected"/>
+        <Field name="panelAuxCPendientes" type="VBox" visibility="protected"/>
+        <Field name="contenedor" type="GridPane" visibility="protected"/>
+        <Field name="lbuscar" type="Label" visibility="protected"/>
+        <Field name="tfBuscar" type="TextField" visibility="protected"/>
+        <Field name="btnMisPedidos" type="Button" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="iniciarComponentes" returnType="void" visibility="public"/>
+        <Method name="iniciarFComprador" returnType="void" visibility="public" isFinal="true"/>
+        <Method name="getPanelAdmin" returnType="BorderPane" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="FGUIview" package="vistas" visibility="public" xPosition="5096.0" yPosition="597.0">
+      <Fields>
+        <Field name="panelPrincipal" type="Pane" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getVentana" returnType="Pane" visibility="public"/>
+        <Method name="setVentana" returnType="void" visibility="public">
+          <Argument type="Pane" name="panel"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="FLogin" package="vistas" visibility="public" xPosition="3459.0" yPosition="951.0">
+      <Fields>
+        <Field name="panelLogin" type="BorderPane" visibility="protected"/>
+        <Field name="ventana" type="Pane" visibility="protected"/>
+        <Field name="contenedor" type="GridPane" visibility="protected"/>
+        <Field name="lusuario" type="Label" visibility="protected"/>
+        <Field name="tfusuario" type="TextField" visibility="protected"/>
+        <Field name="pfcontrasena" type="PasswordField" visibility="protected"/>
+        <Field name="btniniciar" type="Button" visibility="protected"/>
+        <Field name="interAcceso" type="IntefaceAcceso" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="IntefaceAcceso" name="intAcceso"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="iniciarComponentes" returnType="void" visibility="public"/>
+        <Method name="iniciarBotones" returnType="void" visibility="public"/>
+        <Method name="iniciarFLogin" returnType="void" visibility="public" isFinal="true"/>
+        <Method name="getPanelLogin" returnType="BorderPane" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="FRegistro" package="vistas" visibility="public" xPosition="3071.0" yPosition="920.0">
+      <Fields>
+        <Field name="panelRegistro" type="BorderPane" visibility="protected"/>
+        <Field name="ventana" type="Pane" visibility="protected"/>
+        <Field name="contenedor" type="GridPane" visibility="protected"/>
+        <Field name="lnombres" type="Label" visibility="protected"/>
+        <Field name="tfnombres" type="TextField" visibility="protected"/>
+        <Field name="cbperfil" type="ComboBox" visibility="protected"/>
+        <Field name="btnregistrar" type="Button" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="iniciarComponentes" returnType="void" visibility="public"/>
+        <Method name="iniciarFRegistro" returnType="void" visibility="public" isFinal="true"/>
+        <Method name="getPanelRegistro" returnType="BorderPane" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="FVendedor" package="vistas" visibility="public" xPosition="5414.0" yPosition="1301.0">
+      <Fields>
+        <Field name="panelAdmin" type="BorderPane" visibility="protected"/>
+        <Field name="panelLateralmenu" type="VBox" visibility="protected"/>
+        <Field name="panelCentralGeneral" type="VBox" visibility="protected"/>
+        <Field name="panelAuxCPendientes" type="VBox" visibility="protected"/>
+        <Field name="contenedor" type="GridPane" visibility="protected"/>
+        <Field name="lbuscar" type="Label" visibility="protected"/>
+        <Field name="tfBuscar" type="TextField" visibility="protected"/>
+        <Field name="btnVentasPendientes" type="Button" visibility="protected"/>
+        <Field name="comprardor" type="FComprador" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="iniciarComponentes" returnType="void" visibility="public"/>
+        <Method name="iniciarFVendedor" returnType="void" visibility="public" isFinal="true"/>
+        <Method name="getPanelAdmin" returnType="BorderPane" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="IntefaceAcceso" package="controllers" visibility="public" xPosition="3485.0" yPosition="720.0">
+      <Methods>
+        <Method name="recibirUsuario" returnType="void" visibility="public"/>
+        <Method name="recibirContrasena" returnType="void" visibility="public"/>
+        <Method name="login" returnType="void" visibility="public"/>
+        <Method name="cerrarCesion" returnType="void" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Interface name="InterfaceAdministrador" package="controllers" visibility="public" xPosition="4028.0" yPosition="720.0">
+      <Methods>
+        <Method name="administrarUsuarios" returnType="void" visibility="public"/>
+        <Method name="esfectuarBusqueda" returnType="void" visibility="public"/>
+        <Method name="gestionarCompras" returnType="void" visibility="public"/>
+        <Method name="administrarProductos" returnType="void" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Interface name="InterfaceCompras" package="controllers" visibility="public" xPosition="5126.0" yPosition="1048.0">
+      <Methods>
+        <Method name="efectuarBusqueda" returnType="void" visibility="public"/>
+        <Method name="seleccionarTipoBusqueda" returnType="void" visibility="public"/>
+        <Method name="verMisPedidos" returnType="void" visibility="public"/>
+        <Method name="verComprasPendientes" returnType="void" visibility="public"/>
+        <Method name="verHistorial" returnType="void" visibility="public"/>
+        <Method name="articulosMasBuscados" returnType="void" visibility="public"/>
+        <Method name="NuevosArticulos" returnType="void" visibility="public"/>
+        <Method name="cerrarCesion" returnType="void" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Interface name="InterfaceVenta" package="controllers" visibility="public" xPosition="5539.0" yPosition="1746.0">
+      <Methods>
+        <Method name="verMisVentas" returnType="void" visibility="public"/>
+        <Method name="verResumenVentas" returnType="void" visibility="public"/>
+        <Method name="verMisProductos" returnType="void" visibility="public"/>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="controllers.GestionAdministrador" target="controllers.InterfaceAdministrador"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="controllers.GestionCompras" target="controllers.InterfaceCompras"/>
+    <IsRelation name="is" source="models.PagoEfectivo" target="Auxiliares.MetodoPago"/>
+    <IsRelation name="is" source="controllers.GestionRegistro" target="controllers.Crud"/>
+    <UseRelation source="models.CompradorModel" target="Auxiliares.MetodoPago" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="models.Pedidos" target="models.ArticuloModel" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="admin" source="controllers.GestionReportes" target="models.AdministradorModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="administrador" source="controllers.GestionAdministrador" target="vistas.FAdministrador" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="models.Pedidos" target="models.CompradorModel" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="models.UsuarioModel" target="models.UsuarioModel" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="fregistro" source="controllers.GestionAcceso" target="vistas.FRegistro" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="models.PagoVirtual" target="Auxiliares.MetodoPago"/>
+    <IsRelation name="is" source="controllers.InterfaceAdministrador" target="controllers.IntefaceAcceso"/>
+    <IsRelation name="is" source="controllers.InterfaceVenta" target="controllers.InterfaceCompras"/>
+    <HasRelation name="pedido" source="controllers.GestionReportes" target="models.Pedidos" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="productos" source="controllers.GestionCompras" target="models.ArticuloModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="detalleCompra" source="models.Pedidos" target="models.ArticuloModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ListView&lt;ArticuloModel&gt;"/>
+    <IsRelation name="is" source="models.CompradorModel" target="models.UsuarioModel"/>
+    <HasRelation name="fregistro" source="controllers.GestionRegistro" target="vistas.FRegistro" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="models.AdministradorModel" target="models.UsuarioModel"/>
+    <HasRelation name="comprardor" source="vistas.FVendedor" target="vistas.FComprador" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="ventanaPrincipal" source="poliventas.PoliVentas" target="vistas.FGUIview" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="comprador" source="models.Pedidos" target="models.CompradorModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pedidos" source="controllers.GestionCompras" target="models.Pedidos" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="pedido" source="controllers.GestionVentas" target="models.Pedidos" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="modeloAdmin" source="controllers.GestionAdministrador" target="models.AdministradorModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="comprador" source="controllers.GestionCompras" target="vistas.FComprador" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="vendedor" source="controllers.GestionReportes" target="models.VendedorModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="models.UsuarioModel" target="Auxiliares.OperacionesUsuarios"/>
+    <IsRelation name="is" source="models.VendedorModel" target="models.UsuarioModel"/>
+    <HasRelation name="modeloArticulo" source="controllers.GestionAdministrador" target="models.ArticuloModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="comprador" source="controllers.GestionReportes" target="models.CompradorModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="compras" source="poliventas.PoliVentas" target="controllers.GestionCompras" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="vistas.FVendedor" target="vistas.FComprador"/>
+    <HasRelation name="usuario" source="controllers.GestionAcceso" target="models.UsuarioModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="models.Pedidos" target="models.VendedorModel" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="accesoLogin" source="poliventas.PoliVentas" target="controllers.GestionAcceso" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="interAcceso" source="vistas.FLogin" target="controllers.IntefaceAcceso" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="fvendedor" source="controllers.GestionVentas" target="vistas.FVendedor" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="vendedor" source="models.Pedidos" target="models.VendedorModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="vendedor" source="controllers.GestionVentas" target="models.VendedorModel" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="controllers.GestionAcceso" target="controllers.IntefaceAcceso"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="controllers.GestionVentas" target="controllers.InterfaceVenta"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
