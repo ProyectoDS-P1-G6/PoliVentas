@@ -1,0 +1,84 @@
+package views;
+
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+
+public class LoginView {
+
+    Pane root;
+
+    private JFXTextField fieldUsuario;
+    private JFXPasswordField fieldContrasena;
+    JFXButton loginButton;
+    Label singUpLabel;
+
+    public LoginView(){
+
+        fieldContrasena = new JFXPasswordField();
+        fieldUsuario    = new JFXTextField();
+        loginButton     = new JFXButton("Log In");
+        singUpLabel = new Label("Sign Up");
+        singUpLabel.setLayoutX(200);
+
+        ImageView userIcon = new ImageView(new Image("file:src/assets/user.png"));
+        userIcon.setFitWidth(25);
+        userIcon.setFitHeight(25);
+        userIcon.getStyleClass().add("userIcon");
+        ImageView passIcon = new ImageView(new Image("file:src/assets/pass.png"));
+        passIcon.setFitWidth(25);
+        passIcon.setFitHeight(25);
+        passIcon.getStyleClass().add("passIcon");
+
+        GridPane fields = new GridPane();
+        fields.add(userIcon,0,0);
+        fields.add(fieldUsuario, 1,0);
+        fields.add(passIcon,0,1);
+        fields.add(fieldContrasena, 1,1);
+        fields.getStyleClass().add("form_gridpane");
+        fields.setHgap(5);
+        fields.setVgap(5);
+
+        VBox form = new VBox(10);
+        form.getChildren().addAll(fields, loginButton);
+        form.setAlignment(Pos.CENTER);
+        form.setMargin(fields, new Insets(50,70,20,70));
+        form.setMargin(loginButton, new Insets(0,0,50,0));
+
+        root = new Pane();
+        root.getChildren().addAll(form, singUpLabel);
+        root.getStyleClass().add("loginView");
+    }
+
+    public void addLoginAction(EventHandler<ActionEvent> eventHandler){
+        loginButton.setOnAction(eventHandler);
+    }
+
+    public void addLogUpAction(EventHandler<MouseEvent> eventHandler){
+        singUpLabel.setOnMouseClicked(eventHandler);
+    }
+
+    public String getUsuarioInput(){
+        return fieldUsuario.getText();
+    }
+
+    public String getContrasenaInput(){
+        return fieldContrasena.getText();
+    }
+
+    public Pane getRoot(){
+        return this.root;
+    }
+}
