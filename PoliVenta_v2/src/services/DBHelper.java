@@ -20,6 +20,7 @@ class DBHelper {
     CallableStatement getCompras;     //son Callables ejemplos, se añadirán mas cuando se impplemente el sisteme.
 
     public DBHelper(){
+
         DBConnection.createConnection();
         this.connection  = DBConnection.connection;
 
@@ -27,7 +28,9 @@ class DBHelper {
             authUserMethod = connection.prepareCall("CALL checkUserAndPass(?,?)");
             getCompras     = connection.prepareCall("CALL getCompras(?,?)");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
+        } catch (Exception e){
+            System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
         }
     };
 

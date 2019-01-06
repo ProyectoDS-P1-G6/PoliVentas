@@ -21,8 +21,10 @@ class DBConnection {
                 connection = DriverManager.getConnection(DATABASE_PATH ,USER ,PASS );
             } catch (SQLException e){
                 System.out.println("Problema al crear la conexión con la base de datos");
+                return;
             } catch (Exception e){
                 System.out.printf("Error: %s  causa: %s", e.getMessage() ,e.getCause() );
+                return;
             }
         }
     }

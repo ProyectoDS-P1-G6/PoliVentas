@@ -27,11 +27,15 @@ public class LoginView {
 
     public LoginView(){
 
-        fieldContrasena = new JFXPasswordField();
         fieldUsuario    = new JFXTextField();
+        fieldUsuario.setPromptText("Usuario");
+        fieldContrasena = new JFXPasswordField();
+        fieldContrasena.setPromptText("Contraseña");
         loginButton     = new JFXButton("Log In");
+        loginButton.getStyleClass().add("loginButton");
         singUpLabel = new Label("Sign Up");
-        singUpLabel.setLayoutX(200);
+        singUpLabel.getStyleClass().add("singUpLabel");
+        singUpLabel.setLayoutX(220);
 
         ImageView userIcon = new ImageView(new Image("file:src/assets/user.png"));
         userIcon.setFitWidth(25);
