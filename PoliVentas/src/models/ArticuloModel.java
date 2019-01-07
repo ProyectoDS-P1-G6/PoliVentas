@@ -5,14 +5,19 @@
  */
 package models;
 
+import models.CreationalUsers.VendedorModel;
+
 /**
  *
  * @author Usuario
  */
 public class ArticuloModel {
-    private String nomArticulo;
-    private String cateArticulo;
-    private double precioArticulo;
+    protected String nomArticulo;
+    protected String cateArticulo;
+    protected double precioArticulo;
+    protected String maxTimeDeliver;
+    protected Calificacion calificacion;
+    protected VendedorModel vendedor;
 
     public ArticuloModel() {
     }

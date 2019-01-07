@@ -3,21 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
-
-import Auxiliares.MetodoPago;
+package models.CreationalUsers;
 
 /**
  *
  * @author Usuario
  */
-public class PagoEfectivo extends MetodoPago{
+public class AdministradorModel extends UsuarioModel{
 
-    @Override
-    public void pagar(double monto) {
-        //Codigo para pago en efectivo
+   
     }
+    
+  
+    
 
-    
-    
-}

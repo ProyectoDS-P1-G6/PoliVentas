@@ -3,12 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Auxiliares;
+package models.ComportamientoPago;
 
 /**
  *
  * @author Usuario
  */
-public abstract class MetodoPago{
-    abstract public void pagar(double monto);
+public class PagoEfectivo implements MetodoPago{
+
+    @Override
+    public void pagar(double monto) {
+        //Codigo para pago en efectivo
+    }
+
+    
+    
 }

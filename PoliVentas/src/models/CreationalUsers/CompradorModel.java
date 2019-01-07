@@ -3,21 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.CreationalUsers;
 
-import Auxiliares.UsuarioModel;
+import models.CreationalUsers.UsuarioModel;
 
 /**
  *
  * @author Usuario
  */
 public class CompradorModel extends UsuarioModel{
+
+  
+    }
     
     
 
-    @Override
-    public void busqueda() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
-}
+    

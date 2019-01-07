@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
-
-import Auxiliares.MetodoPago;
+package models.ComportamientoPago;
 
 /**
  *
  * @author Usuario
  */
-public class PagoVirtual extends MetodoPago {
+public class PagoVirtual implements MetodoPago {
     private double saldo;
     
 

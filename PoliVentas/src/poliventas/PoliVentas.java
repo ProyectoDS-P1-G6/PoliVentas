@@ -5,8 +5,11 @@
  */
 package poliventas;
 
+import controllers.GestionAcceso;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
@@ -14,6 +17,7 @@ import vistas.FAdministrador;
 import vistas.FGUIview;
 import vistas.FLogin;
 import vistas.FRegistro;
+import vistas.FVendedor;
 
 /**
  *
@@ -25,14 +29,14 @@ public class PoliVentas extends Application{
      * @param args the command line arguments
      * @throws java.lang.Exception
      */
+    private GestionAcceso accesoLogin;
+    public static FGUIview ventanaPrincipal;
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-       //FRegistro registro = new FRegistro();
-        FAdministrador admin = new FAdministrador();
-        FLogin loginsa = new FLogin();
-                        
-        Scene scene = new Scene(admin.getPanelAdmin(), 500, 500);
+        ventanaPrincipal= new FGUIview(); 
+        initInterface();
+        Scene scene = new Scene(ventanaPrincipal.getVentana(), 800, 600);
         
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
@@ -42,5 +46,8 @@ public class PoliVentas extends Application{
     public static void main(String[] args) {
         launch(args);
         
+    }
+    public void initInterface(){
+        this.accesoLogin = new GestionAcceso();
     }
 }
