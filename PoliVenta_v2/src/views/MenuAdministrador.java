@@ -1,4 +1,6 @@
 package views;
 
-public class MenuAdministrador {
+import javafx.stage.Stage;
+
+public class MenuAdministrador extends Stage {
 }

@@ -1,14 +1,11 @@
 package services;
 
-import models.AuthInfo;
-import models.Compra;
-import models.entities.Administrador;
+import models.Carrito;
 import models.entities.Comprador;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,8 +32,8 @@ class DBHelper {
     };
 
 
-    public List<Compra> getCompras(Comprador comprador){
-        List<Compra> compras = new LinkedList<>();
+    public List<Carrito> getCompras(Comprador comprador){
+        List<Carrito> compras = new LinkedList<>();
 
         return compras;
     }

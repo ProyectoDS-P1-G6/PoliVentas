@@ -8,8 +8,6 @@
 }
 
 .button_close{
-    -fx-pref-width: 15px;
-    -fx-pref-height: 15px;
     -fx-border-color: white;
     -fx-background-color: white;
     -fx-graphic: url("close_n.png");
@@ -20,8 +18,6 @@
 }
 
 .button_minimize{
-    -fx-width: 15px;
-    -fx-height: 15px;
     -fx-border-color: white;
     -fx-background-color: white;
     -fx-graphic: url("close_n.png");

@@ -107,11 +107,11 @@ public class Usuario {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public Integer getId() {
-        return id;
+    public Rol getRol() {
+        return rol;
     }
 
-    enum Rol{
-        ADMIN, COMPRADOR, VENDEDOR;
+    public Integer getId() {
+        return id;
     }
 }

@@ -5,6 +5,9 @@
  */
 package models;
 
+import models.entities.Vendedor;
+import org.joda.money.Money;
+
 /**
  *
  * @author Usuario
@@ -13,7 +16,8 @@ public class Articulo {
     private Integer id;
     private String nombre;
     private String categoria;
-    private Double precio;
+    private Money precio;
+    Vendedor vendedor;
 
     public Articulo() {
     }
@@ -24,10 +28,6 @@ public class Articulo {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
     }
 
     public String getNombre() {
@@ -46,12 +46,19 @@ public class Articulo {
         this.categoria = categoria;
     }
 
-    public double getPrecio() {
+    public Money getPrecio() {
         return precio;
     }
 
-    public void setPrecio(double precio) {
+    public void setPrecio(Money precio) {
         this.precio = precio;
     }
 
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
 }

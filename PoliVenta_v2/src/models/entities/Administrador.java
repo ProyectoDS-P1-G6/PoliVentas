@@ -11,14 +11,19 @@ package models.entities;
  */
 public class Administrador extends Usuario {
 
-    Rol actualRol = Rol.ADMIN;
+    Rol tempRol = Rol.ADMIN;
+
+    public Administrador(){
+        this.rol = Rol.ADMIN;
+    }
 
     public boolean cambiarRol(Rol rol){
 
         if(rol == Rol.ADMIN)
             return false;
 
-        this.rol = rol;
+        this.tempRol = rol;
         return true;
     }
+
 }

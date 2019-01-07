@@ -6,7 +6,10 @@ import javafx.scene.input.MouseEvent;
 import models.AuthInfo;
 import models.entities.Usuario;
 import services.LoginService;
+import utils.StageX;
 import views.LoginView;
+import views.MenuAdministrador;
+import views.MenuComprador;
 import views.RegistroForm;
 
 public class LoginController {
@@ -36,6 +39,18 @@ public class LoginController {
             System.out.printf("user: %s password: %s\n",loginView.getUsuarioInput(), loginView.getContrasenaInput() );
             LoginService ls = new LoginService();
             authInfo = ls.authUser(loginView.getUsuarioInput(), loginView.getContrasenaInput());
+
+            switch(authInfo.getUsuario().getRol()){
+                case ADMIN:
+                    new MenuAdministrador().show();
+                    break;
+                case VENDEDOR:
+                    new MenuComprador().show();
+                    break;
+                case COMPRADOR:
+                    new MenuComprador().show();
+                    break;
+            }
         }
     }
 
@@ -45,6 +60,7 @@ public class LoginController {
         public void handle(MouseEvent actionEvent) {
             System.out.println("registrarse....");
             RegistroForm form = new RegistroForm();
+            new StageX(form);
             form.show();
         }
     }

@@ -6,10 +6,9 @@
 
 import controllers.LoginController;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import models.entities.Usuario;
-import utils.SceneX;
+import utils.StageX;
 import views.LoginView;
 
 /**
@@ -22,14 +21,10 @@ public class PoliVentasApp extends Application{
     public void start(Stage primaryStage) throws Exception {
 
         LoginView loginView = new LoginView();
-
-        SceneX view = new SceneX(primaryStage); // decorator
-        view.setContent(loginView.getRoot());
-        view.getScene().getStylesheets().add("assets/loginView.css");
-
+        new StageX(loginView); // decorator
         new LoginController(new Usuario(), loginView);
 
-        primaryStage.show();
+        loginView.show();
     }
 
     public static void main(String[] args) {

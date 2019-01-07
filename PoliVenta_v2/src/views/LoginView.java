@@ -5,9 +5,9 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,8 +15,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class LoginView {
+public class LoginView extends Stage {
 
     Pane root;
 
@@ -26,7 +27,7 @@ public class LoginView {
     Label singUpLabel;
 
     public LoginView(){
-
+        super();
         fieldUsuario    = new JFXTextField();
         fieldUsuario.setPromptText("Usuario");
         fieldContrasena = new JFXPasswordField();
@@ -35,7 +36,8 @@ public class LoginView {
         loginButton.getStyleClass().add("loginButton");
         singUpLabel = new Label("Sign Up");
         singUpLabel.getStyleClass().add("singUpLabel");
-        singUpLabel.setLayoutX(220);
+        singUpLabel.setLayoutX(250);
+        singUpLabel.setLayoutY(190);
 
         ImageView userIcon = new ImageView(new Image("file:src/assets/user.png"));
         userIcon.setFitWidth(25);
@@ -64,6 +66,9 @@ public class LoginView {
         root = new Pane();
         root.getChildren().addAll(form, singUpLabel);
         root.getStyleClass().add("loginView");
+
+        setScene(new Scene(root));
+        getScene().getStylesheets().add("assets/loginView.css");
     }
 
     public void addLoginAction(EventHandler<ActionEvent> eventHandler){

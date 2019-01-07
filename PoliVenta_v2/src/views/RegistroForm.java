@@ -11,6 +11,7 @@ public class RegistroForm extends Stage {
 
     public RegistroForm(){
         super();
+        root = new Pane();
         scene= new Scene(root);
         setScene(scene);
     }
