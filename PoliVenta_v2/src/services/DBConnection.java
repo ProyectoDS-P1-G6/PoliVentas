@@ -3,8 +3,8 @@ package services;
 import java.sql.*;
 
 
-class DBConnection {
-    static Connection connection = null;
+public class DBConnection {
+    private static Connection connection = null;
 
     private static final String USER = "";
     private static final String PASS = "";
@@ -27,6 +27,14 @@ class DBConnection {
                 return;
             }
         }
+    }
+
+    public static Connection getInstance() {
+
+        if(connection == null)
+            createConnection();
+
+        return connection;
     }
 
     static void shutdownConnection() {

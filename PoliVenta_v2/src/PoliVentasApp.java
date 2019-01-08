@@ -8,6 +8,7 @@ import controllers.LoginController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import models.entities.Usuario;
+import services.LoginServiceDB;
 import utils.StageX;
 import views.LoginView;
 
@@ -22,9 +23,11 @@ public class PoliVentasApp extends Application{
 
         LoginView loginView = new LoginView();
         new StageX(loginView); // decorator
-        new LoginController(new Usuario(), loginView);
 
+        new LoginController(new Usuario(), loginView);
         loginView.show();
+
+
     }
 
     public static void main(String[] args) {

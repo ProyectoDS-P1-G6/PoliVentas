@@ -5,7 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import models.AuthInfo;
 import models.entities.Usuario;
-import services.LoginService;
+import services.LoginServiceDB;
 import utils.StageX;
 import views.LoginView;
 import views.MenuAdministrador;
@@ -22,6 +22,7 @@ public class LoginController {
      * Estado del login.
      */
     AuthInfo authInfo;
+    LoginServiceDB ls;
 
     public LoginController(Usuario usuario, LoginView loginView) {
         this.usuario = usuario;
@@ -29,6 +30,10 @@ public class LoginController {
 
         loginView.addLoginAction(new LoginAction());
         loginView.addLogUpAction(new SignUpAction());
+
+        loginView.setOnCloseRequest(
+                windowEvent -> { ls.shutDown(); }
+                );
     }
 
     class LoginAction implements EventHandler<ActionEvent>{
@@ -37,7 +42,7 @@ public class LoginController {
         public void handle(ActionEvent actionEvent) {
             System.out.println("iniciar sesión....");
             System.out.printf("user: %s password: %s\n",loginView.getUsuarioInput(), loginView.getContrasenaInput() );
-            LoginService ls = new LoginService();
+            ls = new LoginServiceDB();
             authInfo = ls.authUser(loginView.getUsuarioInput(), loginView.getContrasenaInput());
 
             switch(authInfo.getUsuario().getRol()){
