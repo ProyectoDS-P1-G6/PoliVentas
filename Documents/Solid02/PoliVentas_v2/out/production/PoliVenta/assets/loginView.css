@@ -1,0 +1,41 @@
+.loginView{
+}
+
+.form_gridpane{
+
+}
+
+.loginButton{
+    -fx-font-weight: bold;
+    -fx-border-color: black;
+    -fx-border-radius : 5px;
+    -fx-border-width: 2px;
+}
+
+.loginButton:hover{
+    -fx-text-fill: white;
+    -fx-background-color : #3897F0;
+    -fx-border-color: #3897F0;
+    -fx-border-radius : 7px;
+}
+
+.singUpLabel:hover{
+    -fx-font-weight: bold;
+    -fx-underline: true;
+}
+
+.jfx-text-field{
+    -jfx-border-width: 0 0 2px 0;
+}
+
+.jfx-password-field{
+    -jfx-border-width: 0 0 4px 0;
+    -fx-background-insets: 0, 0 0 5 0
+}
+
+.userIcon{
+
+}
+
+.passIcon{
+}
