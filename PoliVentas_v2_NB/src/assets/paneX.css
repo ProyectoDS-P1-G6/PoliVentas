@@ -1,0 +1,32 @@
+/*
+    Created on : Aug 31, 2018, 9:14:29 PM
+    Author     : MiguelPS
+*/
+
+.root{
+    -fx-background-color: white;
+}
+
+.button_close{
+    -fx-border-color: white;
+    -fx-background-color: white;
+    -fx-background-size: 25px 25px;
+    -fx-graphic: url("close.png");
+
+}
+
+.button_close:hover{
+    -fx-graphic: url("close_h.png");
+}
+
+.button_minimize{
+    -fx-border-color: white;
+    -fx-background-color: white;
+    -fx-background-size: 25px 25px;
+    -fx-graphic: url("min.png");
+
+}
+.button_minimize:hover{
+    -fx-graphic: url("min_h.png");
+}
+
