@@ -37,7 +37,7 @@ public class DBConnection {
         return connection;
     }
 
-    static void shutdownConnection() {
+    public static void shutdownConnection() {
         if (connection != null) {
             try {
                 connection.close();

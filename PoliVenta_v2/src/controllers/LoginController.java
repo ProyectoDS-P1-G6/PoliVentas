@@ -5,17 +5,15 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import models.AuthInfo;
 import models.entities.Usuario;
+import services.DBConnection;
 import services.LoginServiceDB;
-import utils.StageX;
-import views.LoginView;
-import views.MenuAdministrador;
-import views.MenuComprador;
-import views.RegistroForm;
+import utils.StageDecoratorX;
+import views.*;
 
 public class LoginController {
 
     private Usuario usuario;
-    private LoginView loginView;
+    private LoginView view;
 
     /*
      * Informacion de autenticacion del usuario.
@@ -24,15 +22,18 @@ public class LoginController {
     AuthInfo authInfo;
     LoginServiceDB ls;
 
-    public LoginController(Usuario usuario, LoginView loginView) {
+    public LoginController(Usuario usuario, LoginView view) {
         this.usuario = usuario;
-        this.loginView = loginView;
+        this.view = view;
 
-        loginView.addLoginAction(new LoginAction());
-        loginView.addLogUpAction(new SignUpAction());
+        ls = new LoginServiceDB();
 
-        loginView.setOnCloseRequest(
-                windowEvent -> { ls.shutDown(); }
+        view.addLoginAction(new LoginAction());
+        view.addLogUpAction(new SignUpAction());
+
+        view.setOnCloseRequest(
+                windowEvent -> { DBConnection.shutdownConnection();
+                System.out.println("Cerrada la conección");}
                 );
     }
 
@@ -41,19 +42,28 @@ public class LoginController {
         @Override
         public void handle(ActionEvent actionEvent) {
             System.out.println("iniciar sesión....");
-            System.out.printf("user: %s password: %s\n",loginView.getUsuarioInput(), loginView.getContrasenaInput() );
-            ls = new LoginServiceDB();
-            authInfo = ls.authUser(loginView.getUsuarioInput(), loginView.getContrasenaInput());
+            System.out.printf("user: %s password: %s\n", view.getUsuarioInput(), view.getContrasenaInput() );
+            authInfo = ls.authUser(view.getUsuarioInput(), view.getContrasenaInput());
 
+            if(!authInfo.isLoggeoExitoso()){
+                view.setStatusMessage("** Datos incorrectos.");
+                return;
+            }
             switch(authInfo.getUsuario().getRol()){
                 case ADMIN:
-                    new MenuAdministrador().show();
+                    MenuAdministrador menuAdministrador = new MenuAdministrador();
+                    new StageDecoratorX(menuAdministrador);
+                    menuAdministrador.show();
                     break;
                 case VENDEDOR:
-                    new MenuComprador().show();
+                    MenuVendedor menuVendedor = new MenuVendedor();
+                    new StageDecoratorX(menuVendedor);
+                    menuVendedor.show();
                     break;
                 case COMPRADOR:
-                    new MenuComprador().show();
+                    MenuComprador menuComprador = new MenuComprador();
+                    new StageDecoratorX(menuComprador);
+                    menuComprador.show();
                     break;
             }
         }
@@ -65,7 +75,7 @@ public class LoginController {
         public void handle(MouseEvent actionEvent) {
             System.out.println("registrarse....");
             RegistroForm form = new RegistroForm();
-            new StageX(form);
+            new StageDecoratorX(form);
             form.show();
         }
     }

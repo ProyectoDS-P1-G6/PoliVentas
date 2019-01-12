@@ -5,6 +5,7 @@
  */
 package models;
 
+import javafx.scene.image.Image;
 import models.entities.Vendedor;
 import org.joda.money.Money;
 
@@ -17,9 +18,18 @@ public class Articulo {
     private String nombre;
     private String categoria;
     private Money precio;
+    private Image icon;
     Vendedor vendedor;
 
     public Articulo() {
+    }
+
+    public Image getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Image icon) {
+        this.icon = icon;
     }
 
     public Integer getId() {

@@ -6,13 +6,13 @@ import java.util.Date;
 
 public class AuthInfo {
     Usuario usuario;
-    Boolean estado;
-    Boolean recordarLoggin;
+    private Boolean loggeoExitoso;
+    private Boolean recordarLoggin;
     Date logginDate;
 
-    public AuthInfo(Usuario usuario, Date logginDate,Boolean estado, Boolean recordarLoggin) {
+    public AuthInfo(Usuario usuario, Date logginDate, Boolean loggeoExitoso, Boolean recordarLoggin) {
         this.usuario = usuario;
-        this.estado = estado;
+        this.loggeoExitoso = loggeoExitoso;
         this.recordarLoggin = recordarLoggin;
         this.logginDate = logginDate;
     }
@@ -21,16 +21,8 @@ public class AuthInfo {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
+    public Boolean isLoggeoExitoso() {
+        return loggeoExitoso;
     }
 
     public Boolean getRecordarLoggin() {
@@ -45,7 +37,4 @@ public class AuthInfo {
         return logginDate;
     }
 
-    public void setLogginDate(Date logginDate) {
-        this.logginDate = logginDate;
-    }
 }

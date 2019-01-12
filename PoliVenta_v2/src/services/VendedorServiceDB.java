@@ -2,21 +2,22 @@ package services;
 
 import models.Carrito;
 import models.entities.Comprador;
+import models.entities.Vendedor;
 
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CompradorServiceDB {
+public class VendedorServiceDB extends CompradorServiceDB {
 
-    CallableStatement getCompras;
+    CallableStatement getVentas;
 
-    public CompradorServiceDB(){
-        DBConnection.createConnection();
+    public VendedorServiceDB() {
+        super();
 
         try {
-            getCompras     = DBConnection.getInstance().prepareCall("CALL getCompras(?,?)");
+            getVentas = DBConnection.getInstance().prepareCall("CALL getVentas()");
         } catch (SQLException e) {
             System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
         }catch (Exception e){
@@ -24,9 +25,9 @@ public class CompradorServiceDB {
         }
     }
 
-    public List<Carrito> getCompras(Comprador comprador){
-        List<Carrito> compras = new LinkedList<>();
+    public List<Carrito> getVentas(Vendedor vendedor){
+        List<Carrito> ventas = new LinkedList<>();
 
-        return compras;
+        return ventas;
     }
 }

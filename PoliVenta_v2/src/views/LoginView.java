@@ -23,8 +23,9 @@ public class LoginView extends Stage {
 
     private JFXTextField fieldUsuario;
     private JFXPasswordField fieldContrasena;
-    JFXButton loginButton;
+    private JFXButton loginButton;
     Label singUpLabel;
+    Label statusMessage;
 
     public LoginView(){
         super();
@@ -37,7 +38,11 @@ public class LoginView extends Stage {
         singUpLabel = new Label("Sign Up");
         singUpLabel.getStyleClass().add("singUpLabel");
         singUpLabel.setLayoutX(250);
-        singUpLabel.setLayoutY(190);
+        singUpLabel.setLayoutY(220);
+
+        statusMessage = new Label();
+        statusMessage.setLayoutX(180);
+        statusMessage.setLayoutY(190);
 
         ImageView userIcon = new ImageView(new Image("file:src/assets/user.png"));
         userIcon.setFitWidth(25);
@@ -60,11 +65,11 @@ public class LoginView extends Stage {
         VBox form = new VBox(10);
         form.getChildren().addAll(fields, loginButton);
         form.setAlignment(Pos.CENTER);
-        form.setMargin(fields, new Insets(50,70,20,70));
-        form.setMargin(loginButton, new Insets(0,0,50,0));
+        form.setMargin(fields, new Insets(50,70,30,70));
+        form.setMargin(loginButton, new Insets(0,0,70,0));
 
         root = new Pane();
-        root.getChildren().addAll(form, singUpLabel);
+        root.getChildren().addAll(form, singUpLabel, statusMessage);
         root.getStyleClass().add("loginView");
 
         setScene(new Scene(root));
@@ -85,6 +90,13 @@ public class LoginView extends Stage {
 
     public String getContrasenaInput(){
         return fieldContrasena.getText();
+    }
+
+    public void setStatusMessage(String msg){
+        statusMessage.setText(msg);
+    }
+    public void clearMessageStatus(){
+        statusMessage.setText("");
     }
 
     public Pane getRoot(){

@@ -10,19 +10,23 @@
 .button_close{
     -fx-border-color: white;
     -fx-background-color: white;
-    -fx-graphic: url("close_n.png");
+    -fx-background-size: 25px 25px;
+    -fx-graphic: url("close.png");
+
 }
 
 .button_close:hover{
-    -fx-graphic: url("close_h.png"); 
+    -fx-graphic: url("close_h.png");
 }
 
 .button_minimize{
     -fx-border-color: white;
     -fx-background-color: white;
-    -fx-graphic: url("close_n.png");
+    -fx-background-size: 25px 25px;
+    -fx-graphic: url("min.png");
+
 }
 .button_minimize:hover{
-    -fx-graphic: url("close_h.png");
+    -fx-graphic: url("min_h.png");
 }
 

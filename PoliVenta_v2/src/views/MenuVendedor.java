@@ -1,4 +1,6 @@
 package views;
 
-public class MenuVendedor {
+import javafx.stage.Stage;
+
+public class MenuVendedor extends Stage {
 }

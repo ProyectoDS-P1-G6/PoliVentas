@@ -8,8 +8,7 @@ import controllers.LoginController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import models.entities.Usuario;
-import services.LoginServiceDB;
-import utils.StageX;
+import utils.StageDecoratorX;
 import views.LoginView;
 
 /**
@@ -22,7 +21,7 @@ public class PoliVentasApp extends Application{
     public void start(Stage primaryStage) throws Exception {
 
         LoginView loginView = new LoginView();
-        new StageX(loginView); // decorator
+        new StageDecoratorX(loginView); // decorator
 
         new LoginController(new Usuario(), loginView);
         loginView.show();

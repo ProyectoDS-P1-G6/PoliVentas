@@ -1,15 +1,20 @@
 package controllers;
 
 import models.entities.Administrador;
+import services.AdministradorServiceDB;
 import views.MenuAdministrador;
 
 public class MenuAdministradorController {
     private Administrador administrador;
-    private MenuAdministrador menuAdministrador;
+    private MenuAdministrador view;
 
-    public MenuAdministradorController(Administrador administrador, MenuAdministrador menuAdministrador) {
+    private AdministradorServiceDB db;
+
+    public MenuAdministradorController(Administrador administrador, MenuAdministrador view) {
         this.administrador = administrador;
-        this.menuAdministrador = menuAdministrador;
+        this.view = view;
+
+        db = new AdministradorServiceDB();
     }
 
 
