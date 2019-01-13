@@ -1,23 +1,20 @@
 package models;
 
+import java.util.Date;
 import models.entities.Comprador;
 import org.joda.money.Money;
-import utils.Constants;
 
-import java.util.LinkedList;
-import java.util.List;
 
 public class Pedido {
     private Integer id;
+    private Articulo articulo;
     private Comprador comprador;
-    Money total;
-
-    Articulo articulo;
-
     private Estado estado;
-    Integer cantidad;
-
-    Float descuento;
+    private Money total;
+    private Integer cantidad;
+    private Float descuento;
+    private Date fecha;
+    
 
     public Pedido(Comprador comprador, Articulo articulo, Integer cantidad) {
         this.comprador = comprador;

@@ -22,7 +22,6 @@ public class Usuario {
     private String direccion;
     private Integer cedula;
     private String matricula;
-
     Rol rol;
 
     private boolean isLogged;
@@ -33,6 +32,10 @@ public class Usuario {
         private Integer telefono;
         private List<Integer> telefonosEmergencia;
         private boolean usaWhatsapp;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
 

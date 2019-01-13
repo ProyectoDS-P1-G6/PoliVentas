@@ -9,13 +9,6 @@ package models;
  *
  * @author Usuario
  */
-public class PagoEfectivo extends MetodoPago{
-
-    @Override
-    public void pagar(double monto) {
-        //Codigo para pago en efectivo
-    }
-
-
-
+public enum Calificacion {
+    UNA_ESTRELLA, DOS_ESTRELLAS, TRES_ESTRELLAS, CUATRO_ESTRELLAS, CINCO_ESTRELLAS
 }

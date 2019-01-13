@@ -3,7 +3,6 @@ package views;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -21,7 +20,6 @@ import models.entities.Vendedor;
 import org.joda.money.Money;
 import utils.Constants;
 import views.items.CompradoItem;
-import views.items.Item;
 import views.items.SearchItem;
 
 public class MenuComprador extends Stage {

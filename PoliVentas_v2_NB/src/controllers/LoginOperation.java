@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package controllers;
 
 /**
  *
  * @author Usuario
  */
-public abstract class MetodoPago{
-    abstract public void pagar(double monto);
+public class LoginOperation {
+    
 }

@@ -20,6 +20,9 @@ public class Articulo {
     private Money precio;
     private Image icon;
     Vendedor vendedor;
+    private String maxTimeDeliver;
+    private Calificacion calificacion;
+    
 
     public Articulo() {
     }

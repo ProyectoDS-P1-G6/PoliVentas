@@ -32,7 +32,7 @@ public class LoginServiceDB {
 
     public AuthInfo authUser(String user, String password){
 
-        AuthInfo info = new AuthInfo(new Comprador(), new Date(), true, false);
+        AuthInfo info = new AuthInfo(new Administrador(), new Date(), true, false);
 
         if(user.isEmpty() || password.isEmpty()){
             return info;
