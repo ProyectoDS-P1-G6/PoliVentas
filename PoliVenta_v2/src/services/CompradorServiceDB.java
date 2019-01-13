@@ -1,6 +1,6 @@
 package services;
 
-import models.Carrito;
+import models.Pedido;
 import models.entities.Comprador;
 
 import java.sql.CallableStatement;
@@ -24,8 +24,8 @@ public class CompradorServiceDB {
         }
     }
 
-    public List<Carrito> getCompras(Comprador comprador){
-        List<Carrito> compras = new LinkedList<>();
+    public List<Pedido> getCompras(Comprador comprador){
+        List<Pedido> compras = new LinkedList<>();
 
         return compras;
     }

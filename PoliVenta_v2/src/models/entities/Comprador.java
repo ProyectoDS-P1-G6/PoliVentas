@@ -5,7 +5,7 @@
  */
 package models.entities;
 
-import models.Carrito;
+import models.Pedido;
 
 import java.util.List;
 
@@ -16,17 +16,17 @@ import java.util.List;
 public class Comprador extends Usuario {
 
 
-    List<Carrito> compras;
+    List<Pedido> compras;
 
     public Comprador(){
         this.rol = Rol.COMPRADOR;
     }
 
-    public List<Carrito> getCompras() {
+    public List<Pedido> getCompras() {
         return compras;
     }
 
-    public void setCompras(List<Carrito> compras) {
+    public void setCompras(List<Pedido> compras) {
         this.compras = compras;
     }
 }

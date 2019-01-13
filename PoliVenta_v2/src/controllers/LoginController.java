@@ -4,7 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import models.AuthInfo;
+import models.entities.Administrador;
+import models.entities.Comprador;
 import models.entities.Usuario;
+import models.entities.Vendedor;
 import services.DBConnection;
 import services.LoginServiceDB;
 import utils.StageDecoratorX;
@@ -50,21 +53,29 @@ public class LoginController {
                 return;
             }
             switch(authInfo.getUsuario().getRol()){
+
                 case ADMIN:
                     MenuAdministrador menuAdministrador = new MenuAdministrador();
                     new StageDecoratorX(menuAdministrador);
+                    new MenuAdministradorController((Administrador) authInfo.getUsuario(), menuAdministrador);
                     menuAdministrador.show();
                     break;
+
                 case VENDEDOR:
                     MenuVendedor menuVendedor = new MenuVendedor();
                     new StageDecoratorX(menuVendedor);
+                    new MenuVendedorController((Vendedor) authInfo.getUsuario(), menuVendedor);
                     menuVendedor.show();
                     break;
+
                 case COMPRADOR:
                     MenuComprador menuComprador = new MenuComprador();
                     new StageDecoratorX(menuComprador);
+                    new MenuCompradorController((Comprador) authInfo.getUsuario(), menuComprador);
                     menuComprador.show();
                     break;
+
+
             }
         }
     }

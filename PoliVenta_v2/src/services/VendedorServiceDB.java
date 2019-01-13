@@ -1,7 +1,6 @@
 package services;
 
-import models.Carrito;
-import models.entities.Comprador;
+import models.Pedido;
 import models.entities.Vendedor;
 
 import java.sql.CallableStatement;
@@ -25,8 +24,8 @@ public class VendedorServiceDB extends CompradorServiceDB {
         }
     }
 
-    public List<Carrito> getVentas(Vendedor vendedor){
-        List<Carrito> ventas = new LinkedList<>();
+    public List<Pedido> getVentas(Vendedor vendedor){
+        List<Pedido> ventas = new LinkedList<>();
 
         return ventas;
     }
