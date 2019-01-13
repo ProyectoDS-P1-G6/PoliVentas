@@ -43,3 +43,15 @@ and open the template in the editor.
 .jfx-text-field{
     -jfx-border-width: 0 0 2px 0;
 }
+
+.combo-box
+{
+    -fx-background: #e1f4f7;
+    -fx-border-color: #bfc1c1;
+    -fx-border-image-width: 2px;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em; 
+    -fx-border-radius: 5px;
+}

@@ -77,6 +77,7 @@ public class RegistroForm extends Stage {
         telefono = new TextField();
         telefono.getStyleClass().add("jfx-text-field");
         Whatsapp = new ComboBox<>();
+        Whatsapp.getStyleClass().add("combo-box");
         Whatsapp.setMinWidth(200);
         email = new TextField();
         email.getStyleClass().add("jfx-text-field");
