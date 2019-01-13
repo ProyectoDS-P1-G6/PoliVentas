@@ -1,0 +1,62 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13-ene-2019, 1:23:24
+    Author     : carlasanchez
+*/
+
+.logout-label:hover{
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    }
+
+.title{
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(0, 30, 56);
+}
+.search_button{
+   -jfx-button-type: FLAT;
+   -fx-graphic: url("search.png");
+}
+
+.search_button:hover{
+   -jfx-button-type: RAISED;
+   -fx-graphic: url("search_h.png");
+}
+
+
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: rgb(235, 230, 255);
+    -fx-background-radius: 5em;
+}
+

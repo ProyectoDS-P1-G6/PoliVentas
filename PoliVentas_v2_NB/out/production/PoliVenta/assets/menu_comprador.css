@@ -1,9 +1,0 @@
-.search_button{
-   -jfx-button-type: RAISED;
-   -fx-graphic: url("search.png");
-}
-
-.search_button:hover{
-   -jfx-button-type: RAISED;
-   -fx-graphic: url("search_h.png");
-}
