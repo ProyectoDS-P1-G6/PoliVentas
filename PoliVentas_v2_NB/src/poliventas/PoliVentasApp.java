@@ -7,11 +7,14 @@ package poliventas;
  */
 
 import controllers.LoginController;
+import controllers.MenuVendedorController;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import models.entities.Usuario;
+import models.entities.Vendedor;
 import utils.StageDecoratorX;
 import views.LoginView;
+import views.MenuVendedor;
 
 /**
  *
@@ -27,7 +30,11 @@ public class PoliVentasApp extends Application{
 
         new LoginController(new Usuario(), loginView);
         loginView.show();
-
+        
+        MenuVendedor menuVendedor= new MenuVendedor();
+        new StageDecoratorX(menuVendedor);
+                    new MenuVendedorController(new Vendedor(), menuVendedor);
+                    menuVendedor.show();
 
     }
 

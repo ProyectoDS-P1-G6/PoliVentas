@@ -4,5 +4,6 @@ public enum Estado {
     ENTREGADO,
     ENVIADO,
     PENDIENTE,
-    ANULADO
+    ANULADO,
+    EXITOSA
 }
