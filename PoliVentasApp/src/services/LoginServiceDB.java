@@ -9,6 +9,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 public class LoginServiceDB {
 
@@ -33,15 +34,22 @@ public class LoginServiceDB {
 
     public AuthInfo authUser(String user, String password){
 
-        AuthInfo info = new AuthInfo(new Vendedor(), new Date(), true, false);
-
-        if(user.isEmpty() || password.isEmpty()){
-            return info;
+        AuthInfo info = new AuthInfo(new Administrador(), new Date(), true, false);
+        switch(user.toLowerCase()){
+            case "admin":
+                info = new AuthInfo(new Administrador(), new Date(), true, false);
+                break;
+            case "comprador":
+                info = new AuthInfo(new Comprador(), new Date(), true, false);
+                break;
+            case "vendedor":
+                info = new AuthInfo(new Vendedor(), new Date(), true, false);
+                break;
         }
         this.actualLogin = info;
         return info;
     }
-
+    
 
     public AuthInfo getActualLogin() {
         return actualLogin;
