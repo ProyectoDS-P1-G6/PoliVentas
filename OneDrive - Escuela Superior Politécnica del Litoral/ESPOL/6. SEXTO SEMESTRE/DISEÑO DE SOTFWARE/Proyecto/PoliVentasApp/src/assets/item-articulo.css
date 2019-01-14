@@ -1,0 +1,29 @@
+
+.content{
+    -fx-background-color: white;
+    -fx-padding: 10;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10;
+}
+
+.content:hover{
+
+}
+
+
+.nombre-label{
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+}
+
+.precio-label{
+    -fx-font-size: 8pt;
+    -fx-text-fill: rgb(0, 32, 56);
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+
+.estado-label{
+    -fx-font-weight: bold;
+    -fx-font-size: 8pt;
+}

@@ -1,0 +1,21 @@
+.vbox {
+    -fx-background-color: #027B96  ;
+/*    -fx-relleno: 15;
+    -espacio-fx: 10;*/
+}
+.amduser{
+    -fx-background-color: #FFFFFF  ;
+/*    -fx-relleno: 15;
+    -espacio-fx: 10;*/
+}
+.amdbusqueda{
+    -fx-background-color: #FFFFFF  ;
+/*    -fx-relleno: 15;
+    -espacio-fx: 10;*/
+}
+.amdproduct{
+    -fx-background-color: #FFFFFF  ;
+/*    -fx-relleno: 15;
+    -espacio-fx: 10;*/
+}
+
