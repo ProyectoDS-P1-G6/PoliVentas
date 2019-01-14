@@ -20,9 +20,11 @@ import models.entities.Comprador;
 import models.entities.Vendedor;
 import org.joda.money.Money;
 import utils.Constants;
+import utils.StageDecoratorX;
 import views.items.CompradoItem;
 import views.items.Item;
 import views.items.SearchItem;
+import views.popup.RealizarCompra;
 
 public class MenuComprador extends Stage {
 
@@ -46,8 +48,6 @@ public class MenuComprador extends Stage {
 
     EventHandler<MouseEvent> onSearchItemSelected;
     EventHandler<MouseEvent> onComprasPendientesSelected;
-    EventHandler<MouseEvent> onMasBuscadosItemsSelected;
-
 
 
     public MenuComprador() {
@@ -124,55 +124,22 @@ public class MenuComprador extends Stage {
         setScene(new Scene(root));
         getScene().getStylesheets().add("assets/menu_comprador.css");
 
-        addItems();
     }
 
-
-    void addItems() {
-        int j = 0;
-        for (int i = 0; i < 10; i++) {
-            Articulo articulo = new Articulo();
-            articulo.setNombre("Nave Espacial.");
-            Vendedor x = new Vendedor();
-            x.setNombres("Nombres");
-            x.setApellidos("Apellidos");
-            articulo.setVendedor(x);
-            articulo.setPrecio(Money.of(Constants.USD, 3000000.5));
-
-            Pedido p = new Pedido(new Comprador(), articulo, 5);
-            switch (j) {
-                case 0:
-                    p.setEstado(Estado.ENVIADO);
-                    j++;
-                    break;
-                case 1:
-                    p.setEstado(Estado.PENDIENTE);
-                    j++;
-                    break;
-                case 2:
-                    p.setEstado(Estado.ANULADO);
-                    j++;
-                    break;
-                default:
-                    p.setEstado(Estado.ENTREGADO);
-                    j = 0;
-                    break;
-            }
-            masBuscadosList.getChildren().add(new SearchItem(articulo));
-            comprasPendientesList.getChildren().add(new CompradoItem(p));
-            searchResultList.getChildren().add(new SearchItem(articulo));
-        }
-    }
 
     public void addSearchResultItem(SearchItem item) {
+        item.setOnMouseClicked(new OnSearchItemSelected(item));
         this.searchResultList.getChildren().add(item);
     }
 
     public void addComprasPendientesItem(CompradoItem item) {
+        item.setOnMouseClicked(new OnComprasPendientesSelected(item));
         this.comprasPendientesList.getChildren().add(item);
     }
 
     public void addMasBuscadosItem(SearchItem item) {
+
+        item.setOnMouseClicked(new OnSearchItemSelected(item));
         this.masBuscadosList.getChildren().add(item);
     }
 
@@ -186,6 +153,36 @@ public class MenuComprador extends Stage {
 
     public void removeMasBuscadosItem(SearchItem item) {
         this.masBuscadosList.getChildren().remove(item);
+    }
+
+
+    class OnSearchItemSelected implements EventHandler<MouseEvent> {
+        Item item;
+
+        public OnSearchItemSelected(Item item) {
+            this.item = item;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            RealizarCompra rc = new RealizarCompra(item);
+            new StageDecoratorX(rc);
+            rc.show();
+        }
+    }
+
+    class OnComprasPendientesSelected implements  EventHandler<MouseEvent>{
+
+        Item item;
+
+        public OnComprasPendientesSelected(Item item) {
+            this.item = item;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+
+        }
     }
 
 

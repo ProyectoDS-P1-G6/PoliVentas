@@ -134,9 +134,8 @@ public MenuVendedor(){
         
         
         root = new AnchorPane();
-        ScrollPane rootsc= new ScrollPane();
-        root.setPrefWidth(900);
-        root.setPrefHeight(600);
+        root.setPrefWidth(920);
+        root.setPrefHeight(610);
 
         Label comprasPendientesLabel = new Label("Mis Compras.");
         comprasPendientesLabel.getStyleClass().add("title");
@@ -163,8 +162,8 @@ public MenuVendedor(){
         busquedaLabel.setLayoutX(searchSection.getLayoutX());
         busquedaLabel.setLayoutY(searchSection.getLayoutY()-15);
         root.getChildren().addAll(carritoButton,logout, busquedaLabel,searchSection,comprasPendientesLabel ,comprasPendientes,masbuscadosLabel , masBuscados,misProductosLabel,misProductos,ventasPendientesLabel,ventasPendientes,nuevosArticulosLabel,nuevosArticulos);
-        rootsc.setContent(root);
-        setScene(new Scene(rootsc));
+
+        setScene(new Scene(root));
         getScene().getStylesheets().add("assets/menu_vendedor.css");
 
         addItemsComprador();

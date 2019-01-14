@@ -56,7 +56,7 @@ and open the template in the editor.
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
-    -fx-background-color: rgb(235, 230, 255);
+    -fx-background-color: rgb(235, 230, 250);
     -fx-background-radius: 5em;
 }
 
