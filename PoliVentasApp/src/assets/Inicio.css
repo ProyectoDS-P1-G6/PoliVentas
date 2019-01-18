@@ -1,0 +1,78 @@
+.button_style{
+    -fx-text-fill: white;
+    -fx-background-color : #2fcbe2;
+    -fx-border-color: #2cadc1;
+    -fx-border-radius : 15px;
+    -fx-background-radius: 15px;
+
+}
+.text_style{
+    -fx-text-fill: #0d2751;
+    -fx-font-size: 15;
+    -fx-text-align: center;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-content-display: center;
+    
+
+}
+.logout-label:hover{
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    }
+
+.title{
+    -fx-font-size: 10pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: rgb(0, 32, 56);
+}
+.search_button{
+   -jfx-button-type: FLAT;
+   -fx-graphic: url("search.png");
+}
+
+.search_button:hover{
+   -jfx-button-type: RAISED;
+   -fx-graphic: url("search_h.png");
+}
+
+
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: rgb(235, 230, 250);
+    -fx-background-radius: 5em;
+}
+.title{
+    -fx-text-fill: #0d2751;
+    -fx-font-size: 30;
+    -fx-text-align: center;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-content-display: center;
+
+}
