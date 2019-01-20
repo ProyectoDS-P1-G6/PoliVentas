@@ -12,13 +12,13 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import models.Articulo;
 
-public class Item extends StackPane {
+public class Item extends StackPane implements Cloneable{
     HBox content;
     ImageView icon;
     VBox description;
 
-    Label nombre;
-    Label vendedor;
+    Label nombre_producto;
+    Label nombre_vendedor;
     Label precio;
 
     public Item() {
@@ -27,11 +27,11 @@ public class Item extends StackPane {
         description = new VBox();
         content = new HBox(5);
 
-        nombre = new Label();
-        vendedor = new Label();
+        nombre_producto = new Label();
+        nombre_vendedor = new Label();
         precio = new Label();
-        nombre.getStyleClass().add("nombre-label");
-        vendedor.getStyleClass().add("vendedor-label");
+        nombre_producto.getStyleClass().add("nombre-label");
+        nombre_vendedor.getStyleClass().add("vendedor-label");
         precio.getStyleClass().add("precio-label");
         setAlignment(precio, Pos.BASELINE_RIGHT);
         content.setEffect(new DropShadow(11, Color.rgb(235, 240, 255)));

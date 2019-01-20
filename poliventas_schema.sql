@@ -24,24 +24,32 @@ CREATE TABLE Usuario (
     usa_whatsapp BOOLEAN DEFAULT FALSE,
     direccion 	VARCHAR(60),
     matricula 	INTEGER UNIQUE NOT NULL,
-    saldo 		DOUBLE NOT NULL,
     tipo		CHAR(1)     #A administrador; C comprador; V vendedor
 );
   
+
+DROP TABLE IF EXISTS Categorias;
+CREATE TABLE Categorias(
+	id 				INTEGER PRIMARY KEY,
+    nombre_categoria	VARCHAR(10),
+    detalles 		VARCHAR(70)
+);
+
 
 
 DROP TABLE IF EXISTS Articulos ;
 CREATE TABLE Articulos (
 	id 				INTEGER PRIMARY KEY AUTO_INCREMENT,
 	nombre 			VARCHAR(30) NOT NULL,
-	descripción 	VARCHAR(80),
+    id_categoria	INTEGER,
+	descripcion 	VARCHAR(80),
 	precio 			FLOAT4 NOT NULL,
-	tiempoMaxEntrega INTEGER NOT NULL, # Horas
-	categoria 		VARCHAR(10),
-	idVendedor 		INTEGER,
+	tiempo_max_entrega INTEGER NOT NULL, # Horas
     image_path 		VARCHAR(30),
+	id_vendedor 		INTEGER,
     
-	FOREIGN KEY (idVendedor) REFERENCES Usuario(id)
+    FOREIGN KEY (id_categoria) REFERENCES Categorias(id),
+	FOREIGN KEY (id_vendedor) REFERENCES Usuario(id)
 );
 
 
@@ -53,56 +61,80 @@ CREATE TABLE Pedidos(
     cantidad 	INTEGER,
 	fecha 		DATE NOT NULL,
 	estado 		CHAR(1) DEFAULT 'P', # E entregado; P pendiente; A anulado 
-	idComprador INTEGER,
-    idArticulo 	INTEGER,
+	id_comprador INTEGER,
+    id_articulo 	INTEGER,
     
-    FOREIGN KEY (idArticulo) REFERENCES Articulos(id),
-	FOREIGN KEY (idComprador) REFERENCES Usuario(id)
+    FOREIGN KEY (id_articulo) REFERENCES Articulos(id),
+	FOREIGN KEY (id_comprador) REFERENCES Usuario(id)
 );
 
 
 
 DROP VIEW IF EXISTS Ventas;
 CREATE VIEW Ventas AS
-    SELECT id, cantidad, fecha, estado, idComprador, idArticulo
+    SELECT id, cantidad, fecha, estado, id_comprador, id_articulo
     FROM Pedidos p WHERE p.estado = "E" ;
       
 
 
-DROP TABLE IF EXISTS Calificacion_Vendedor ;
+DROP TABLE IF EXISTS Calificacion_vendedor ;
 CREATE TABLE Calificacion_Vendedor (
 	id 			INTEGER PRIMARY KEY AUTO_INCREMENT,
-	NoEstrellas INTEGER,
-	idVendedor 	INTEGER,
-	idUsuario 	INTEGER,
+	no_estrellas INTEGER,
+	id_vendedor 	INTEGER,
+	id_usuario 	INTEGER,
     
-	FOREIGN KEY (idVendedor) REFERENCES Usuario (id),
-    FOREIGN KEY (idUsuario) REFERENCES Usuario (id)
+	FOREIGN KEY (id_vendedor) REFERENCES Usuario (id),
+    FOREIGN KEY (id_usuario) REFERENCES Usuario (id)
 );
 
 
 
-DROP TABLE IF EXISTS Calificacion_Producto ;
-CREATE TABLE Calificacion_Producto (
+DROP TABLE IF EXISTS Calificacion_producto ;
+CREATE TABLE Calificacion_producto (
 
 	id 			INT PRIMARY KEY AUTO_INCREMENT,
-	NoEstrellas INTEGER,
-	idProducto 	INTEGER,
-	idComprador INTEGER,
-	FOREIGN KEY (idProducto) REFERENCES Articulos(id),
-	FOREIGN KEY (idComprador) REFERENCES Usuario(id)
+	no_estrellas INTEGER,
+	id_producto 	INTEGER,
+	id_comprador INTEGER,
+	FOREIGN KEY (id_producto) REFERENCES Articulos(id),
+	FOREIGN KEY (id_comprador) REFERENCES Usuario(id)
+);
+
+
+
+DROP TABLE IF EXISTS Credito_cuenta;
+CREATE TABLE Credito_cuenta(
+	id_usuario	INTEGER,
+    saldo 		DOUBLE NOT NULL,
+    detalles	VARCHAR(100),
+    
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
+);
+
+
+
+DROP TABLE IF EXISTS Metodo_pago;
+CREATE TABLE Metodo_pago(
+	id	INTEGER PRIMARY KEY,
+    id_usuario INTEGER,
+    nombre_metodo VARCHAR(20),
+    
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id)
 );
 
 
 
 DROP TABLE IF EXISTS Pagos ;
 CREATE TABLE Pagos (
-	id 		INTEGER PRIMARY KEY AUTO_INCREMENT,
-	metodo	VARCHAR(1),  # B = efectivo; E = electronico
-    estado 	CHAR(1),  # P = pendiente; R = realizado
-    fecha	DATE,
-	idPedido INTEGER,
-	FOREIGN KEY (idPedido) REFERENCES Pedidos(id)
+	id			INTEGER PRIMARY KEY AUTO_INCREMENT,
+	id_metodoPago INTEGER,
+    estado		CHAR(1),  # P = pendiente; R = realizado
+    monto		DOUBLE,
+    fecha		DATE,
+	id_pedido	INTEGER,
+    
+	FOREIGN KEY (id_pedido) REFERENCES Pedidos(id),
+    FOREIGN KEY (id_metodoPago) REFERENCES Metodo_pago(id)
 );
-
  

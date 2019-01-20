@@ -1,35 +1,15 @@
 package views;
-import org.joda.money.Money;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import models.Articulo;
-import models.Estado;
-import models.Pedido;
-import models.entities.Comprador;
-import models.entities.CompradorBuilder;
-import models.entities.Vendedor;
-import models.entities.VendedorBuilder;
-import utils.Constants;
-import views.items.CompradoItem;
-import views.items.SearchItem;
+
 
 public class Inicio extends Stage {
 
@@ -94,43 +74,8 @@ public class Inicio extends Stage {
 	        setScene(new Scene(root));
 	        getScene().getStylesheets().add("assets/Inicio.css");
 	        
-	       addItemsComprador();
 	}
-	void addItemsComprador() {
-        int j = 0;
-        for (int i = 0; i < 10; i++) {
-            Articulo articulo = new Articulo();
-            articulo.setNombre("Nave Espacial.");
-            Vendedor x = new Vendedor(new VendedorBuilder());
-            x.setNombres("Nombres");
-            x.setApellidos("Apellidos");
-            articulo.setVendedor(x);
-            articulo.setPrecio(Money.of(Constants.USD, 3000000.5));
-
-            Pedido p = new Pedido(new Comprador(new CompradorBuilder()), articulo, 5);
-            switch (j) {
-                case 0:
-                    p.setEstado(Estado.ENVIADO);
-                    j++;
-                    break;
-                case 1:
-                    p.setEstado(Estado.PENDIENTE);
-                    j++;
-                    break;
-                case 2:
-                    p.setEstado(Estado.ANULADO);
-                    j++;
-                    break;
-                default:
-                    p.setEstado(Estado.ENTREGADO);
-                    j = 0;
-                    break;
-            }
-            nuevosArticulosList.getChildren().add(new SearchItem(articulo));
-            masBuscadosArticulosList.getChildren().add(new SearchItem(articulo));
-          
-        }
-    }
+	
 	public void addLoginAction(EventHandler<ActionEvent> eventHandler){
         loginButton.setOnAction(eventHandler);
     }

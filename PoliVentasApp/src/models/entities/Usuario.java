@@ -32,7 +32,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    
+
     public Usuario(UsuarioBuilder builder) {
         this.cedula = builder.cedula;
         this.nombres = builder.nombres;

@@ -17,17 +17,38 @@ public class Articulo {
     private Integer id;
     private String nombre;
     private String categoria;
+    private String descripción;
     private Money precio;
+    private Integer tiempo_max_entrega;
     private Image icon;
     Vendedor vendedor;
 
-    public Articulo() {
+    public Articulo(ArticuloBuilder builder) {
+        this.id = builder.id;
+        this.nombre = builder.nombre;
+        this.categoria = builder.categoria;
+        this.descripción = builder.descripción;
+        this.precio = builder.precio;
+        this.tiempo_max_entrega = builder.tiempo_max_entrega;
+        this.vendedor = builder.vendedor;
+        this.icon = builder.icon;
     }
 
+    
     public Image getIcon() {
         return icon;
     }
 
+    public String getDescripción() {
+        return descripción;
+    }
+
+    public Integer getTiempo_max_entrega() {
+        return tiempo_max_entrega;
+    }
+
+    
+    
     public void setIcon(Image icon) {
         this.icon = icon;
     }
@@ -71,4 +92,13 @@ public class Articulo {
     public void setVendedor(Vendedor vendedor) {
         this.vendedor = vendedor;
     }
+
+    @Override
+    public String toString() {
+        return "Articulo{" + "id=" + id + ", nombre=" + nombre + ", categoria=" + categoria + ", descripci\u00f3n=" + descripción + ", precio=" + precio + ", tiempo_max_entrega=" + tiempo_max_entrega + ", icon=" + icon + ", vendedor=" + vendedor + '}';
+    }
+    
+    
+    
+    
 }

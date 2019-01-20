@@ -20,8 +20,8 @@ public VendidoItem(Pedido pedido){
 
         super();
         Articulo articulo = pedido.getArticulo();
-        nombre.setText(articulo.getNombre());
-        vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
+        nombre_producto.setText(articulo.getNombre());
+        nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
         precio.setText(articulo.getPrecio().toString());
 
         estado = new Label();
@@ -37,7 +37,7 @@ public VendidoItem(Pedido pedido){
         }
         estado.setText(e.toString());
 
-        description.getChildren().addAll(nombre,vendedor,precio, estado);
+        description.getChildren().addAll(nombre_producto,nombre_vendedor,precio, estado);
 
         content.setOnMouseClicked(event -> {
 

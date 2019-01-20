@@ -1,24 +1,26 @@
 package controllers;
 
+import java.util.List;
 import java.util.Optional;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import models.Articulo;
-import models.Estado;
 import models.Pedido;
 import models.entities.Comprador;
-import models.entities.CompradorBuilder;
-import models.entities.Vendedor;
-import models.entities.VendedorBuilder;
-import org.joda.money.Money;
 import services.CompradorServiceDB;
-import utils.Constants;
+import utils.StageDecoratorX;
 import views.MenuComprador;
-import views.items.CompradoItem;
+import views.items.PendienteItem;
 import views.items.SearchItem;
+import views.popup.MostrarDetalles;
+import views.popup.RealizarCompra;
+
 
 public class MenuCompradorController {
     LoginController login;
@@ -30,49 +32,30 @@ public class MenuCompradorController {
     public MenuCompradorController(Comprador comprador, MenuComprador menuComprador) {
         this.comprador = comprador;
         this.menuComprador = menuComprador;
+        db = new CompradorServiceDB(comprador);
         
         this.menuComprador.setOnLogout(new LogOutAction());
-        db = new CompradorServiceDB();
-        addItems();
+        this.menuComprador.setOnInputChanged(new OnSearchInputChanged());
+        
+        actualizarPedidos();
+        
     }
-
-
-
-    void addItems() {
-        int j = 0;
-        for (int i = 0; i < 10; i++) {
-            Articulo articulo = new Articulo();
-            articulo.setNombre("Nave Espacial.");
-            Vendedor x = new Vendedor(new VendedorBuilder());
-            x.setNombres("Nombres");
-            x.setApellidos("Apellidos");
-            articulo.setVendedor(x);
-            articulo.setPrecio(Money.of(Constants.USD, 3000000.5));
-
-            Pedido p = new Pedido(new Comprador(new CompradorBuilder()), articulo, 5);
-            switch (j) {
-                case 0:
-                    p.setEstado(Estado.ENVIADO);
-                    j++;
-                    break;
-                case 1:
-                    p.setEstado(Estado.PENDIENTE);
-                    j++;
-                    break;
-                case 2:
-                    p.setEstado(Estado.ANULADO);
-                    j++;
-                    break;
-                default:
-                    p.setEstado(Estado.ENTREGADO);
-                    j = 0;
-                    break;
-            }
-            menuComprador.addMasBuscadosItem(new SearchItem(articulo));
-            menuComprador.addComprasPendientesItem(new CompradoItem(p));
-            menuComprador.addSearchResultItem(new SearchItem(articulo));
+    
+    
+    void actualizarPedidos(){
+        List<Pedido> pedidos =  db.getPedidos(comprador);
+        
+        int i = 0;
+        for(Pedido p: pedidos){
+            System.out.println(i++ );
+            System.out.println(" pedido: "+p+"\n");
+            PendienteItem item = new PendienteItem(p);
+            item.setOnMouseClicked(new OnPedidoSelected(item));
+            menuComprador.addPedidoItem(item);
         }
     }
+    
+    
     
     class LogOutAction implements EventHandler<MouseEvent>{
 
@@ -86,12 +69,63 @@ public class MenuCompradorController {
                         menuComprador.close();
                         login.getView().show();
                     }
-                    else {
-                        
-                    }
         }
     }
 
+    
+    class OnSearchItemSelected implements EventHandler<MouseEvent> {
+        SearchItem item;
+
+        public OnSearchItemSelected(SearchItem item) {
+            this.item = item;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            RealizarCompra rc = new RealizarCompra(item);
+            new StageDecoratorX(rc);
+            rc.show();
+        }
+    }
+
+    class OnPedidoSelected implements  EventHandler<MouseEvent>{
+
+        PendienteItem item;
+
+        public OnPedidoSelected(PendienteItem item) {
+            this.item = item;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            MostrarDetalles md = new MostrarDetalles(item);
+            menuComprador.cleanPedidosPendientes();
+            actualizarPedidos();
+            
+            new StageDecoratorX(md);
+            md.show();
+
+        }
+    }
+    
+    class OnSearchInputChanged implements ChangeListener<String>{
+
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+           if(menuComprador.getTextInput().length() < 3)
+               return;
+           menuComprador.cleanSearchResultItem();
+           List<Articulo> articulos = db.buscarArticulo(menuComprador.getTextInput());
+           for(Articulo articulo: articulos){
+               SearchItem item = new SearchItem(articulo);
+               item.setOnMouseClicked(new OnSearchItemSelected(item));
+               menuComprador.addSearchResultItem(item);
+           }
+        }
+        
+    }
+    
+    
     public void setLoginController(LoginController login) {
         this.login = login;
     }

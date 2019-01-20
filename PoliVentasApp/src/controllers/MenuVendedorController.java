@@ -8,13 +8,13 @@ public class MenuVendedorController {
     private Vendedor vendedor;
     private MenuVendedor menuVendedor;
 
-    private VendedorServiceDB db = new VendedorServiceDB();
+    private VendedorServiceDB db;
 
     public MenuVendedorController(Vendedor vendedor, MenuVendedor menuVendedor) {
         this.vendedor = vendedor;
         this.menuVendedor = menuVendedor;
 
-        db = new VendedorServiceDB();
+        db = new VendedorServiceDB(vendedor);
     }
 
 

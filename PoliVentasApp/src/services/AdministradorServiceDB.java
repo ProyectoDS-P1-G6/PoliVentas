@@ -6,6 +6,7 @@ import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import models.entities.Usuario;
 
 public class AdministradorServiceDB extends VendedorServiceDB{
 
@@ -20,9 +21,10 @@ public class AdministradorServiceDB extends VendedorServiceDB{
     private CallableStatement updateArticulo;
     private CallableStatement deleteArticulo;
 
+    Usuario usuario;
 
-    public AdministradorServiceDB(){
-        super();
+    public AdministradorServiceDB(Usuario usuario){
+        super(usuario);
 
         try {
             createUsuario = DBConnection.getInstance().prepareCall("CALL createUsuario(?)");

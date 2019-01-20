@@ -17,7 +17,7 @@ public class MenuAdministradorController{
         this.administrador = modelo;
         this.view = view;
         
-        db = new AdministradorServiceDB();
+        db = new AdministradorServiceDB(administrador);
         
         view.buscarAction((EventHandler<ActionEvent>) new buscarOperation() );
         view.productosAction((EventHandler<ActionEvent>) new admProductOperation());

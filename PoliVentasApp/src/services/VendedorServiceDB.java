@@ -7,14 +7,15 @@ import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import models.entities.Usuario;
 
 public class VendedorServiceDB extends CompradorServiceDB {
 
     CallableStatement getVentas;
 
-    public VendedorServiceDB() {
-        super();
-
+    public VendedorServiceDB(Usuario vendedor) {
+        
+        super(vendedor);
         try {
             getVentas = DBConnection.getInstance().prepareCall("CALL getVentas()");
         } catch (SQLException e) {

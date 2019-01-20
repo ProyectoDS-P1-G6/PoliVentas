@@ -7,16 +7,17 @@ import models.Articulo;
 import models.Estado;
 import models.Pedido;
 
-public class CompradoItem extends Item {
+public class PendienteItem extends Item {
 
     Label estado;
 
-    public CompradoItem(Pedido pedido){
+    public PendienteItem(Pedido pedido){
 
         super();
         Articulo articulo = pedido.getArticulo();
-        nombre.setText(articulo.getNombre());
-        vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
+        System.out.println("from item: "+articulo.getVendedor()+ "\n");
+        nombre_producto.setText(articulo.getNombre());
+        nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
         precio.setText(articulo.getPrecio().toString());
 
         estado = new Label();
@@ -34,12 +35,12 @@ public class CompradoItem extends Item {
         }
         estado.setText(e.toString());
 
-        description.getChildren().addAll(nombre,vendedor,precio, estado);
+        description.getChildren().addAll(nombre_producto,nombre_vendedor,precio, estado);
 
         content.setOnMouseClicked(event -> {
 
         });
 
-        content.getChildren().addAll(new ImageView(new Image("file:src/assets/env1.png")), description);
+        content.getChildren().addAll(new ImageView(pedido.getArticulo().getIcon()), description);
     }
 }

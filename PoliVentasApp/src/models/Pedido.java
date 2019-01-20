@@ -2,81 +2,70 @@ package models;
 
 import java.util.Date;
 import models.entities.Comprador;
+import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 
 public class Pedido {
-    private Integer id;
-    private Articulo articulo;
-    private Comprador comprador;
-    private Estado estado;
-    private Money total;
-    private Integer cantidad;
-    private Float descuento;
-    private Date fecha;
+    Integer id;
+    Articulo articulo;
+    Comprador comprador;
+    Estado estado;
+    Money total;
+    Integer cantidad;
+    Float descuento;
+    Date fecha;
     
-
-    public Pedido(Comprador comprador, Articulo articulo, Integer cantidad) {
-        this.comprador = comprador;
-        this.articulo = articulo;
-        this.cantidad = cantidad;
-        total = Money.parse("USD 0.0");
-        total = total.plus(articulo.getPrecio());
+    
+    public Pedido(PedidoBuilder builder) {
+        
+        id = builder.id;
+        articulo = builder.articulo;
+        comprador = builder.comprador;
+        estado = builder.estado;
+        total = builder.total;
+        cantidad = builder.cantidad;
+        descuento = builder.descuento;
+        fecha = builder.fecha;
+      
     }
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Comprador getComprador() {
         return comprador;
-    }
-
-    public void setComprador(Comprador comprador) {
-        this.comprador = comprador;
     }
 
     public Money getTotal() {
         return total;
     }
 
-    public void setTotal(Money total) {
-        this.total = total;
-    }
 
     public Articulo getArticulo() {
         return articulo;
-    }
-
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
     }
 
     public Estado getEstado() {
         return estado;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
 
     public Integer getCantidad() {
         return cantidad;
-    }
-
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
     }
 
     public Float getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(Float descuento) {
-        this.descuento = descuento;
+    @Override
+    public String toString() {
+        return "Pedido{" + "id=" + id + ", articulo=" + articulo + ", comprador=" + comprador + ", estado=" + estado + ", total=" + total + ", cantidad=" + cantidad + ", descuento=" + descuento + ", fecha=" + fecha + '}';
     }
+    
+    
+    
 }

@@ -22,12 +22,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Articulo;
+import models.ArticuloBuilder;
 import models.Estado;
 import models.Pedido;
 import models.entities.*;
 import org.joda.money.Money;
 import utils.Constants;
-import views.items.CompradoItem;
+import views.items.PendienteItem;
 import views.items.SearchItem;
 import views.items.UserBottomView;
 import views.items.UserItem;
@@ -218,7 +219,7 @@ public final class MenuAdministrador extends Stage {
     void addItemsCompras() {
         int j = 0;
         for (int i = 0; i < 10; i++) {
-            Articulo articulo = new Articulo();
+            Articulo articulo = new Articulo(new ArticuloBuilder());
             articulo.setNombre("Nave Espacial.");
             Vendedor x = new Vendedor(new VendedorBuilder());
             x.setNombres("Nombres");
@@ -226,28 +227,10 @@ public final class MenuAdministrador extends Stage {
             articulo.setVendedor(x);
             articulo.setPrecio(Money.of(Constants.USD, 3000000.5));
 
-            Pedido p = new Pedido(new Comprador(new CompradorBuilder()), articulo, 5);
-            switch (j) {
-                case 0:
-                    p.setEstado(Estado.ENVIADO);
-                    j++;
-                    break;
-                case 1:
-                    p.setEstado(Estado.PENDIENTE);
-                    j++;
-                    break;
-                case 2:
-                    p.setEstado(Estado.ANULADO);
-                    j++;
-                    break;
-                default:
-                    p.setEstado(Estado.ENTREGADO);
-                    j = 0;
-                    break;
-            }
+         
             comprasExitosasList.getChildren().add(new SearchItem(articulo));
-            comprasPendientesList.getChildren().add(new CompradoItem(p));
-            compraseAnuladasList.getChildren().add(new CompradoItem(p));
+            comprasPendientesList.getChildren().add(new PendienteItem(new Pedido(null)));
+            compraseAnuladasList.getChildren().add(new PendienteItem(new Pedido(null)));
         }
     }
     

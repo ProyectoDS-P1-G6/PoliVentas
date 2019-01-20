@@ -2,6 +2,7 @@ package views;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -12,11 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import utils.StageDecoratorX;
-import views.items.CompradoItem;
-import views.items.Item;
+import views.items.PendienteItem;
 import views.items.SearchItem;
-import views.popup.RealizarCompra;
+
 
 public class MenuComprador extends Stage {
 
@@ -34,7 +33,7 @@ public class MenuComprador extends Stage {
     VBox searchResultList;
 
 
-    HBox comprasPendientesList;
+    HBox pedidosList;
     VBox masBuscadosList;
 
 
@@ -51,15 +50,15 @@ public class MenuComprador extends Stage {
         logout.setLayoutX(640);
         logout.getStyleClass().add("logout_label");
 
-        comprasPendientesList = new HBox(10);
-        comprasPendientesList.getStyleClass().add("comprasPendientesList");
+        pedidosList = new HBox(10);
+        pedidosList.getStyleClass().add("comprasPendientesList");
         ScrollPane comprasPendientes = new ScrollPane();
         //comprasPendientesList.setOrientation(Orientation.HORIZONTAL);
         comprasPendientes.setPrefWidth(620);
         comprasPendientes.setPrefHeight(150);
         comprasPendientes.setLayoutX(10);
         comprasPendientes.setLayoutY(40);
-        comprasPendientes.setContent(comprasPendientesList);
+        comprasPendientes.setContent(pedidosList);
 
         Pane searchSection = new Pane();
         searchSection.setLayoutX(10);
@@ -120,27 +119,27 @@ public class MenuComprador extends Stage {
 
 
     public void addSearchResultItem(SearchItem item) {
-        item.setOnMouseClicked(new OnSearchItemSelected(item));
         this.searchResultList.getChildren().add(item);
     }
 
-    public void addComprasPendientesItem(CompradoItem item) {
-        item.setOnMouseClicked(new OnComprasPendientesSelected(item));
-        this.comprasPendientesList.getChildren().add(item);
+    public void addPedidoItem(PendienteItem item) {
+        this.pedidosList.getChildren().add(item);
     }
 
     public void addMasBuscadosItem(SearchItem item) {
-
-        item.setOnMouseClicked(new OnSearchItemSelected(item));
         this.masBuscadosList.getChildren().add(item);
     }
 
-    public void removeSearchResultItem(SearchItem item) {
-        this.searchResultList.getChildren().remove(item);
+    public void cleanSearchResultItem() {
+        this.searchResultList.getChildren().clear();
     }
+    public void cleanPedidosPendientes(){
+        this.pedidosList.getChildren().clear();
+    }
+    
 
-    public void removeComprasPendientesItem(CompradoItem item) {
-        this.comprasPendientesList.getChildren().remove(item);
+    public void removeComprasPendientesItem(PendienteItem item) {
+        this.pedidosList.getChildren().remove(item);
     }
 
     public void removeMasBuscadosItem(SearchItem item) {
@@ -150,35 +149,13 @@ public class MenuComprador extends Stage {
     public void setOnLogout(EventHandler<MouseEvent> eventHandler){
         logout.setOnMouseClicked(eventHandler);
     }
-
-    class OnSearchItemSelected implements EventHandler<MouseEvent> {
-        Item item;
-
-        public OnSearchItemSelected(Item item) {
-            this.item = item;
-        }
-
-        @Override
-        public void handle(MouseEvent event) {
-            RealizarCompra rc = new RealizarCompra(item);
-            new StageDecoratorX(rc);
-            rc.show();
-        }
+    
+    public void setOnInputChanged(ChangeListener<String> listener){
+        searchBox.textProperty().addListener(listener);
     }
-
-    class OnComprasPendientesSelected implements  EventHandler<MouseEvent>{
-
-        Item item;
-
-        public OnComprasPendientesSelected(Item item) {
-            this.item = item;
-        }
-
-        @Override
-        public void handle(MouseEvent event) {
-
-        }
+    
+    public String getTextInput(){
+        return searchBox.getText();
     }
-
 
 }

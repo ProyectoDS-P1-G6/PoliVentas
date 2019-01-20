@@ -9,6 +9,7 @@ import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import models.Articulo;
 import models.entities.AdministradorBuilder;
 import models.entities.CompradorBuilder;
 import models.entities.VendedorBuilder;
@@ -19,7 +20,7 @@ public class LoginServiceDB {
 
 
     private CallableStatement authUserMethod;
-    private CallableStatement getUser;
+    private CallableStatement getLoginUser;
     private AuthInfo actualLogin;
 
     public LoginServiceDB(){
@@ -28,7 +29,7 @@ public class LoginServiceDB {
 
         try {
             authUserMethod = DBConnection.getInstance().prepareCall("{CALL checkUserAndPass(?,?,?)}");
-            getUser        = DBConnection.getInstance().prepareCall("{CALL getUser(?)}");
+            getLoginUser        = DBConnection.getInstance().prepareCall("{CALL getUser(?)}");
         } catch (SQLException e) {
             System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
         } catch (Exception e){
@@ -45,63 +46,17 @@ public class LoginServiceDB {
             authUserMethod.setString(1, user);
             authUserMethod.setString(2, password);
             authUserMethod.execute();
+           
             
             if(authUserMethod.getInt(3)!= 0){
                 
                 info.setLoggeoExitoso(Boolean.TRUE);
-                getUser.setInt(1, authUserMethod.getInt(3));
-                getUser.execute();
-                ResultSet data = getUser.getResultSet();
-                data.next();
-                String tipo = data.getString("tipo");
-                
-                switch(tipo){
-                    case "A":
-                        Administrador administrador = new AdministradorBuilder()
-                                .setCedula(data.getInt(1))
-                                .setNombres(data.getString(2))
-                                .setApellidos(data.getString(3))
-                                .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
-                                .setDireccion(data.getString(7))
-                                .setMatricula(data.getInt(8))
-                                .setSaldo(data.getDouble(9))
-                                .build();
-                        info.setUsuario(administrador);
-                        System.out.println(administrador);
-                        break;
-                    case "C":
-                        Comprador comprador = new CompradorBuilder()
-                                .setCedula(data.getInt(1))
-                                .setNombres(data.getString(2))
-                                .setApellidos(data.getString(3))
-                                .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
-                                .setDireccion(data.getString(7))
-                                .setMatricula(data.getInt(8))
-                                .setSaldo(data.getDouble(9))
-                                .build();
-                        info.setUsuario(comprador);
-                        System.out.println(comprador);
-                        break;
-                    case "V":
-                        Vendedor vendedor = new VendedorBuilder()
-                                .setCedula(data.getInt(1))
-                                .setNombres(data.getString(2))
-                                .setApellidos(data.getString(3))
-                                .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
-                                .setDireccion(data.getString(7))
-                                .setMatricula(data.getInt(8))
-                                .setSaldo(data.getDouble(9))
-                                .build();
-                        info.setUsuario(vendedor);
-                        System.out.println(vendedor);
-                        break;
-                };
+                info.setUsuario( loadUsuario(authUserMethod.getInt(3)));
               
             }else{
                 info.setLoggeoExitoso(Boolean.FALSE);
             }
                 
-   
 
         } catch (SQLException e) {
             System.out.printf("%s  %s", e.getCause(), e.getMessage());
@@ -122,5 +77,56 @@ public class LoginServiceDB {
     void registarLoggeo(){
 
     }
+    
+    
+    
+    public Usuario loadUsuario(Integer id) throws SQLException{
+        getLoginUser.setInt(1, id);
+        getLoginUser.execute();
+        ResultSet data = getLoginUser.getResultSet();
+        data.next();
+        String tipo = data.getString("tipo");
+        
+        Usuario usuario = new Usuario();
+
+        switch(tipo){
+            case "A":
+                usuario = new AdministradorBuilder()
+                        .setCedula(data.getInt(1))
+                        .setNombres(data.getString(2))
+                        .setApellidos(data.getString(3))
+                        .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
+                        .setDireccion(data.getString(7))
+                        .setMatricula(data.getInt(8))
+                        .build();
+                System.out.println(usuario);
+                break;
+            case "C":
+                usuario = new CompradorBuilder()
+                        .setCedula(data.getInt(1))
+                        .setNombres(data.getString(2))
+                        .setApellidos(data.getString(3))
+                        .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
+                        .setDireccion(data.getString(7))
+                        .setMatricula(data.getInt(8))
+                        .build();
+                System.out.println("from login: "+usuario+ "\n");
+                break;
+            case "V":
+                usuario = new VendedorBuilder()
+                        .setCedula(data.getInt(1))
+                        .setNombres(data.getString(2))
+                        .setApellidos(data.getString(3))
+                        .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
+                        .setDireccion(data.getString(7))
+                        .setMatricula(data.getInt(8))
+                        .build();
+                System.out.println(usuario);
+                break;
+        };
+        
+        return usuario;
+    }
+    
 
 }

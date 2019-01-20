@@ -6,7 +6,9 @@
             <file>file:/Users/carlasanchez/NetBeansProjects/disenosoftware/v3/PoliVentas/PoliVentasApp/src/PoliVentas/PoliVentasApp.java</file>
         </group>
         <group>
-            <file>file:/media/miguelps/MiguelPS/T/0_DdS/proyecto2/PoliVentas/PoliVentasApp/src/PoliVentas/PoliVentasApp.java</file>
+            <file>file:/media/miguelps/MiguelPS/T/0_DdS/proyecto2/PoliVentas/PoliVentasApp/src/views/MenuComprador.java</file>
+            <file>file:/media/miguelps/MiguelPS/T/0_DdS/proyecto2/PoliVentas/PoliVentasApp/src/services/CompradorServiceDB.java</file>
+            <file>file:/media/miguelps/MiguelPS/T/0_DdS/proyecto2/PoliVentas/PoliVentasApp/src/controllers/MenuCompradorController.java</file>
         </group>
     </open-files>
 </project-private>
