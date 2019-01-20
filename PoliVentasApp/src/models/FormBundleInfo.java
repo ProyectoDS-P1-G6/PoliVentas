@@ -1,7 +1,7 @@
 package models;
 
-import javax.xml.registry.infomodel.EmailAddress;
 import java.util.Date;
+import javax.mail.internet.InternetAddress;
 
 /**
  * Guarda la informacion de registro.
@@ -10,6 +10,6 @@ public class FormBundleInfo {
     Date date;
     String nommbres;
     String  apellidos;
-    EmailAddress email;
+    InternetAddress email;
     //...
 }

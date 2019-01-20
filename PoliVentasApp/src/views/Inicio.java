@@ -24,7 +24,9 @@ import models.Articulo;
 import models.Estado;
 import models.Pedido;
 import models.entities.Comprador;
+import models.entities.CompradorBuilder;
 import models.entities.Vendedor;
+import models.entities.VendedorBuilder;
 import utils.Constants;
 import views.items.CompradoItem;
 import views.items.SearchItem;
@@ -99,13 +101,13 @@ public class Inicio extends Stage {
         for (int i = 0; i < 10; i++) {
             Articulo articulo = new Articulo();
             articulo.setNombre("Nave Espacial.");
-            Vendedor x = new Vendedor();
+            Vendedor x = new Vendedor(new VendedorBuilder());
             x.setNombres("Nombres");
             x.setApellidos("Apellidos");
             articulo.setVendedor(x);
             articulo.setPrecio(Money.of(Constants.USD, 3000000.5));
 
-            Pedido p = new Pedido(new Comprador(), articulo, 5);
+            Pedido p = new Pedido(new Comprador(new CompradorBuilder()), articulo, 5);
             switch (j) {
                 case 0:
                     p.setEstado(Estado.ENVIADO);

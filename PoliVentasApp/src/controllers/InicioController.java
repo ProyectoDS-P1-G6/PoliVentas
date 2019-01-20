@@ -1,9 +1,7 @@
 package controllers;
 
-import controllers.LoginController.LoginAction;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import models.entities.Usuario;
 import utils.StageDecoratorX;
 import views.Inicio;
@@ -23,11 +21,12 @@ public class InicioController {
 
 		@Override
 		public void handle(ActionEvent event) {
-			 System.out.println("login...");
-	         LoginView login = new LoginView();
-	         new StageDecoratorX(login);
-	         new LoginController(new Usuario(), login);
-	         login.show();
+                    System.out.println("login...");
+                    LoginView login = new LoginView();
+                    new StageDecoratorX(login);
+                    new LoginController(new Usuario(), login);
+                    inicio.close();
+                    login.show();
 			
 		}
 		
@@ -36,10 +35,11 @@ public class InicioController {
 
 		@Override
 		public void handle(ActionEvent event) {
-			System.out.println("register...");
-	        RegistroForm registro = new RegistroForm();
-	        new StageDecoratorX(registro);
-	        registro.show();
+                    System.out.println("register...");
+                    RegistroForm registro = new RegistroForm();
+                    new StageDecoratorX(registro);
+                    inicio.close();
+                    registro.show();
 			
 		}
 	}

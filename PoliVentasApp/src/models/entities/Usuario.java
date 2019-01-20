@@ -6,33 +6,41 @@
 package models.entities;
 
 
-import javax.xml.registry.JAXRException;
-import javax.xml.registry.infomodel.EmailAddress;
+import java.util.LinkedList;
 import java.util.List;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import org.joda.money.Money;
 
 /**
  *
  * @author Usuario
  */
 public class Usuario {
-    private Integer id;
-    private String nombres;
-    private String apellidos;
-    private ContactInfo contactInfo;
-    private String direccion;
-    private Integer cedula;
-    private String matricula;
+    protected Integer cedula;
+    protected String nombres;
+    protected String apellidos;
+    protected ContactInfo contactInfo;
+    protected String direccion;
+    protected Integer matricula;
+    protected Money saldo;
 
     Rol rol;
 
     private boolean isLogged;
 
+    public Usuario() {
+    }
 
-    public class ContactInfo{
-        private EmailAddress email;
-        private Integer telefono;
-        private List<Integer> telefonosEmergencia;
-        private boolean usaWhatsapp;
+    
+    public Usuario(UsuarioBuilder builder) {
+        this.cedula = builder.cedula;
+        this.nombres = builder.nombres;
+        this.apellidos = builder.apellidos;
+        this.contactInfo = builder.contactInfo;
+        this.direccion = builder.direccion;
+        this.matricula = builder.matricula;
+        this.saldo = builder.saldo;
     }
 
 
@@ -40,10 +48,21 @@ public class Usuario {
         return nombres;
     }
 
-    public void setNombres(String nombres) {
+    public Usuario setNombres(String nombres) {
         this.nombres = nombres;
+        return this;
     }
 
+    public ContactInfo getContactInfo() {
+        return contactInfo;
+    }
+
+    public void setContactInfo(ContactInfo contactInfo) {
+        this.contactInfo = contactInfo;
+    }
+
+    
+    
     public String getApellidos() {
         return apellidos;
     }
@@ -52,16 +71,6 @@ public class Usuario {
         this.apellidos = apellidos;
     }
 
-    public boolean setEmail(String email){
-        try {
-            this.contactInfo.email.setAddress(email);
-        } catch (JAXRException e) {
-            System.out.println(e.getMessage());
-            return false;
-        }
-
-        return true;
-    }
 
     public String getDireccion() {
         return direccion;
@@ -79,28 +88,12 @@ public class Usuario {
         this.cedula = cedula;
     }
 
-    public String getMatricula() {
+    public Integer getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(String matricula) {
+    public void setMatricula(Integer matricula) {
         this.matricula = matricula;
-    }
-
-    public int getTelefono() {
-        return contactInfo.telefono;
-    }
-
-    public void setTelefono(int telefono) {
-        this.contactInfo.telefono = telefono;
-    }
-
-    public boolean usaWhatsapp() {
-        return contactInfo.usaWhatsapp;
-    }
-
-    public void setUsaWhatsapp(boolean usaWhatsapp) {
-        this.contactInfo.usaWhatsapp = usaWhatsapp;
     }
 
     public boolean comprobarUsuario(Usuario usuario) {
@@ -111,7 +104,35 @@ public class Usuario {
         return rol;
     }
 
-    public Integer getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Usuario{" + "cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos + ", contactInfo=" + contactInfo + ", direccion=" + direccion + ", matricula=" + matricula + ", rol=" + rol + ", isLogged=" + isLogged + '}';
     }
+    
+     
+    
+    static public class ContactInfo{
+        InternetAddress email;
+        Integer telefono;
+        List<Integer> telefonosEmergencia;
+        boolean usaWhatsapp;
+
+        public ContactInfo(String email, Integer telefono, boolean usaWhatsapp) {
+            try {
+                this.email = new InternetAddress(email);
+                this.email.validate();
+            } catch (AddressException e) { 
+                System.out.println(e.getMessage());
+            }
+            this.telefono = telefono;
+            this.telefonosEmergencia = new LinkedList<>();
+            this.usaWhatsapp = usaWhatsapp;
+        }
+
+        @Override
+        public String toString() {
+            return "ContactInfo{" + "email=" + email + ", telefono=" + telefono + ", telefonosEmergencia=" + telefonosEmergencia + ", usaWhatsapp=" + usaWhatsapp + '}';
+        } 
+    }
+
 }

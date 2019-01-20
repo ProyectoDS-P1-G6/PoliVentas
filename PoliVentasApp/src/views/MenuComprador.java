@@ -3,7 +3,6 @@ package views;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -13,13 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import models.Articulo;
-import models.Estado;
-import models.Pedido;
-import models.entities.Comprador;
-import models.entities.Vendedor;
-import org.joda.money.Money;
-import utils.Constants;
 import utils.StageDecoratorX;
 import views.items.CompradoItem;
 import views.items.Item;
@@ -57,7 +49,7 @@ public class MenuComprador extends Stage {
         carritoButton = new JFXButton();
         logout = new Label("Log out");
         logout.setLayoutX(640);
-        logout.getStyleClass().add("logout-label");
+        logout.getStyleClass().add("logout_label");
 
         comprasPendientesList = new HBox(10);
         comprasPendientesList.getStyleClass().add("comprasPendientesList");
@@ -155,6 +147,9 @@ public class MenuComprador extends Stage {
         this.masBuscadosList.getChildren().remove(item);
     }
 
+    public void setOnLogout(EventHandler<MouseEvent> eventHandler){
+        logout.setOnMouseClicked(eventHandler);
+    }
 
     class OnSearchItemSelected implements EventHandler<MouseEvent> {
         Item item;

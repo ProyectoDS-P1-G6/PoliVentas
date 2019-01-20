@@ -5,15 +5,12 @@ package PoliVentas;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import controllers.InicioController;
-import controllers.LoginController;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import models.entities.Usuario;
 import utils.StageDecoratorX;
 import views.Inicio;
-import views.LoginView;
+
 
 /**
  *

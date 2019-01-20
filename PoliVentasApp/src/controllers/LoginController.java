@@ -52,6 +52,7 @@ public class LoginController {
                 view.setStatusMessage("** Datos incorrectos.");
                 return;
             }
+            view.close();
             switch(authInfo.getUsuario().getRol()){
 
                 case ADMIN:
@@ -71,7 +72,8 @@ public class LoginController {
                 case COMPRADOR:
                     MenuComprador menuComprador = new MenuComprador();
                     new StageDecoratorX(menuComprador);
-                    new MenuCompradorController((Comprador) authInfo.getUsuario(), menuComprador);
+                    new MenuCompradorController((Comprador) authInfo.getUsuario(), menuComprador)
+                            .setLoginController(LoginController.this);
                     menuComprador.show();
                     break;
 
@@ -90,5 +92,11 @@ public class LoginController {
             form.show();
         }
     }
+
+    public LoginView getView() {
+        return view;
+    }
+    
+    
 
 }

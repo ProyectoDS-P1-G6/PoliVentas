@@ -6,9 +6,9 @@ import java.sql.*;
 public class DBConnection {
     private static Connection connection = null;
 
-    private static final String USER = "";
-    private static final String PASS = "";
-    private static final String DATABASE_PATH = "";
+    private static final String USER = "root";
+    private static final String PASS = "controlxyz";
+    private static final String DATABASE_PATH = "jdbc:mysql://localhost:3306/POLIVENTAS?useSSL=false";
 
     static void createConnection(){
 

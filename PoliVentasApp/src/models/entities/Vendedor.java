@@ -18,7 +18,8 @@ public class Vendedor extends Usuario {
     List<Comprador> compradores;
     List<Pedido> ventas;
 
-    public Vendedor() {
+    public Vendedor(VendedorBuilder builder) {
+        super(builder);
         this.rol = Rol.VENDEDOR;
     }
 

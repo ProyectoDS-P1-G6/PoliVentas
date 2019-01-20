@@ -1,5 +1,8 @@
 package views;
 
+import models.entities.AdministradorBuilder;
+import models.entities.VendedorBuilder;
+import models.entities.CompradorBuilder;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
@@ -199,10 +202,10 @@ public final class MenuAdministrador extends Stage {
         for (int i = 0; i < 10; i++) {
             Usuario user;
             if(i%3 == 0)
-                user = new Comprador();
+                user = new Comprador(new CompradorBuilder());
             else if(i%3 == 2)
-                user = new Vendedor();
-            else user = new Administrador();
+                user = new Vendedor(new VendedorBuilder());
+            else user = new Administrador(new AdministradorBuilder());
             
             user.setNombres("Prueba ");
             user.setApellidos("Prototype Name "+String.valueOf(i));
@@ -217,13 +220,13 @@ public final class MenuAdministrador extends Stage {
         for (int i = 0; i < 10; i++) {
             Articulo articulo = new Articulo();
             articulo.setNombre("Nave Espacial.");
-            Vendedor x = new Vendedor();
+            Vendedor x = new Vendedor(new VendedorBuilder());
             x.setNombres("Nombres");
             x.setApellidos("Apellidos");
             articulo.setVendedor(x);
             articulo.setPrecio(Money.of(Constants.USD, 3000000.5));
 
-            Pedido p = new Pedido(new Comprador(), articulo, 5);
+            Pedido p = new Pedido(new Comprador(new CompradorBuilder()), articulo, 5);
             switch (j) {
                 case 0:
                     p.setEstado(Estado.ENVIADO);
