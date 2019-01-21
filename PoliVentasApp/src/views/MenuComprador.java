@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import views.containers.SearchSection;
 import views.items.PendienteItem;
 import views.items.SearchItem;
 
@@ -28,17 +29,10 @@ public class MenuComprador extends Stage {
     /**
      * Sección de busqueda.
      */
-    JFXTextField searchBox;
-    JFXButton searchButton;
-    VBox searchResultList;
-
+     SearchSection searchSection;
 
     HBox pedidosList;
     VBox masBuscadosList;
-
-
-    EventHandler<MouseEvent> onSearchItemSelected;
-    EventHandler<MouseEvent> onComprasPendientesSelected;
 
 
     public MenuComprador() {
@@ -60,32 +54,12 @@ public class MenuComprador extends Stage {
         comprasPendientes.setLayoutY(40);
         comprasPendientes.setContent(pedidosList);
 
-        Pane searchSection = new Pane();
+        searchSection = new SearchSection();
         searchSection.setLayoutX(10);
         searchSection.setLayoutY(210);
         searchSection.setPrefWidth(350);
         searchSection.setPrefHeight(400);
-        searchBox    = new JFXTextField();
-        searchBox.setPromptText("  Buscar Producto");
-        searchBox.setLayoutX(10);
-        searchBox.setLayoutY(10);
-        searchBox.setPrefWidth(200);
-        searchBox.setPrefHeight(30);
-        searchResultList = new VBox(10);
-        searchResultList.getStyleClass().add("searchResultList");
-        ScrollPane searchResult = new ScrollPane();
-        //searchResultList.setOrientation(Orientation.VERTICAL);
-        searchResult.setLayoutX(10);
-        searchResult.setLayoutY(50);
-        searchResult.setPrefWidth(350);
-        searchResult.setPrefHeight(330);
 
-        searchResult.setContent(searchResultList);
-        searchButton = new JFXButton();
-        searchButton.setLayoutX(200);
-        searchButton.setLayoutY(13);
-        searchButton.getStyleClass().add("search_button");
-        searchSection.getChildren().addAll(searchBox, searchButton, searchResult);
 
         ScrollPane masBuscados = new ScrollPane();
         masBuscadosList = new VBox(10);
@@ -118,9 +92,7 @@ public class MenuComprador extends Stage {
     }
 
 
-    public void addSearchResultItem(SearchItem item) {
-        this.searchResultList.getChildren().add(item);
-    }
+    
 
     public void addPedidoItem(PendienteItem item) {
         this.pedidosList.getChildren().add(item);
@@ -130,9 +102,7 @@ public class MenuComprador extends Stage {
         this.masBuscadosList.getChildren().add(item);
     }
 
-    public void cleanSearchResultItem() {
-        this.searchResultList.getChildren().clear();
-    }
+    
     public void cleanPedidosPendientes(){
         this.pedidosList.getChildren().clear();
     }
@@ -151,11 +121,19 @@ public class MenuComprador extends Stage {
     }
     
     public void setOnInputChanged(ChangeListener<String> listener){
-        searchBox.textProperty().addListener(listener);
+        searchSection.setOnInputChanged(listener);
     }
     
     public String getTextInput(){
-        return searchBox.getText();
+        return searchSection.getTextInput();
+    }
+    
+    public void cleanSearchResultItem() {
+        this.searchSection.cleanSearchResultItem();
+    }
+    
+    public void addSearchResultItem(SearchItem item) {
+        this.searchSection.addSearchResultItem(item);
     }
 
 }

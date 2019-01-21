@@ -15,7 +15,6 @@ public class PendienteItem extends Item {
 
         super();
         Articulo articulo = pedido.getArticulo();
-        System.out.println("from item: "+articulo.getVendedor()+ "\n");
         nombre_producto.setText(articulo.getNombre());
         nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
         precio.setText(articulo.getPrecio().toString());

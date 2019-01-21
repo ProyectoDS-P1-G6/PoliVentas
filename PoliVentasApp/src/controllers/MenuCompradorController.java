@@ -1,15 +1,14 @@
 package controllers;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import models.Articulo;
 import models.Pedido;
 import models.entities.Comprador;
@@ -38,6 +37,7 @@ public class MenuCompradorController {
         this.menuComprador.setOnInputChanged(new OnSearchInputChanged());
         
         actualizarPedidos();
+        addArticulosMasBuscados();
         
     }
     
@@ -45,13 +45,20 @@ public class MenuCompradorController {
     void actualizarPedidos(){
         List<Pedido> pedidos =  db.getPedidos(comprador);
         
-        int i = 0;
         for(Pedido p: pedidos){
-            System.out.println(i++ );
-            System.out.println(" pedido: "+p+"\n");
             PendienteItem item = new PendienteItem(p);
             item.setOnMouseClicked(new OnPedidoSelected(item));
             menuComprador.addPedidoItem(item);
+        }
+    }
+    
+    void addArticulosMasBuscados(){
+        List<Articulo> articulos = db.getArticulosMasBuscados();
+        
+        for(Articulo a: articulos){
+            SearchItem item = new SearchItem(a);
+            item.setOnMouseClicked(new OnSearchItemSelected(item));
+            menuComprador.addMasBuscadosItem(item);
         }
     }
     

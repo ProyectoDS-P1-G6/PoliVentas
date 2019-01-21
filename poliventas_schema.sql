@@ -47,6 +47,7 @@ CREATE TABLE Articulos (
 	tiempo_max_entrega INTEGER NOT NULL, # Horas
     image_path 		VARCHAR(30),
 	id_vendedor 		INTEGER,
+    numero_busquedas	INTEGER,
     
     FOREIGN KEY (id_categoria) REFERENCES Categorias(id),
 	FOREIGN KEY (id_vendedor) REFERENCES Usuario(id)

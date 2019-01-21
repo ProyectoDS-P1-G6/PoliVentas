@@ -23,9 +23,15 @@ public class ArticuloBuilder {
     Integer tiempo_max_entrega;
     Image icon;
     Vendedor vendedor;
+    Integer numero_busquedas;
 
     public ArticuloBuilder setTiempo_max_entrega(Integer tiempo_max_entrega) {
         this.tiempo_max_entrega = tiempo_max_entrega;
+        return this;
+    }
+
+    public ArticuloBuilder setNumero_busquedas(Integer numero_busquedas) {
+        this.numero_busquedas = numero_busquedas;
         return this;
     }
 

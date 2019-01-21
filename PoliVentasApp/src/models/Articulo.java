@@ -22,6 +22,7 @@ public class Articulo {
     private Integer tiempo_max_entrega;
     private Image icon;
     Vendedor vendedor;
+    Integer numero_busquedas;
 
     public Articulo(ArticuloBuilder builder) {
         this.id = builder.id;
@@ -32,8 +33,12 @@ public class Articulo {
         this.tiempo_max_entrega = builder.tiempo_max_entrega;
         this.vendedor = builder.vendedor;
         this.icon = builder.icon;
+        this.numero_busquedas = builder.numero_busquedas;
     }
 
+    public Integer getNumero_busquedas() {
+        return numero_busquedas;
+    }
     
     public Image getIcon() {
         return icon;

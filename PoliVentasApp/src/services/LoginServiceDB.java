@@ -99,7 +99,6 @@ public class LoginServiceDB {
                         .setDireccion(data.getString(7))
                         .setMatricula(data.getInt(8))
                         .build();
-                System.out.println(usuario);
                 break;
             case "C":
                 usuario = new CompradorBuilder()
@@ -110,7 +109,6 @@ public class LoginServiceDB {
                         .setDireccion(data.getString(7))
                         .setMatricula(data.getInt(8))
                         .build();
-                System.out.println("from login: "+usuario+ "\n");
                 break;
             case "V":
                 usuario = new VendedorBuilder()
@@ -121,7 +119,6 @@ public class LoginServiceDB {
                         .setDireccion(data.getString(7))
                         .setMatricula(data.getInt(8))
                         .build();
-                System.out.println(usuario);
                 break;
         };
         

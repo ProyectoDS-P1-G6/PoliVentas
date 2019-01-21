@@ -25,12 +25,12 @@ VALUES
 
 
 INSERT INTO 
-Articulos(nombre, id_categoria, descripcion, precio, tiempo_max_entrega, image_path, id_vendedor)
+Articulos(nombre, id_categoria, descripcion, precio, tiempo_max_entrega, image_path, id_vendedor, numero_busquedas)
 VALUES
-('nave espacial',1 , 'nave que vuela muy pero muy alto, cómprala', 900000.99, 100, '/nave_espacial.png', 1211111111 ),
-('Luck T-shirt',2 , 'Camiseta de la suerte, cómprala guapo', 1000.99, 1, '/luck_t-shirt.png', 1211111111 ),
-('Brasalete del futuro',3 , 'Brasalete que revela que puede revelar la fecha de WW3', 8912899.99, 50, '/brasalete.png', 1211111111 ),
-('pistola de lodo',4 , 'para ensuciar a todos tus amigos', 50.99, 100, '/adult.png', 1211111111 );
+('nave espacial',1 , 'nave que vuela muy pero muy alto, cómprala', 900000.99, 100, '/nave_espacial.png', 1211111111, 2 ),
+('Luck T-shirt',2 , 'Camiseta de la suerte, cómprala guapo', 1000.99, 1, '/luck_t-shirt.png', 1211111111, 5 ),
+('Brasalete del futuro',3 , 'Brasalete que revela que puede revelar la fecha de WW3', 8912899.99, 50, '/brasalete.png', 1211111111, 10 ),
+('pistola de lodo',4 , 'para ensuciar a todos tus amigos', 50.99, 100, '/adult.png', 1211111111, 7 );
 
 
 INSERT INTO
