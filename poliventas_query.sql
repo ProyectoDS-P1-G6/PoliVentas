@@ -77,3 +77,19 @@ CREATE PROCEDURE setSaldo(IN id_user INTEGER, IN saldo_t DOUBLE)
         SET saldo = saldo_t 
         WHERE id_usuario = id_user;
     END//
+    
+CREATE PROCEDURE getMisArticulos(IN id_vendedor INTEGER)
+	BEGIN
+		Select a.id,a.nombre,c.nombre_categoria,a.descripcion,a.precio,a.tiempo_max_entrega,a.image_path,a.id_vendedor,a.numero_busquedas
+        from Articulos a inner join Categorias c on a.id_categoria = c.id
+        where id_vendedor = a.id_vendedor;
+	END//
+    
+CREATE PROCEDURE getVentas(IN id_vendedor INTEGER)
+	BEGIN
+		SELECT p.id, a.nombre, p.cantidad, p.fecha,a.precio,a.id_vendedor,p.estado,p.id_articulo
+        FROM Pedidos p inner join Articulos a on p.id_articulo = a.id
+        where p.id_vendedor = id_vendedor;
+	END//
+
+    

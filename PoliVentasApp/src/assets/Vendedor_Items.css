@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22-ene-2019, 22:29:57
+    Author     : carlasanchez
+*/
+
+.title{
+    -fx-text-fill: #0e3a82;
+    -fx-font-size: 32;
+    -fx-text-align: center;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-content-display: center;
+
+}
+
+.button_style{
+    -fx-text-fill: white;
+    -fx-background-color : #2fcbe2;
+    -fx-border-color: #2cadc1;
+    -fx-border-radius : 15px;
+    -fx-background-radius: 15px;
+
+}
+
+.nombre_label{
+    -fx-text-fill: #0d2751;
+    -fx-font-size: 15;
+    -fx-text-align: center;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-content-display: center;
+    
+
+}
+.precio-label{
+    -fx-font-size: 10pt;
+    -fx-text-fill: #40a8b2;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+
+.estado-label{
+    -fx-font-weight: bold;
+    -fx-font-size: 8pt;
+}
+
+.text-style{
+    -fx-text-fill: #4b5059;
+    -fx-font-size: 10;
+    -fx-text-align: center;
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+    -fx-content-display: center;
+    
+
+}
+
+.content{
+    -fx-background-color: white;
+    -fx-padding: 10;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10;
+}
+
+.content:hover{
+
+}
