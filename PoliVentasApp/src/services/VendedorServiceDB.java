@@ -25,14 +25,7 @@ public class VendedorServiceDB extends CompradorServiceDB {
         try {
             getVentas = DBConnection.getInstance().prepareCall("{CALL getVentas(?)}");
             getMisArticulos = DBConnection.getInstance().prepareCall("{CALL getMisArticulos(?)}");
-            buscarArticulo  = DBConnection.getInstance().prepareCall("{CALL buscarArticulo(?)}");
-            addBusqueda     = DBConnection.getInstance().prepareCall("{CALL addBusqueda(?)}");
-            getArticulosMasBuscados = DBConnection.getInstance().prepareCall("{CALL getArticulosMasBuscados(?)}");
-            getArticulo     = DBConnection.getInstance().prepareCall("{CALL getArticulo(?)}");
-            getUsuario      = DBConnection.getInstance().prepareCall("{CALL getUser(?)}");
-            getPedidos      = DBConnection.getInstance().prepareCall("{CALL getPedidos(?)}");
-            getSaldo        = DBConnection.getInstance().prepareCall("{CALL getSaldo(?,?)}");
-            setSaldo        = DBConnection.getInstance().prepareCall("{CALL setSaldo(?,?)}");
+
         } catch (SQLException e) {
             System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
         }catch (Exception e){

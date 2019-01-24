@@ -1,13 +1,19 @@
 package controllers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import models.*;
 import models.entities.Vendedor;
 import services.VendedorServiceDB;
@@ -107,9 +113,19 @@ public class MenuVendedorController {
 
         @Override
         public void handle(MouseEvent event) {
-            RealizarCompra rc = new RealizarCompra(item);
-            new StageDecoratorX(rc);
-            rc.show();
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/RealizarCompra.fxml"));
+            Stage realizarCompra = new Stage();
+            try {
+                realizarCompra.setScene(new Scene(loader.load()));
+                 new StageDecoratorX(realizarCompra);
+                 realizarCompra.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            RealizarCompraController controller = loader.getController();
+            controller.setItem(item);
         }
     }
     

@@ -66,7 +66,7 @@ CREATE TABLE Pedidos(
     id_articulo  INTEGER,
     
     FOREIGN KEY (id_articulo) REFERENCES Articulos(id),
-	FOREIGN KEY (id_comprador) REFERENCES Usuario(id),
+	FOREIGN KEY (id_comprador) REFERENCES Usuario(id)
 );
 
 
