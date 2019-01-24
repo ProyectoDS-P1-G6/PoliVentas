@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Leche;
+package models;
 
 /**
  *
- * @author Pedro Mendoza
+ * @author Usuario
  */
-public class LecheDescremada extends Leche {
-
-   
-    public void usar() {
-        //Usando leche descremada
-    }
-    
+public enum Calificacion {
+    UNA_ESTRELLA, DOS_ESTRELLAS, TRES_ESTRELLAS, CUATRO_ESTRELLAS, CINCO_ESTRELLAS
 }

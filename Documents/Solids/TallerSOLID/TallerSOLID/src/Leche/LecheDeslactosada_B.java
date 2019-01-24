@@ -7,13 +7,14 @@ package Leche;
 
 /**
  *
- * @author Pedro Mendoza
+ * @author Usuario
  */
-public class LecheDescremada extends Leche {
+public class LecheDeslactosada_B extends Leche{
 
-   
-    public void usar() {
-        //Usando leche descremada
+    @Override
+    void usar() {
+        //usar leche deslactosada
     }
+    
     
 }
