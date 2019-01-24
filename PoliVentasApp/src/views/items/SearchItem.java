@@ -1,23 +1,50 @@
 package views.items;
 
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import models.Articulo;
 
 public class SearchItem extends Item{
 
-
+    String descripcion_t;
     public SearchItem(Articulo articulo) {
         super();
-
+        
+        descripcion_t = articulo.getDescripción();
         nombre_producto.setText(articulo.getNombre());
         nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
         precio.setText(articulo.getPrecio().toString());
+        icon = new ImageView(articulo.getIcon());
         
         Label numero_busquedas = new Label("Busquedas: "+articulo.getNumero_busquedas().toString());
         description.getChildren().addAll(nombre_producto,nombre_vendedor,precio, numero_busquedas);
 
-        content.getChildren().addAll(new ImageView(articulo.getIcon()), description);
+        content.getChildren().addAll(icon, description);
     }
+
+    public Image getIcon() {
+        return icon.getImage();
+    }
+
+    public String getNombre_producto() {
+        return nombre_producto.getText();
+    }
+
+    public String getNombre_vendedor() {
+        return nombre_vendedor.getText();
+    }
+
+    public String getPrecio() {
+        return precio.getText();
+    }
+
+    public String getDescripcion() {
+        return descripcion_t;
+    }
+    
+    
+    
+    
 }

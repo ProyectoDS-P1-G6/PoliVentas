@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package views.items;
 
 import javafx.scene.control.Label;
@@ -12,11 +7,11 @@ import models.Articulo;
 import models.Estado;
 import models.Pedido;
 
-
 public class VendidoItem extends Item{
-        Label estado;
+    
+    Label estado;
         
-public VendidoItem(Pedido pedido){
+    public VendidoItem(Pedido pedido){
 
         super();
         Articulo articulo = pedido.getArticulo();

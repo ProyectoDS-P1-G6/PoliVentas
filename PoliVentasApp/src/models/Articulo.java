@@ -51,8 +51,6 @@ public class Articulo {
     public Integer getTiempo_max_entrega() {
         return tiempo_max_entrega;
     }
-
-    
     
     public void setIcon(Image icon) {
         this.icon = icon;
