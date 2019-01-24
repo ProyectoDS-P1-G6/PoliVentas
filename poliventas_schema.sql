@@ -63,10 +63,10 @@ CREATE TABLE Pedidos(
 	fecha 		DATE NOT NULL,
 	estado 		CHAR(1) DEFAULT 'P', # E entregado; P pendiente; A anulado 
 	id_comprador INTEGER,
-    id_articulo 	INTEGER,
+    id_articulo  INTEGER,
     
     FOREIGN KEY (id_articulo) REFERENCES Articulos(id),
-	FOREIGN KEY (id_comprador) REFERENCES Usuario(id)
+	FOREIGN KEY (id_comprador) REFERENCES Usuario(id),
 );
 
 
