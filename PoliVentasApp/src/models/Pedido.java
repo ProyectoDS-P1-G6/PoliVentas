@@ -17,19 +17,47 @@ public class Pedido {
     Date fecha;
     
     
-    public Pedido(PedidoBuilder builder) {
-        
-        id = builder.id;
-        articulo = builder.articulo;
-        comprador = builder.comprador;
-        estado = builder.estado;
-        total = builder.total;
-        cantidad = builder.cantidad;
-        descuento = builder.descuento;
-        fecha = builder.fecha;
+    public Pedido() {
       
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setArticulo(Articulo articulo) {
+        this.articulo = articulo;
+    }
+
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public void setTotal(Double total) {
+        this.total = Money.of(CurrencyUnit.USD, total);
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setDescuento(Float descuento) {
+        this.descuento = descuento;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    
     public Integer getId() {
         return id;
     }
@@ -63,7 +91,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido{" + "id=" + id + ", articulo=" + articulo + ", comprador=" + comprador + ", estado=" + estado + ", total=" + total + ", cantidad=" + cantidad + ", descuento=" + descuento + ", fecha=" + fecha + '}';
+        return " articulo=" + articulo + ", comprador=" + comprador + ", estado=" + estado + ", total=" + total + ", cantidad=" + cantidad;
     }
     
     

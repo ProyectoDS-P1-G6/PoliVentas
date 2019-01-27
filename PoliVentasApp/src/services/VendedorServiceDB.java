@@ -6,11 +6,11 @@ import models.entities.Vendedor;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.entities.*;
 import models.*;
 
 
@@ -19,9 +19,8 @@ public class VendedorServiceDB extends CompradorServiceDB {
     CallableStatement getVentas;
     CallableStatement getMisArticulos;
 
-    public VendedorServiceDB(Usuario vendedor) {
+    public VendedorServiceDB() {
         
-        super(vendedor);
         try {
             getVentas = DBConnection.getInstance().prepareCall("{CALL getVentas(?)}");
             getMisArticulos = DBConnection.getInstance().prepareCall("{CALL getMisArticulos(?)}");
@@ -33,8 +32,8 @@ public class VendedorServiceDB extends CompradorServiceDB {
         }
     }
 
-    public List<Venta> getVentas(Vendedor vendedor){
-        List<Venta> ventas = new LinkedList<>();
+    public List<Pedido> getVentas(Vendedor vendedor){
+        List<Pedido> ventas = new LinkedList<>();
         try{
             getVentas.setInt(1,vendedor.getCedula());
             getVentas.execute();
@@ -42,7 +41,7 @@ public class VendedorServiceDB extends CompradorServiceDB {
             ResultSet result = getVentas.getResultSet();
             
             while(result.next()){
-            ventas.add(parseVenta(result));
+                ventas.add(parseVenta(result));
             }
         }
         catch (SQLException ex){
@@ -71,17 +70,16 @@ public class VendedorServiceDB extends CompradorServiceDB {
         return misArticulos;
     }
     
-    public Venta parseVenta(ResultSet data){
-        Venta venta = new Venta();
+    public Pedido parseVenta(ResultSet data){
+        Pedido venta = new Pedido();
         
         try {
-            venta = new Venta()
-                    .setId(data.getInt("id"))
-                    .setCantidad(data.getInt("cantidad"))
-                    .setFecha(data.getDate("fecha"))
-                    .setEstado(Estado.parseEstado(data.getString("estado")))
-                    .setVendedor((Vendedor)usuario)
-                    .setArticulo(getArticulo(data.getInt("id_articulo")));
+            venta.setId(data.getInt("id"));
+            venta.setCantidad(data.getInt("cantidad"));
+            venta.setFecha(data.getDate("fecha"));
+            venta.setTotal(Double.parseDouble(new DecimalFormat("#.00").format(data.getDouble("total"))));
+            venta.setEstado(Estado.parseEstado(data.getString("estado")));
+            venta.setArticulo(getArticulo(data.getInt("id_articulo")));
             return venta;
         } catch (SQLException ex) {
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);

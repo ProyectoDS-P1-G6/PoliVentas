@@ -6,13 +6,12 @@ import javafx.scene.image.ImageView;
 
 import models.Articulo;
 
-public class SearchItem extends Item{
+public class ArticuloItem extends Item{
 
-    String descripcion_t;
-    public SearchItem(Articulo articulo) {
+    public ArticuloItem(Articulo articulo) {
         super();
         
-        descripcion_t = articulo.getDescripción();
+
         nombre_producto.setText(articulo.getNombre());
         nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
         precio.setText(articulo.getPrecio().toString());
@@ -39,12 +38,6 @@ public class SearchItem extends Item{
     public String getPrecio() {
         return precio.getText();
     }
-
-    public String getDescripcion() {
-        return descripcion_t;
-    }
-    
-    
-    
+ 
     
 }

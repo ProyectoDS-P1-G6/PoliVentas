@@ -7,6 +7,7 @@ package models;
 
 import javafx.scene.image.Image;
 import models.entities.Vendedor;
+import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 /**
@@ -24,18 +25,23 @@ public class Articulo {
     Vendedor vendedor;
     Integer numero_busquedas;
 
-    public Articulo(ArticuloBuilder builder) {
-        this.id = builder.id;
-        this.nombre = builder.nombre;
-        this.categoria = builder.categoria;
-        this.descripción = builder.descripción;
-        this.precio = builder.precio;
-        this.tiempo_max_entrega = builder.tiempo_max_entrega;
-        this.vendedor = builder.vendedor;
-        this.icon = builder.icon;
-        this.numero_busquedas = builder.numero_busquedas;
+    public Articulo() {
+
     }
 
+    public void setDescripción(String descripción) {
+        this.descripción = descripción;
+    }
+
+    public void setTiempo_max_entrega(Integer tiempo_max_entrega) {
+        this.tiempo_max_entrega = tiempo_max_entrega;
+    }
+
+    public void setNumero_busquedas(Integer numero_busquedas) {
+        this.numero_busquedas = numero_busquedas;
+    }
+
+    
     public Integer getNumero_busquedas() {
         return numero_busquedas;
     }
@@ -52,8 +58,8 @@ public class Articulo {
         return tiempo_max_entrega;
     }
     
-    public void setIcon(Image icon) {
-        this.icon = icon;
+    public void setIcon(String icon_path) {
+        this.icon = new Image("file:static"+ icon_path);
     }
 
     public Integer getId() {
@@ -84,8 +90,8 @@ public class Articulo {
         return precio;
     }
 
-    public void setPrecio(Money precio) {
-        this.precio = precio;
+    public void setPrecio(Double precio) {
+        this.precio = Money.of(CurrencyUnit.USD, precio);
     }
 
     public Vendedor getVendedor() {
@@ -98,7 +104,7 @@ public class Articulo {
 
     @Override
     public String toString() {
-        return "Articulo{" + "id=" + id + ", nombre=" + nombre + ", categoria=" + categoria + ", descripci\u00f3n=" + descripción + ", precio=" + precio + ", tiempo_max_entrega=" + tiempo_max_entrega + ", icon=" + icon + ", vendedor=" + vendedor + '}';
+        return nombre + "  "+ categoria +"  " +precio ;
     }
     
     

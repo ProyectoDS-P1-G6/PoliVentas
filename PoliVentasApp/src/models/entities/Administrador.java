@@ -13,8 +13,8 @@ public class Administrador extends Usuario {
 
     Rol tempRol = Rol.ADMIN;
 
-    public Administrador(AdministradorBuilder builder){
-        super(builder);
+    public Administrador(){
+        super();
         this.rol = Rol.ADMIN;
     }
     

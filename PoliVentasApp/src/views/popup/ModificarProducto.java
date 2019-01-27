@@ -16,7 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Articulo;
-import views.items.ProductoItem;
+import views.items.ArticuloItem;
 
 /**
  *
@@ -42,7 +42,7 @@ public class ModificarProducto extends Stage{
     protected final Button cancelarbutton;
     protected final Button guardarbutton;
 
-    public ModificarProducto( ProductoItem item) {
+    public ModificarProducto( ArticuloItem item) {
         root = new AnchorPane();
         vBoxContainer = new VBox();
         titulo = new Label();

@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models.entities;
-
-import models.entities.Comprador;
+package utils;
 
 /**
  *
  * @author miguelps
  */
-public class CompradorBuilder extends UsuarioBuilder<CompradorBuilder>{
-
-    @Override
-    public Comprador build() {
-        return new Comprador(this);
-    }
+public interface Returnable {
+    
+    void setPreviousWindow(Returnable previous);
+    void showWindow();
     
 }

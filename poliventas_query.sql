@@ -87,7 +87,7 @@ CREATE PROCEDURE getMisArticulos(IN id_vendedor INTEGER)
     
 CREATE PROCEDURE getVentas(IN id_vendedor INTEGER)
 	BEGIN
-		SELECT p.id, a.nombre, p.cantidad, p.fecha,a.precio,p.estado,p.id_articulo
+		SELECT p.id, a.nombre, p.cantidad, p.fecha, a.precio*p.cantidad as total, p.estado, p.id_articulo
         FROM Pedidos p inner join Articulos a on p.id_articulo = a.id
         where a.id_vendedor = id_vendedor;
 	END//

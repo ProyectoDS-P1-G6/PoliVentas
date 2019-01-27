@@ -21,10 +21,8 @@ public class AdministradorServiceDB extends VendedorServiceDB{
     private CallableStatement updateArticulo;
     private CallableStatement deleteArticulo;
 
-    Usuario usuario;
 
-    public AdministradorServiceDB(Usuario usuario){
-        super(usuario);
+    public AdministradorServiceDB(){
 
         try {
             createUsuario = DBConnection.getInstance().prepareCall("CALL createUsuario(?)");
@@ -36,6 +34,7 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             readArticulos = DBConnection.getInstance().prepareCall("CALL readArticulos(?)");
             updateArticulo = DBConnection.getInstance().prepareCall("CALL updateArticulo(?)");
             deleteArticulo = DBConnection.getInstance().prepareCall("CALL deleteArticulo(?)");
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }catch (Exception e){

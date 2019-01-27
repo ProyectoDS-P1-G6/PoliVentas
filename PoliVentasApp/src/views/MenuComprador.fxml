@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="601.0" prefWidth="689.0" style="-fx-background-color: white;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuCompradorController">
+    <stylesheets>
+        <URL value="@/assets/menu_comprador.css" />
+    </stylesheets>
+   <children>
+      <ScrollPane layoutX="25.0" layoutY="54.0" prefHeight="169.0" prefWidth="650.0">
+         <content>
+            <HBox fx:id="pedidosList" alignment="CENTER" spacing="5.0">
+               <padding>
+                  <Insets top="5.0" />
+               </padding></HBox>
+         </content>
+      </ScrollPane>
+      <ScrollPane layoutX="391.0" layoutY="293.0" prefHeight="294.0" prefWidth="284.0" style="-fx-background-color: white;">
+         <content>
+            <VBox fx:id="masBuscadosList" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="25.0" layoutY="31.0" styleClass="title" text="Compas Pendientes" />
+      <Label fx:id="logout" layoutX="605.0" layoutY="23.0" onMouseClicked="#logOutAction" styleClass="logout_label" text="Log Out" />
+      <Label layoutX="391.0" layoutY="277.0" styleClass="title" text="Articulos Mas Buscados" />
+      <Label layoutX="25.0" layoutY="256.0" styleClass="title" text="Buscar Articulo" />
+      <Pane layoutX="25.0" layoutY="264.0" prefHeight="337.0" prefWidth="315.0">
+         <children>
+            <ScrollPane layoutX="10.0" layoutY="47.0" prefHeight="277.0" prefWidth="296.0">
+               <content>
+                  <VBox fx:id="searchResultList" prefHeight="200.0" prefWidth="277.0" />
+               </content>
+            </ScrollPane>
+            <JFXTextField fx:id="searchBox" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="240.0" promptText="  Buscar">
+               <contextMenu>
+                  <ContextMenu fx:id="sugerencias_busqueda">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu></JFXTextField>
+            <JFXButton fx:id="search_button" buttonType="RAISED" layoutX="192.0" layoutY="14.0" onAction="#search" ripplerFill="#4f94da" styleClass="search_button" textAlignment="CENTER" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

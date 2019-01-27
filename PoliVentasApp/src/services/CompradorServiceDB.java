@@ -6,20 +6,17 @@ import models.entities.Comprador;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.Articulo;
-import models.ArticuloBuilder;
 import models.Estado;
-import models.PedidoBuilder;
-import models.entities.AdministradorBuilder;
-import models.entities.CompradorBuilder;
+import models.entities.Administrador;
 import models.entities.Rol;
 import models.entities.Usuario;
 import models.entities.Vendedor;
-import models.entities.VendedorBuilder;
 
 public class CompradorServiceDB {
 
@@ -32,11 +29,10 @@ public class CompradorServiceDB {
     CallableStatement getSaldo;
     CallableStatement setSaldo;
     
-    Usuario usuario;
     
 
-    public CompradorServiceDB(Usuario usuario){
-        this.usuario = usuario;
+    public CompradorServiceDB(){
+        
         DBConnection.createConnection();
 
         try {
@@ -85,7 +81,6 @@ public class CompradorServiceDB {
     public Articulo getArticulo(Integer id){
         
         try {
-            
             getArticulo.setInt(1, id);
             getArticulo.execute();
             ResultSet data = getArticulo.getResultSet();
@@ -97,7 +92,7 @@ public class CompradorServiceDB {
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return new  Articulo(new ArticuloBuilder());
+        return new  Articulo();
     }
     
     
@@ -114,11 +109,6 @@ public class CompradorServiceDB {
             while (result.next()) {                
                 articulos.add(parseArticulo(result));
             }
-            
-            for(Articulo a: articulos){
-                addBusqueda.setInt(1, a.getId());
-                addBusqueda.execute();
-            }
                 
             
         } catch (SQLException ex) {
@@ -126,6 +116,17 @@ public class CompradorServiceDB {
         }
             
         return articulos;
+    }
+    
+    public void addPuntoDeBusqueda(Articulo articulo){
+        
+        try {
+            addBusqueda.setInt(1, articulo.getId());
+            addBusqueda.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
     
     
@@ -159,56 +160,42 @@ public class CompradorServiceDB {
 
         switch(rol){
             case ADMIN:
-                usuario = new AdministradorBuilder()
-                        .setCedula(data.getInt(1))
-                        .setNombres(data.getString(2))
-                        .setApellidos(data.getString(3))
-                        .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
-                        .setDireccion(data.getString(7))
-                        .setMatricula(data.getInt(8))
-                        .build();
+                usuario = new Administrador();
                 break;
                 
             case COMPRADOR:
-                usuario = new CompradorBuilder()
-                        .setCedula(data.getInt(1))
-                        .setNombres(data.getString(2))
-                        .setApellidos(data.getString(3))
-                        .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
-                        .setDireccion(data.getString(7))
-                        .setMatricula(data.getInt(8))
-                        .build();
+                usuario = new Comprador();
                 break;
                 
             case VENDEDOR:
-                usuario = new VendedorBuilder()
-                        .setCedula(data.getInt(1))
-                        .setNombres(data.getString(2))
-                        .setApellidos(data.getString(3))
-                        .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
-                        .setDireccion(data.getString(7))
-                        .setMatricula(data.getInt(8))
-                        .build();
-                break;
-                
+                usuario = new Vendedor();
+                break;  
         }
         
+        usuario.setCedula(data.getInt(1));
+        usuario.setNombres(data.getString(2));
+        usuario.setApellidos(data.getString(3));
+        usuario.setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6));
+        usuario.setDireccion(data.getString(7));
+        usuario.setMatricula(data.getInt(8));
+
         return usuario;
     }
     
     
     public Pedido parsePedido(ResultSet data){
-        Pedido pedido = new Pedido(new PedidoBuilder());
+        Pedido pedido = new Pedido();
         
         try {
-            pedido = new PedidoBuilder()
-                    .setId(data.getInt("id"))
-                    .setCantidad(data.getInt("cantidad"))
-                    .setFecha(data.getDate("fecha"))
-                    .setEstado(Estado.parseEstado(data.getString("estado")))
-                    .setComprador((Comprador)usuario)
-                    .setArticulo(getArticulo(data.getInt("id_articulo")))
-                    .build();
+            Articulo a = getArticulo(data.getInt("id_articulo"));
+            
+            pedido = new Pedido();
+            pedido.setId(data.getInt("id"));
+            pedido.setCantidad(data.getInt("cantidad"));
+            pedido.setFecha(data.getDate("fecha"));
+            pedido.setEstado(Estado.parseEstado(data.getString("estado")));
+            pedido.setComprador((Comprador)LoginServiceDB.getActualLogin().getUsuario());
+            pedido.setArticulo(a);
             return pedido;
         } catch (SQLException ex) {
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,20 +206,19 @@ public class CompradorServiceDB {
     
     
     public Articulo parseArticulo(ResultSet data){
-        Articulo articulo = new Articulo(new ArticuloBuilder());
+        Articulo articulo = new Articulo();
         try {
 
-            articulo = new ArticuloBuilder()
-                    .setId(data.getInt(1))
-                    .setNombre(data.getString(2))
-                    .setCategoria(data.getString(3))
-                    .setDescripción(data.getString(4))
-                    .setPrecio(data.getDouble(5))
-                    .setTiempo_max_entrega(data.getInt(6))
-                    .setIcon(data.getString(7))
-                    .setVendedor((Vendedor) loadUsuario(data.getInt(8), Rol.VENDEDOR))
-                    .setNumero_busquedas(data.getInt(9))
-                    .build();
+            articulo = new Articulo();
+            articulo.setId(data.getInt(1));
+            articulo.setNombre(data.getString(2));
+            articulo.setCategoria(data.getString(3));
+            articulo.setDescripción(data.getString(4));
+            articulo.setPrecio(data.getDouble(5));
+            articulo.setTiempo_max_entrega(data.getInt(6));
+            articulo.setIcon(data.getString(7));
+            articulo.setVendedor((Vendedor) loadUsuario(data.getInt(8), Rol.VENDEDOR));
+            articulo.setNumero_busquedas(data.getInt(9));
 
             return articulo;
         } catch (SQLException ex) {

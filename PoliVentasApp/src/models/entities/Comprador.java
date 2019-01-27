@@ -18,8 +18,8 @@ public class Comprador extends Usuario {
 
     List<Pedido> compras;
 
-    public Comprador(CompradorBuilder builder){
-        super(builder);
+    public Comprador(){
+        super();
         this.rol = Rol.COMPRADOR;
     }
 

@@ -9,15 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.StageDecoratorX;
@@ -34,7 +29,7 @@ public class ProductosView extends Stage {
     
     
 
-    public ProductosView(ProductoItem item) {
+    public ProductosView(ArticuloItem item) {
         
         root= new AnchorPane();
         vBoxContainer = new VBox();
@@ -121,9 +116,9 @@ public class ProductosView extends Stage {
      }
 
      class modificarProducto implements EventHandler<MouseEvent> {
-        ProductoItem item;
+        ArticuloItem item;
 
-        public modificarProducto(ProductoItem item) {
+        public modificarProducto(ArticuloItem item) {
             this.item = item;
         }
 

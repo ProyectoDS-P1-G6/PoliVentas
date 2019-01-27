@@ -11,16 +11,13 @@ import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextArea;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
-import models.entities.Vendedor;
-import views.items.Item;
-import views.items.SearchItem;
+import views.items.ArticuloItem;
 
 /**
  * FXML Controller class
@@ -51,18 +48,17 @@ public class RealizarCompraController implements Initializable {
     @FXML
     Label cantidad;
     
-    SearchItem item;
+    ArticuloItem item;
     @FXML
     JFXButton comprar;
 
     
-    public RealizarCompraController(){
-        
+    public RealizarCompraController(){  
     }
+    
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       System.out.println("............before.......");
         selectorPago = new ToggleGroup();
         pago_efectivo.setToggleGroup(selectorPago);
         pago_virtual.setToggleGroup(selectorPago);
@@ -74,11 +70,10 @@ public class RealizarCompraController implements Initializable {
         
    }
     
-    public void setItem(SearchItem item){
+    public void setItem(ArticuloItem item){
         this.item = item;
         imagen.setImage(item.getIcon());
         nombre.setText(item.getNombre_producto());
-        descripcion.setText(item.getDescripcion());
         precio.setText(item.getPrecio());
         vendedor.setText(item.getNombre_vendedor());
     }

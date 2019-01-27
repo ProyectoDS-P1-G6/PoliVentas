@@ -32,33 +32,34 @@ public class Usuario {
     public Usuario() {
     }
 
+    
 
-    public Usuario(UsuarioBuilder builder) {
-        this.cedula = builder.cedula;
-        this.nombres = builder.nombres;
-        this.apellidos = builder.apellidos;
-        this.contactInfo = builder.contactInfo;
-        this.direccion = builder.direccion;
-        this.matricula = builder.matricula;
-        this.saldo = builder.saldo;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public void setSaldo(Money saldo) {
+        this.saldo = saldo;
     }
 
 
+    public void setIsLogged(boolean isLogged) {
+        this.isLogged = isLogged;
+    }
+
+
+    
     public String getNombres() {
         return nombres;
     }
 
-    public Usuario setNombres(String nombres) {
-        this.nombres = nombres;
-        return this;
-    }
 
     public ContactInfo getContactInfo() {
         return contactInfo;
     }
 
-    public void setContactInfo(ContactInfo contactInfo) {
-        this.contactInfo = contactInfo;
+    public void setContactInfo(String email, Integer telefono, boolean usaWhatsapp) {
+        this.contactInfo = new ContactInfo(email, telefono, usaWhatsapp);
     }
 
     
@@ -106,7 +107,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "cedula=" + cedula + ", nombres=" + nombres + ", apellidos=" + apellidos + ", contactInfo=" + contactInfo + ", direccion=" + direccion + ", matricula=" + matricula + ", rol=" + rol + ", isLogged=" + isLogged + '}';
+        return nombres  + apellidos +", direccion=" + direccion + ", matricula=" + matricula;
     }
     
      

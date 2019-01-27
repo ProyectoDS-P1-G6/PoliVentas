@@ -1,36 +1,23 @@
 package views;
 
-import models.entities.AdministradorBuilder;
-import models.entities.VendedorBuilder;
-import models.entities.CompradorBuilder;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
-import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Articulo;
-import models.ArticuloBuilder;
-import models.Estado;
 import models.Pedido;
 import models.entities.*;
-import org.joda.money.Money;
-import utils.Constants;
-import views.items.PendienteItem;
-import views.items.SearchItem;
-import views.items.UserBottomView;
+import views.items.PedidoItem;
+import views.items.ArticuloItem;
 import views.items.UserItem;
 
 public final class MenuAdministrador extends Stage {
@@ -203,10 +190,10 @@ public final class MenuAdministrador extends Stage {
         for (int i = 0; i < 10; i++) {
             Usuario user;
             if(i%3 == 0)
-                user = new Comprador(new CompradorBuilder());
+                user = new Comprador();
             else if(i%3 == 2)
-                user = new Vendedor(new VendedorBuilder());
-            else user = new Administrador(new AdministradorBuilder());
+                user = new Vendedor();
+            else user = new Administrador();
             
             user.setNombres("Prueba ");
             user.setApellidos("Prototype Name "+String.valueOf(i));
@@ -219,18 +206,18 @@ public final class MenuAdministrador extends Stage {
     void addItemsCompras() {
         int j = 0;
         for (int i = 0; i < 10; i++) {
-            Articulo articulo = new Articulo(new ArticuloBuilder());
+            Articulo articulo = new Articulo();
             articulo.setNombre("Nave Espacial.");
-            Vendedor x = new Vendedor(new VendedorBuilder());
+            Vendedor x = new Vendedor();
             x.setNombres("Nombres");
             x.setApellidos("Apellidos");
             articulo.setVendedor(x);
-            articulo.setPrecio(Money.of(Constants.USD, 3000000.5));
+            articulo.setPrecio(3000000.5);
 
          
-            comprasExitosasList.getChildren().add(new SearchItem(articulo));
-            comprasPendientesList.getChildren().add(new PendienteItem(new Pedido(null)));
-            compraseAnuladasList.getChildren().add(new PendienteItem(new Pedido(null)));
+            comprasExitosasList.getChildren().add(new ArticuloItem(articulo));
+            comprasPendientesList.getChildren().add(new PedidoItem(new Pedido()));
+            compraseAnuladasList.getChildren().add(new PedidoItem(new Pedido()));
         }
     }
     
@@ -240,7 +227,6 @@ public final class MenuAdministrador extends Stage {
     
     public void productosAction(EventHandler<ActionEvent> eventHandler){
         btnProductos.setOnAction(eventHandler);
-        
     }
     public void usersAction(EventHandler<ActionEvent> eventHandler){
         btnUsuarios.setOnAction(eventHandler);

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" prefHeight="641.0" prefWidth="802.0" style="-fx-background-color: white;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MenuVendedorController">
+    <stylesheets>
+        <URL value="@/assets/menu_vendedor.css" />
+    </stylesheets>
+   <children>
+      <Label fx:id="logout" layoutX="14.0" layoutY="14.0" onMouseClicked="#logOutAction" styleClass="logout-label" text="Log Out" />
+      <JFXTabPane layoutX="14.0" layoutY="38.0" prefHeight="590.0" prefWidth="760.0">
+         <tabs>
+            <Tab text="Mis Ventas">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane layoutX="14.0" layoutY="36.0" prefHeight="515.0" prefWidth="226.0">
+                           <content>
+                              <VBox fx:id="articulosList" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane layoutX="261.0" layoutY="37.0" prefHeight="514.0" prefWidth="233.0">
+                           <content>
+                              <VBox fx:id="historialVentasList" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane layoutX="511.0" layoutY="36.0" prefHeight="512.0" prefWidth="234.0">
+                           <content>
+                              <VBox fx:id="ventasPendientesList" />
+                           </content>
+                        </ScrollPane>
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="title" text="Mis Articulos" />
+                        <Label layoutX="261.0" layoutY="14.0" styleClass="title" text="Hitorial Ventas" />
+                        <Label layoutX="511.0" layoutY="14.0" styleClass="title" text="MIs ventas pendientes" />
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="MIs Compras">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ScrollPane layoutX="14.0" layoutY="30.0" prefHeight="200.0" prefWidth="733.0">
+                           <content>
+                              <HBox fx:id="misComprasList" />
+                           </content>
+                        </ScrollPane>
+                        <Pane layoutX="14.0" layoutY="272.0" prefHeight="277.0" prefWidth="357.0">
+                            <children>
+                                <ScrollPane layoutX="14.0" layoutY="59.0" prefHeight="215.0" prefWidth="296.0">
+                                   <content>
+                                      <VBox fx:id="searchResultList" prefHeight="200.0" prefWidth="277.0" />
+                                   </content>
+                                </ScrollPane>
+                                <JFXTextField fx:id="searchBox" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="240.0" promptText="  Buscar" >
+                                    <ContextMenu fx:id="sugerencias_busqueda">
+                                      <items>
+                                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                      </items>
+                                    </ContextMenu>
+                                 </JFXTextField>
+                                <JFXButton fx:id="search_button" buttonType="RAISED" layoutX="192.0" layoutY="14.0" onAction="#search" ripplerFill="#4f94da" styleClass="search_button" textAlignment="CENTER" />
+                             </children>
+                          </Pane>
+                        <Label layoutX="14.0" layoutY="14.0" styleClass="title" text="MIs compras" />
+                        <Label layoutX="14.0" layoutY="256.0" styleClass="title" text="Buscar Articulos" />
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </children>
+</AnchorPane>

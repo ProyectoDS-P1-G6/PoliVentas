@@ -16,6 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import utils.Returnable;
 
 public class LoginView extends Stage {
 
@@ -102,4 +103,5 @@ public class LoginView extends Stage {
     public Pane getRoot(){
         return this.root;
     }
+
 }

@@ -13,8 +13,7 @@ public class AuthInfo {
     public AuthInfo() {
     }
 
-    
-    
+
     public AuthInfo(Usuario usuario, Date logginDate, Boolean loggeoExitoso, Boolean recordarLoggin) {
         this.usuario = usuario;
         this.loggeoExitoso = loggeoExitoso;

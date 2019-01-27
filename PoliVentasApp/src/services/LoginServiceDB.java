@@ -10,9 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import models.Articulo;
-import models.entities.AdministradorBuilder;
-import models.entities.CompradorBuilder;
-import models.entities.VendedorBuilder;
+import models.entities.Rol;
 import models.entities.Usuario;
 
 
@@ -21,7 +19,7 @@ public class LoginServiceDB {
 
     private CallableStatement authUserMethod;
     private CallableStatement getLoginUser;
-    private AuthInfo actualLogin;
+    private static AuthInfo actualLogin;
 
     public LoginServiceDB(){
 
@@ -29,7 +27,7 @@ public class LoginServiceDB {
 
         try {
             authUserMethod = DBConnection.getInstance().prepareCall("{CALL checkUserAndPass(?,?,?)}");
-            getLoginUser        = DBConnection.getInstance().prepareCall("{CALL getUser(?)}");
+            getLoginUser   = DBConnection.getInstance().prepareCall("{CALL getUser(?)}");
         } catch (SQLException e) {
             System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
         } catch (Exception e){
@@ -67,7 +65,7 @@ public class LoginServiceDB {
     }
     
 
-    public AuthInfo getActualLogin() {
+    public static AuthInfo getActualLogin() {
         return actualLogin;
     }
 
@@ -89,38 +87,24 @@ public class LoginServiceDB {
         
         Usuario usuario = new Usuario();
 
-        switch(tipo){
-            case "A":
-                usuario = new AdministradorBuilder()
-                        .setCedula(data.getInt(1))
-                        .setNombres(data.getString(2))
-                        .setApellidos(data.getString(3))
-                        .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
-                        .setDireccion(data.getString(7))
-                        .setMatricula(data.getInt(8))
-                        .build();
+        switch(Rol.parseRol(tipo)){
+            case ADMIN:
+                usuario = new Administrador();
                 break;
-            case "C":
-                usuario = new CompradorBuilder()
-                        .setCedula(data.getInt(1))
-                        .setNombres(data.getString(2))
-                        .setApellidos(data.getString(3))
-                        .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
-                        .setDireccion(data.getString(7))
-                        .setMatricula(data.getInt(8))
-                        .build();
+            case COMPRADOR:
+                usuario = new Comprador();
                 break;
-            case "V":
-                usuario = new VendedorBuilder()
-                        .setCedula(data.getInt(1))
-                        .setNombres(data.getString(2))
-                        .setApellidos(data.getString(3))
-                        .setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6))
-                        .setDireccion(data.getString(7))
-                        .setMatricula(data.getInt(8))
-                        .build();
+            case VENDEDOR:
+                usuario = new Vendedor();
                 break;
         };
+        
+        usuario.setCedula(data.getInt(1));
+        usuario.setNombres(data.getString(2));
+        usuario.setApellidos(data.getString(3));
+        usuario.setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6));
+        usuario.setDireccion(data.getString(7));
+        usuario.setMatricula(data.getInt(8));
         
         return usuario;
     }
