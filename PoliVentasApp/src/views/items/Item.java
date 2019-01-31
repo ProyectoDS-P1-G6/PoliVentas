@@ -1,16 +1,12 @@
 package views.items;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import models.Articulo;
 
 public class Item extends StackPane implements Cloneable{
     HBox content;
@@ -18,7 +14,6 @@ public class Item extends StackPane implements Cloneable{
     VBox description;
 
     Label nombre_producto;
-    Label nombre_vendedor;
     Label precio;
 
     public Item() {
@@ -28,10 +23,8 @@ public class Item extends StackPane implements Cloneable{
         content = new HBox(5);
 
         nombre_producto = new Label();
-        nombre_vendedor = new Label();
         precio = new Label();
         nombre_producto.getStyleClass().add("nombre-label");
-        nombre_vendedor.getStyleClass().add("vendedor-label");
         precio.getStyleClass().add("precio-label");
         setAlignment(precio, Pos.BASELINE_RIGHT);
         content.setEffect(new DropShadow(11, Color.rgb(235, 240, 255)));

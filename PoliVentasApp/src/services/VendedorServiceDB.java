@@ -77,7 +77,7 @@ public class VendedorServiceDB extends CompradorServiceDB {
             venta.setId(data.getInt("id"));
             venta.setCantidad(data.getInt("cantidad"));
             venta.setFecha(data.getDate("fecha"));
-            venta.setTotal(Double.parseDouble(new DecimalFormat("#.00").format(data.getDouble("total"))));
+            venta.setTotal(data.getDouble("total"));
             venta.setEstado(Estado.parseEstado(data.getString("estado")));
             venta.setArticulo(getArticulo(data.getInt("id_articulo")));
             return venta;

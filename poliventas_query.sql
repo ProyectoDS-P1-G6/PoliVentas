@@ -64,6 +64,7 @@ CREATE PROCEDURE getArticulosMasBuscados(IN cantidad INTEGER)
 	BEGIN
 		SELECT *
         FROM Articulos
+        WHERE numero_busquedas > 0
 		ORDER BY numero_busquedas DESC
 		LIMIT 5;
     END//

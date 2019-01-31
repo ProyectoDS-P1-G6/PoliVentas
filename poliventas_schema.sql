@@ -42,12 +42,12 @@ CREATE TABLE Articulos (
 	id 				INTEGER PRIMARY KEY AUTO_INCREMENT,
 	nombre 			VARCHAR(30) NOT NULL,
     id_categoria	INTEGER,
-	descripcion 	VARCHAR(80),
+	descripcion 	CHAR(150),
 	precio 			FLOAT4 NOT NULL,
 	tiempo_max_entrega INTEGER NOT NULL, # Horas
     image_path 		VARCHAR(30),
 	id_vendedor 		INTEGER,
-    numero_busquedas	INTEGER,
+    numero_busquedas	INTEGER DEFAULT 0,
     
     FOREIGN KEY (id_categoria) REFERENCES Categorias(id),
 	FOREIGN KEY (id_vendedor) REFERENCES Usuario(id)

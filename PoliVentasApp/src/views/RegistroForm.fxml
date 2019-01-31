@@ -2,18 +2,20 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="463.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegistroFormController">
+<AnchorPane id="AnchorPane" prefHeight="571.0" prefWidth="626.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RegistroFormController">
     <stylesheets>
         <URL value="@/assets/formregistro.css" />
     </stylesheets>
    <children>
-      <JFXButton layoutX="510.0" layoutY="423.0" text="Registrar" />
-      <JFXButton layoutX="440.0" layoutY="423.0" text="Limpiar" />
+      <JFXButton layoutX="524.0" layoutY="519.0" text="Registrar" />
+      <JFXButton layoutX="443.0" layoutY="519.0" text="Limpiar" />
       <JFXComboBox layoutX="219.0" layoutY="65.0" prefHeight="26.0" prefWidth="157.0" promptText="Tipo de usuario">
            <items>
         <FXCollections fx:factory="observableArrayList">
@@ -23,6 +25,21 @@
         </FXCollections>
     </items>
       </JFXComboBox>
-      <Label layoutX="38.0" layoutY="14.0" text="Formulario de registro." />
+      <Label layoutX="173.0" layoutY="14.0" style="-fx-font-weight: bold; -fx-font-size: 16pt;" text="Formulario de registro." />
+      <Label layoutX="45.0" layoutY="128.0" text="Nombres:" />
+      <Label layoutX="334.0" layoutY="128.0" text="Apellidos:" />
+      <Label layoutX="57.0" layoutY="186.0" text="Email:" />
+      <Label layoutX="40.0" layoutY="230.0" text="Telefono:" />
+      <Label layoutX="301.0" layoutY="238.0" text="¿Usa WhatsApp?" />
+      <Label layoutX="38.0" layoutY="322.0" text="Direccion:" />
+      <Label layoutX="313.0" layoutY="186.0" text="N° Matricula:" />
+      <JFXTextField layoutX="111.0" layoutY="123.0" />
+      <JFXTextField layoutX="399.0" layoutY="123.0" />
+      <JFXTextField layoutX="111.0" layoutY="173.0" />
+      <JFXTextField layoutX="399.0" layoutY="181.0" />
+      <JFXTextField layoutX="111.0" layoutY="225.0" />
+      <JFXRadioButton layoutX="422.0" layoutY="238.0" text="si" />
+      <JFXRadioButton layoutX="470.0" layoutY="238.0" text="no" />
+      <JFXTextField layoutX="113.0" layoutY="317.0" />
    </children>
 </AnchorPane>

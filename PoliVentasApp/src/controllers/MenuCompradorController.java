@@ -155,7 +155,8 @@ public class MenuCompradorController implements Initializable, Returnable, MakeS
         return searchBox.getText();
     }
     
-     public void cleanPedidosPendientes(){
+    @Override
+    public void cleanPedidosPendientes(){
         this.pedidosList.getChildren().clear();
     }
      

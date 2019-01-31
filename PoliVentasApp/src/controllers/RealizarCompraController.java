@@ -114,6 +114,7 @@ public class RealizarCompraController implements Initializable {
         imagen.setImage(a.getIcon());
         nombre.setText(a.getNombre());
         precio.setText(a.getPrecio().toString());
+        descripcion.setText(a.getDescripción());
         vendedor.setText(String.format("%s %s",a.getVendedor().getNombres(), a.getVendedor().getApellidos()));
     }
     

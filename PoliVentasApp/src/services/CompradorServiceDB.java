@@ -195,7 +195,6 @@ public class CompradorServiceDB {
             registrarPedido.execute();
             
         } catch (SQLException ex) {
-            System.out.println("xxxxxxxxxxxxxxxxx");
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
