@@ -1,5 +1,5 @@
-USE POLIVENTAS;
 
+USE POLIVENTAS;
 
 INSERT INTO 
 Usuario(id, nombres , apellidos, email, telefono, usa_whatsapp, direccion, matricula, tipo)
@@ -37,13 +37,7 @@ INSERT INTO
 Pedidos(cantidad ,fecha,id_comprador,id_articulo)
 VALUES
 (2, now(),1200000000, 1),
-(1, now(),1200000000, 2),
-(3, now(),1200000000, 3),
-(4, now(),1200000000, 4),
-(1, now(),1200000000, 1),
-(2, now(),1200000000, 2);
-
-
+(1, now(),1200000000, 2);
 
 INSERT INTO 
 Pedidos(cantidad, fecha, estado, id_comprador,id_articulo) 

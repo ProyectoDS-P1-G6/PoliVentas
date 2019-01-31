@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="356.0" prefWidth="486.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.popup.RealizarCompraController">
+<AnchorPane id="AnchorPane" prefHeight="356.0" prefWidth="486.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RealizarCompraController">
    <children>
       <JFXRippler layoutX="172.0" layoutY="112.0" />
       <JFXSlider fx:id="cantidad_slider" blockIncrement="1.0" layoutX="162.0" layoutY="200.0" max="20.0" prefHeight="16.0" prefWidth="166.0" showTickMarks="true" />
@@ -44,7 +44,7 @@
             <Font name="System Bold" size="13.0" />
          </font>
       </Label>
-      <JFXButton fx:id="comprar" buttonType="RAISED" layoutX="391.0" layoutY="316.0" ripplerFill="#3897f0" text="Comprar">
+      <JFXButton fx:id="comprar" buttonType="RAISED" layoutX="391.0" layoutY="316.0" ripplerFill="#3897f0" text="Comprar" onAction="#realizarCompra" >
          <font>
             <Font name="System Bold" size="13.0" />
          </font></JFXButton>

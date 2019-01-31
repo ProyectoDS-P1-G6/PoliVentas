@@ -1,7 +1,7 @@
 package models;
 
 import java.util.Date;
-import models.entities.Comprador;
+import models.entities.Usuario;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
@@ -9,7 +9,7 @@ import org.joda.money.Money;
 public class Pedido {
     Integer id;
     Articulo articulo;
-    Comprador comprador;
+    Usuario comprador;
     Estado estado;
     Money total;
     Integer cantidad;
@@ -18,7 +18,10 @@ public class Pedido {
     
     
     public Pedido() {
-      
+        this.estado = Estado.PENDIENTE;
+        this.total = Money.of(CurrencyUnit.USD,0);
+        this.cantidad = 0;
+        this.descuento = 0.0F;
     }
 
     public void setId(Integer id) {
@@ -29,7 +32,7 @@ public class Pedido {
         this.articulo = articulo;
     }
 
-    public void setComprador(Comprador comprador) {
+    public void setComprador(Usuario comprador) {
         this.comprador = comprador;
     }
 
@@ -63,7 +66,7 @@ public class Pedido {
     }
 
 
-    public Comprador getComprador() {
+    public Usuario getComprador() {
         return comprador;
     }
 

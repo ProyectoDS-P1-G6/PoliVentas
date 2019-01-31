@@ -4,30 +4,30 @@
  * and open the template in the editor.
  */
 package models.pago;
+import models.Pedido;
+import services.CompradorServiceDB;
 
 /**
  *
  * @author Usuario
  */
 public class PagoVirtual extends MetodoPago {
-    private double saldo;
 
+    
+    
+    public PagoVirtual(CompradorServiceDB db) {
+        this.db = db;
+    }
 
     @Override
-    public void pagar(double monto) {
-        saldo = saldo-monto;
+    public Boolean confirmar() {
+        return true;
     }
 
-    public void recargar(double monto){
-        saldo = saldo+monto;
+    public Boolean checkSaldo() {
+        return true;
     }
 
-    public double getSaldo() {
-        return saldo;
-    }
-
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
-    }
+    
 
 }

@@ -73,8 +73,13 @@ CREATE TABLE Pedidos(
 
 DROP VIEW IF EXISTS Ventas;
 CREATE VIEW Ventas AS
-    SELECT id, cantidad, fecha, estado, id_comprador, id_articulo
+    SELECT *
     FROM Pedidos p WHERE p.estado = "E" ;
+
+DROP VIEW IF EXISTS PedidosPendientes;
+CREATE VIEW PedidosPendientes AS
+    SELECT *
+    FROM Pedidos p WHERE p.estado = "P" ;
       
 
 

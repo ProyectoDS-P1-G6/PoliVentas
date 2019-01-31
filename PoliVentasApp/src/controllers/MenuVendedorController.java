@@ -6,6 +6,8 @@
 package controllers;
 
 import com.jfoenix.controls.JFXTextField;
+import controllers.handlers.OnPedidoSelected;
+import controllers.handlers.OnSearchInputChanged;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -29,12 +31,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.*;
 import models.entities.Vendedor;
+import services.CompradorServiceDB;
 import services.LoginServiceDB;
 import services.VendedorServiceDB;
 import utils.Returnable;
@@ -47,7 +51,7 @@ import views.popup.*;
  *
  * @author miguelps
  */
-public class MenuVendedorController implements Initializable, Returnable {
+public class MenuVendedorController implements Initializable, Returnable, MakeSearch {
 
     Returnable login;
     private VendedorServiceDB db;
@@ -82,11 +86,11 @@ public class MenuVendedorController implements Initializable, Returnable {
         
         logout.setOnMouseClicked(new LogOutAction());
         searchBox.setText("");
-        searchBox.textProperty().addListener(new OnSearchInputChanged());
+        searchBox.textProperty().addListener(new OnSearchInputChanged(this));
         
         actualizarVentas();
         addMisProductos();
-
+        actualizarPedidosPendientes();
     }
 
     @Override
@@ -116,31 +120,6 @@ public class MenuVendedorController implements Initializable, Returnable {
         
     }
     
-        
-    class OnSearchItemSelected implements EventHandler<MouseEvent> {
-        ArticuloItem item;
-
-        public OnSearchItemSelected(ArticuloItem item) {
-            this.item = item;
-        }
-
-        @Override
-        public void handle(MouseEvent event) {
-            
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/RealizarCompra.fxml"));
-            Stage realizarCompra = new Stage();
-            try {
-                realizarCompra.setScene(new Scene(loader.load()));
-                 new StageDecoratorX(realizarCompra);
-                 realizarCompra.show();
-            } catch (IOException ex) {
-                Logger.getLogger(MenuVendedorController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            RealizarCompraController controller = loader.getController();
-            controller.setItem(item);
-        }
-    }
     
     class OnMiProductoSelected implements EventHandler<MouseEvent> {
         ArticuloItem item;
@@ -157,69 +136,12 @@ public class MenuVendedorController implements Initializable, Returnable {
         }
     }
 
-    class OnPedidoSelected implements  EventHandler<MouseEvent>{
-
-        Pedido pedido;
-
-        public OnPedidoSelected(Pedido p) {
-            this.pedido = p;
-        }
-
-        @Override
-        public void handle(MouseEvent event) {
-            
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/DetallePedido.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(loader.load()));
-                loader.<DetallePedidoController>getController().setPedido(pedido);
-                new StageDecoratorX(stage); 
-                stage.showAndWait();
-                
-            } catch (IOException ex) {
-                Logger.getLogger(MenuVendedorController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-    }
     
-    class OnSearchInputChanged implements ChangeListener<String>{
-
-        @Override
-        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            
-           List<CustomMenuItem> menuItems = new LinkedList<>();
-           
-           if(getTextInput().length() < 3 || getTextInput().length() > 20){
-               sugerencias_busqueda.hide();
-               return;
-           }
-           //cleanSearchResultItem();
-           List<Articulo> articulos = db.buscarArticulo(getTextInput());
-           for(Articulo articulo: articulos){
-               CustomMenuItem sugerenciaItem = new CustomMenuItem(new Label(articulo.toString()), true);
-               sugerenciaItem.setOnAction((ActionEvent actionEvent) -> {
-                    cleanSearchResultItem();
-                    String nombre = ((Label) sugerenciaItem.getContent()).getText();
-                    searchBox.setText(articulo.getNombre());
-                    sugerencias_busqueda.hide();
-                    ArticuloItem item = new ArticuloItem(articulo);
-                    item.setOnMouseClicked(new OnSearchItemSelected(item));
-                    addSearchResultItem(item);
-                    db.addPuntoDeBusqueda(articulo);
-
-               });
-               menuItems.add(sugerenciaItem);
-           }
-            sugerencias_busqueda.show(searchBox, Side.BOTTOM, 0, 0);
-            sugerencias_busqueda.getItems().clear();
-            sugerencias_busqueda.getItems().addAll(menuItems);
-        }
-        
-    }
     
-        void actualizarPedidos(){
-        List<Pedido> pedidos =  db.getPedidos(LoginServiceDB.getActualLogin().getUsuario());
+    @Override
+    public void actualizarPedidosPendientes(){
+        cleanPedidosPendientes();
+        List<Pedido> pedidos =  db.getPedidosPendientes(LoginServiceDB.getActualLogin().getUsuario());
         
         for(Pedido p: pedidos){
             PedidoItem item = new PedidoItem(p);
@@ -271,13 +193,16 @@ public class MenuVendedorController implements Initializable, Returnable {
     
     
         
+    @Override
     public String getTextInput(){
         return searchBox.getText();
     }
+    @Override
     public void cleanSearchResultItem() {
         this.searchResultList.getChildren().clear();
     }
     
+    @Override
     public void addSearchResultItem(ArticuloItem item) {
         this.searchResultList.getChildren().add(item);
     }
@@ -294,12 +219,32 @@ public class MenuVendedorController implements Initializable, Returnable {
         this.ventasPendientesList.getChildren().clear();
     }
     
+    @Override
      public void cleanPedidosPendientes(){
         this.misComprasList.getChildren().clear();
     }
      
-     public void addPedidoItem(PedidoItem item) {
+    public void addPedidoItem(PedidoItem item) {
         this.misComprasList.getChildren().add(item);
+    }
+     
+    @Override
+    public ContextMenu getSugerencias_busqueda() {
+        return sugerencias_busqueda;
+    }
+
+    @Override
+    public TextField getSearchBox() {
+        return searchBox;
+    }
+
+    @Override
+    public CompradorServiceDB getDB() {
+        return this.db;
+    }
+
+    @Override
+    public void addArticulosMasBuscados() {
     }
     
 }

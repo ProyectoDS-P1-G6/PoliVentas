@@ -5,15 +5,23 @@
  */
 package models.pago;
 
+import models.Pedido;
+import services.CompradorServiceDB;
+
 /**
  *
  * @author Usuario
  */
 public class PagoEfectivo extends MetodoPago{
+   
+
+    public PagoEfectivo(CompradorServiceDB db) {
+        this.db = db;
+    }
 
     @Override
-    public void pagar(double monto) {
-        //Codigo para pago en efectivo
+    public Boolean confirmar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

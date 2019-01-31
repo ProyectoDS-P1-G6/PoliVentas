@@ -5,10 +5,19 @@
  */
 package models.pago;
 
+import models.Pedido;
+import services.CompradorServiceDB;
+
 /**
  *
  * @author Usuario
  */
 public abstract class MetodoPago{
-    abstract public void pagar(double monto);
+    CompradorServiceDB db;
+    
+    public void transferir(Pedido pedido) {
+        db.registrarPedido(pedido);
+    }
+    
+    public abstract Boolean confirmar();
 }
