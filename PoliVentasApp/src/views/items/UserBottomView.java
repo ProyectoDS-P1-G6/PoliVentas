@@ -42,15 +42,17 @@ public class UserBottomView extends StackPane{
         informacion.setPrefSize(400, 90);
         
         opciones.setAlignment(Pos.CENTER);
-        opciones.setPrefWidth(80);
+        opciones.setPrefWidth(100);
         
         
-        cuerpo.setPrefSize(500, 100);
+        cuerpo.setPrefSize(600, 100);
         cuerpo.setAlignment(Pos.CENTER);
+        cuerpo.getStyleClass().add("colorpanelicon");
         getChildren().add(cuerpo);
       
         
     }
+    
                     
 //    public void createButtonUser(Usuario user){
 //        nombre.setText(user.getNombres()+" "+user.getApellidos());

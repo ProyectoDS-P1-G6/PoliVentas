@@ -101,6 +101,10 @@ public class Usuario {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
     public Rol getRol() {
         return rol;
     }
@@ -129,6 +133,23 @@ public class Usuario {
             this.telefonosEmergencia = new LinkedList<>();
             this.usaWhatsapp = usaWhatsapp;
         }
+
+        public String getEmail() {
+            return email.getAddress();
+        }
+
+        public Integer getTelefono() {
+            return telefono;
+        }
+
+        public List<Integer> getTelefonosEmergencia() {
+            return telefonosEmergencia;
+        }
+
+        public boolean isUsaWhatsapp() {
+            return usaWhatsapp;
+        }
+        
 
         @Override
         public String toString() {

@@ -1,5 +1,5 @@
 .vbox {
-    -fx-background-color: #027B96  ;
+    -fx-background-color: #00395A  ;
 /*    -fx-relleno: 15;
     -espacio-fx: 10;*/
 }
@@ -18,4 +18,26 @@
 /*    -fx-relleno: 15;
     -espacio-fx: 10;*/
 }
+.colorlabel{
+    -fx-text-fill: white;
+}
+.colorpanelicon{
+    -fx-background-color: #D7DBDD
+}
 
+.jfx-tab-pane .headers-region {
+    -fx-background-color: #A9CCE3;
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #A9CCE3;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-stroke: #154360;
+    -fx-stroke-width: 3pt;
+}
+.jfx-tab-pane .tab:selected .tab-label{
+    -fx-background-color: #2980B9;
+}
+.linecolor{
+    -fx-stroke: white;
+}

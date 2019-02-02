@@ -14,4 +14,15 @@ public enum  Rol {
         }
         return COMPRADOR;
     }
+    public static String inParseRol(Rol rol){
+        switch(rol){
+            case ADMIN:
+                return "A";
+            case COMPRADOR:
+                return "C";
+            case VENDEDOR:
+                return "V";
+        }
+        return "C";
+    }
 }

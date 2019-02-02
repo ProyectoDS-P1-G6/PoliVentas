@@ -1,14 +1,13 @@
 package services;
 
 import java.sql.*;
-import java.util.logging.Logger;
 
 
 public class DBConnection {
     private static Connection connection = null;
-    private static final String USER = "root";
-    private static final String PASS = "controlxyz";
-    private static final String DATABASE_PATH = "jdbc:mysql://localhost:3306/POLIVENTAS?useSSL=false";
+    private static final String USER = "neythan";
+    private static final String PASS = "root";
+    private static final String DATABASE_PATH = "jdbc:mysql://localhost:3306/poliventas?serverTimezone=UTC";
 
     static void createConnection(){
 

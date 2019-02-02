@@ -10,17 +10,13 @@ import models.Pedido;
 public class PedidoItem extends Item {
 
     Label estado;
-    Label nombre_comprador;
-    private Pedido pedido;
 
     public PedidoItem(Pedido pedido){
 
         super();
-        this.pedido = pedido;
         Articulo articulo = pedido.getArticulo();
         nombre_producto.setText(articulo.getNombre());
-        nombre_comprador = new Label();
-        nombre_comprador.setText(pedido.getComprador().getNombres() +" "+ pedido.getComprador().getApellidos());
+        nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
         precio.setText(articulo.getPrecio().toString());
 
         estado = new Label();
@@ -38,16 +34,10 @@ public class PedidoItem extends Item {
         }
         estado.setText(e.toString());
 
-        description.getChildren().addAll(nombre_producto,nombre_comprador,precio, estado);
+        description.getChildren().addAll(nombre_producto,nombre_vendedor,precio, estado);
         icon = new ImageView(pedido.getArticulo().getIcon());
-        icon.setFitWidth(60);
-        icon.setFitHeight(60);
         
         content.getChildren().addAll(icon, description);
-    }
-    
-    public Pedido getPedido(){
-    return this.pedido;
     }
     
 }

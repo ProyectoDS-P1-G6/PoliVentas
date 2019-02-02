@@ -2,42 +2,59 @@ package views;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-import models.Articulo;
-import models.Pedido;
-import models.entities.*;
 import views.items.PedidoItem;
-import views.items.ArticuloItem;
 import views.items.UserItem;
 
 public final class MenuAdministrador extends Stage {
 
     BorderPane root;
-    VBox menuLateral;
     public Pane viewSubMenu;
-    public Pane viewAdmUser;
-    public Pane viewBusqueda;
-    public Pane viewAdmProduct;
-    public Pane viewAdmCompra;
     
+    //componentes menuBusqueda
+    public Label tituloBusqueda;
+    public VBox viewBusqueda;
+    public JFXTextField barraBusqueda;
+    public JFXButton btnSearch;
+    public VBox contenedorBusquedas;
+    
+    public Pane viewAdmProduct;
+    
+    //componentes del menu lateral
+    AnchorPane anchorMenuLateral;
+    AnchorPane menuLateral, anchorMenuIcon;
+    Line lineuser;
+    public Label lUserAdminName;
+    public ImageView iconUserAdmin;
     public JFXButton btnUsuarios;
     public JFXButton btnBusqueda;
     public JFXButton btnProductos;
     public JFXButton btnComprar;
-    
+    //end menu lateral
+
+    public Pane viewAdmUser;    
     public ScrollPane scrollpaneListUser;
     public VBox paneVerticalListUser;
+    public JFXButton btnCreateUser;
     
+    public Pane viewAdmCompra;
     public JFXTabPane tapPaneCompras;
     public Tab tapPendientes;
     public VBox comprasPendientesList;
@@ -55,7 +72,7 @@ public final class MenuAdministrador extends Stage {
         super();
         
         root = new BorderPane();
-        root.setPrefWidth(700);
+        root.setPrefWidth(800);
         root.setPrefHeight(600);
         
         
@@ -65,74 +82,134 @@ public final class MenuAdministrador extends Stage {
         chargeMenuProduc();
         chargeMenuCompra();
 
-        asigComponents();
+        asigCharacterComponents();
+        
         root.setLeft(menuLateral);
         root.setCenter(viewSubMenu);
-        //root.getChildren().addAll(menuLateral,viewSubMenu);
         setScene(new Scene(root));
         getScene().getStylesheets().add("assets/menuAdmin.css");
 
-        //addItems();
     }
     public void initComponents(){
-        
-        menuLateral = new VBox();
+        anchorMenuLateral= new AnchorPane();
+        anchorMenuIcon = new AnchorPane();
+        menuLateral = new AnchorPane();
         viewSubMenu = new AnchorPane();
         
 
         
-        viewBusqueda = new Pane();
+        viewBusqueda = new VBox(15);
         viewAdmProduct = new Pane();
         
         scrollpaneListUser = new ScrollPane();
         paneVerticalListUser = new VBox(10);
         
+        iconUserAdmin = new ImageView(new Image("file:src/assets/iconUser.png"));
+        iconUserAdmin.setFitWidth(40); iconUserAdmin.setFitHeight(40);
+        lUserAdminName =  new Label("User Admin");
+        iconUserAdmin.getStyleClass().add("colorLabel");
+        lineuser = new Line();
+        
         btnUsuarios = new JFXButton("Usuarios");
+        btnUsuarios.getStyleClass().add("colorlabel");
         btnBusqueda = new JFXButton("Buscar");
+        btnBusqueda.getStyleClass().add("colorlabel");
         btnProductos = new JFXButton("Productos");
+        btnProductos.getStyleClass().add("colorlabel");
         btnComprar =  new JFXButton("Compras");
+        btnComprar.getStyleClass().add("colorlabel");
         
         
         
         
     }
-    public void asigComponents(){
-        menuLateral.getChildren().addAll(btnBusqueda,btnUsuarios,btnProductos,btnComprar);
-        menuLateral.setAlignment(Pos.TOP_CENTER);
-        menuLateral.setPrefWidth(150);
+    public void asigCharacterComponents(){
+       
+        
+        anchorMenuIcon.setPrefWidth(50);
+        anchorMenuIcon.setPrefHeight(root.getPrefHeight());
+        anchorMenuIcon.setLayoutX(0);
+        anchorMenuIcon.setLayoutY(0);
+        anchorMenuIcon.getStyleClass().add("colorpanelicon");
+        
+        ImageView iconLupa = new ImageView(new Image("file:src/assets/search.png"));
+        iconLupa.setLayoutX(8); iconLupa.setLayoutY(100);
+        ImageView iconProductos = new ImageView(new Image("file:src/assets/miniProduc.png"));
+        iconProductos.setLayoutX(10); iconProductos.setLayoutY(iconLupa.getLayoutY()+41);
+        ImageView iconUsuario = new ImageView(new Image("file:src/assets/miniuser.png"));
+        iconUsuario.setLayoutX(15); iconUsuario.setLayoutY(iconProductos.getLayoutY()+41);
+        ImageView iconCompras = new ImageView(new Image("file:src/assets/minicompras.png"));
+        iconCompras.setLayoutX(12); iconCompras.setLayoutY(iconUsuario.getLayoutY()+41);
+        
+        anchorMenuIcon.getChildren().addAll(iconLupa,iconProductos,iconUsuario,iconCompras);
+        
+        iconUserAdmin.setLayoutX(60);
+        iconUserAdmin.setLayoutY(10);
+        lUserAdminName.setLayoutX(60);
+        lUserAdminName.getStyleClass().add("colorlabel");
+        lUserAdminName.setLayoutY(70);
+        lineuser.setStartX(60);lineuser.setEndX(240);
+        lineuser.setLayoutY(lUserAdminName.getLayoutY()+20);
+        lineuser.getStyleClass().add("linecolor");
+        
+        menuLateral.getChildren().addAll(anchorMenuIcon,iconUserAdmin,lUserAdminName,lineuser,btnBusqueda,btnUsuarios,btnProductos,btnComprar);
+        //menuLateral.setAlignment(Pos.TOP_CENTER);
+        menuLateral.setPrefWidth(250);
         menuLateral.setPrefHeight(root.getPrefHeight());
         menuLateral.getStyleClass().add("vbox");
         
         btnBusqueda.setMinWidth(menuLateral.getPrefWidth());
+        btnBusqueda.setLayoutY(100);
         btnProductos.setMinWidth(menuLateral.getPrefWidth());
+        btnProductos.setLayoutY(btnBusqueda.getLayoutY()+40);
         btnUsuarios.setMinWidth(menuLateral.getPrefWidth());
+        btnUsuarios.setLayoutY(btnProductos.getLayoutY()+40);
         btnComprar.setMinWidth(menuLateral.getPrefWidth());
+        btnComprar.setLayoutY(btnUsuarios.getLayoutY()+40);
         
-        viewSubMenu.getChildren().addAll(viewAdmUser,viewBusqueda,viewAdmProduct,viewAdmCompra);
+        viewSubMenu.getChildren().addAll(viewAdmUser,viewAdmProduct,viewAdmCompra,viewBusqueda);
         
     }
     public void chargeMenuAdminUser(){
-        viewAdmUser = new Pane();
+        viewAdmUser = new HBox();
         
         double altoPane = root.getPrefHeight(); 
-        double anchoPane=700-menuLateral.getPrefWidth();
+        double anchoPane=800-menuLateral.getPrefWidth();
         viewAdmUser.getStyleClass().add("amduser");
         viewAdmUser.setPrefSize(anchoPane,altoPane);
         scrollpaneListUser.setContent(paneVerticalListUser);
-        scrollpaneListUser.setPrefSize(anchoPane, altoPane);
-        viewAdmUser.getChildren().add(scrollpaneListUser);
-        addItems();
+        scrollpaneListUser.setPrefSize(anchoPane-200, altoPane);
         
+        btnCreateUser = new JFXButton("Nuevo\nUsuario");
+       
+        
+        viewAdmUser.getChildren().addAll(scrollpaneListUser,btnCreateUser);
+                
     }
     public void chargeMenuBuscar(){
         double altoPane = root.getPrefHeight(); 
-        double anchoPane=700-menuLateral.getPrefWidth(); 
+        double anchoPane=800-menuLateral.getPrefWidth(); 
         viewBusqueda.getStyleClass().add("amdbusqueda");
         viewBusqueda.setPrefSize(anchoPane,altoPane);
+        
+        tituloBusqueda = new Label("Busqueda de Articulos");
+        barraBusqueda = new JFXTextField();
+        barraBusqueda.setPrefWidth(300);
+        
+        btnSearch = new JFXButton();
+        
+        contenedorBusquedas = new VBox(15);
+        contenedorBusquedas.setPrefWidth(400);
+        contenedorBusquedas.setPrefHeight(400);
+        //contenedorBusquedas.setPrefSize(anchoPane-300, altoPane-100);
+        contenedorBusquedas.getStyleClass().add("colorpanelicon");
+        
+        viewBusqueda.getChildren().addAll(tituloBusqueda,barraBusqueda,contenedorBusquedas);
+        
     }
     public void chargeMenuProduc(){
         double altoPane = root.getPrefHeight(); 
-        double anchoPane=700-menuLateral.getPrefWidth(); 
+        double anchoPane=800-menuLateral.getPrefWidth(); 
         viewAdmProduct.getStyleClass().add("amdproduct");
         viewAdmProduct.setPrefSize(anchoPane,altoPane);
     }
@@ -146,26 +223,48 @@ public final class MenuAdministrador extends Stage {
         ScrollPane scrollAnuladas = new ScrollPane(compraseAnuladasList);
         ScrollPane scrollExitosas = new ScrollPane(comprasExitosasList);
         ScrollPane scrollPendientes = new ScrollPane(comprasPendientesList);
+
         tapPaneCompras = new JFXTabPane();
+        tapPaneCompras.getStyleClass().add("jfx-tab-pane");
+        
+        
         tapAnuladas = new Tab("Anuladas");
+        tapAnuladas.getStyleClass().add("jfx-tab-pane");
         tapExitosas = new Tab("Exitosas");
+        tapExitosas.getStyleClass().add("jfx-tab-pane");
         tapPendientes = new Tab("Pendientes");
+        tapPendientes.getStyleClass().add("jfx-tab-pane");
         
         tapAnuladas.setContent(scrollAnuladas);
         tapExitosas.setContent(scrollExitosas);
         tapPendientes.setContent(scrollPendientes);
         
         double altoPane = root.getPrefHeight(); 
-        double anchoPane=700-menuLateral.getPrefWidth(); 
+        double anchoPane=800-menuLateral.getPrefWidth(); 
         viewAdmCompra.setPrefSize(anchoPane, altoPane);
         tapPaneCompras.setPrefSize(anchoPane, altoPane);
         scrollAnuladas.setPrefSize(anchoPane, altoPane);
         scrollExitosas.setPrefSize(anchoPane, altoPane);
         scrollPendientes.setPrefSize(anchoPane, altoPane);
         tapPaneCompras.getTabs().addAll(tapPendientes,tapAnuladas,tapExitosas);
-        
         viewAdmCompra.getChildren().add(tapPaneCompras);
-        addItemsCompras();
+    }
+    
+    
+    public void AsignarDatosAdministardor(String dato){
+        this.lUserAdminName.setText(dato);
+    }
+    public void chargerUsuarios(UserItem userView){
+        this.paneVerticalListUser.getChildren().add(userView);
+    }
+    public void chargerPedidosPendientes(PedidoItem item){
+        this.comprasPendientesList.getChildren().add(item);
+    }
+    public void chargerPedidosExitosos(PedidoItem item){
+        this.comprasExitosasList.getChildren().add(item);
+    }
+    public void chargerPedidosAnulados(PedidoItem item){
+        this.compraseAnuladasList.getChildren().add(item);
     }
     public void changeViewAdmin(String nameButton){
         switch(nameButton){
@@ -184,41 +283,10 @@ public final class MenuAdministrador extends Stage {
 
         }
     }
+ 
 
-    void addItems() {
-        int j = 0;
-        for (int i = 0; i < 10; i++) {
-            Usuario user;
-            if(i%3 == 0)
-                user = new Comprador();
-            else if(i%3 == 2)
-                user = new Vendedor();
-            else user = new Administrador();
-            
-            user.setNombres("Prueba ");
-            user.setApellidos("Prototype Name "+String.valueOf(i));
-            
-            paneVerticalListUser.getChildren().add(new UserItem(user));
-
-
-        }
-    }
-    void addItemsCompras() {
-        int j = 0;
-        for (int i = 0; i < 10; i++) {
-            Articulo articulo = new Articulo();
-            articulo.setNombre("Nave Espacial.");
-            Vendedor x = new Vendedor();
-            x.setNombres("Nombres");
-            x.setApellidos("Apellidos");
-            articulo.setVendedor(x);
-            articulo.setPrecio(3000000.5);
-
-         
-            comprasExitosasList.getChildren().add(new ArticuloItem(articulo));
-            comprasPendientesList.getChildren().add(new PedidoItem(new Pedido()));
-            compraseAnuladasList.getChildren().add(new PedidoItem(new Pedido()));
-        }
+     public void createButtonUserAction(EventHandler<MouseEvent> eventHandler){
+        btnCreateUser.setOnMouseClicked(eventHandler);
     }
     
     public void buscarAction(EventHandler<ActionEvent> eventHandler){
@@ -227,6 +295,7 @@ public final class MenuAdministrador extends Stage {
     
     public void productosAction(EventHandler<ActionEvent> eventHandler){
         btnProductos.setOnAction(eventHandler);
+        
     }
     public void usersAction(EventHandler<ActionEvent> eventHandler){
         btnUsuarios.setOnAction(eventHandler);
