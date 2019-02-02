@@ -11,10 +11,12 @@ public class PedidoItem extends Item {
 
     Label estado;
     Label nombre_comprador;
+    private Pedido pedido;
 
     public PedidoItem(Pedido pedido){
 
         super();
+        this.pedido = pedido;
         Articulo articulo = pedido.getArticulo();
         nombre_producto.setText(articulo.getNombre());
         nombre_comprador = new Label();
@@ -42,6 +44,10 @@ public class PedidoItem extends Item {
         icon.setFitHeight(60);
         
         content.getChildren().addAll(icon, description);
+    }
+    
+    public Pedido getPedido(){
+    return this.pedido;
     }
     
 }

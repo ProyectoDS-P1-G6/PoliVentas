@@ -13,23 +13,18 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -44,7 +39,6 @@ import services.VendedorServiceDB;
 import utils.Returnable;
 import utils.StageDecoratorX;
 import views.items.*;
-import views.popup.*;
 
 /**
  * FXML Controller class
@@ -58,6 +52,9 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     
     @FXML
     private Label logout;
+    
+    @FXML
+    private Label agregarProducto;
 
     @FXML
     private HBox misComprasList;
@@ -77,20 +74,23 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     @FXML
     private VBox searchResultList;
 
-    
+    private Vendedor vendedor;
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         db = new VendedorServiceDB();
-        
+        vendedor = (Vendedor)LoginServiceDB.getActualLogin().getUsuario();
         logout.setOnMouseClicked(new LogOutAction());
+        agregarProducto.setOnMouseClicked(new agregarProductoAction());
         searchBox.setText("");
         searchBox.textProperty().addListener(new OnSearchInputChanged(this));
         
         actualizarVentas();
         addMisProductos();
         actualizarPedidosPendientes();
+        actualizarVentasPendientes();
     }
 
     @Override
@@ -130,9 +130,19 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
 
         @Override
         public void handle(MouseEvent event) {
-            ProductosView pv = new ProductosView(item);
-            new StageDecoratorX(pv);
-            pv.show();         
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/DetallesProducto.fxml"));
+            Stage detalles = new Stage();
+            try {
+                detalles.setScene(new Scene(loader.load()));
+                new StageDecoratorX(detalles);
+                detalles.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            DetallesProductoController controller = loader.getController();
+            controller.setArticulo(item.getArticulo(),db);   
+            cleanProductoItem();
+            addMisProductos();
         }
     }
 
@@ -156,9 +166,20 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
         List<Pedido> ventas = db.getVentas((Vendedor)LoginServiceDB.getActualLogin().getUsuario());
 
         for (Pedido p : ventas) {
-            PedidoItem item = new PedidoItem(p);
-            item.setOnMouseClicked(new OnPedidoSelected(p));
-            addVentaPendienteItem(item);
+           PedidoItem item = new PedidoItem(p);
+           item.setOnMouseClicked(new OnVentaSelected(item));
+           addVentaItem(item);
+        }
+        
+    }
+    
+    private void actualizarVentasPendientes() {
+        List<Pedido> ventas = db.getVentasPendientes((Vendedor)LoginServiceDB.getActualLogin().getUsuario());
+
+        for (Pedido p : ventas) {
+           PedidoItem item = new PedidoItem(p);
+           item.setOnMouseClicked(new OnVentaSelected(item));
+           addVentaPendienteItem(item);
         }
         
     }
@@ -192,7 +213,56 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     }
     
     
-        
+    class agregarProductoAction implements EventHandler<MouseEvent> {
+
+        @Override
+        public void handle(MouseEvent event) {
+            System.out.println("agregar");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/AgregarProducto.fxml"));
+            Stage agregar = new Stage();
+            try {
+                agregar.setScene(new Scene(loader.load()));
+                new StageDecoratorX(agregar);
+                agregar.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            AgregarProductoController controller = loader.getController();
+            controller.setVendedorCon(db,(Vendedor)LoginServiceDB.getActualLogin().getUsuario());
+            cleanProductoItem();
+            addMisProductos();
+        }
+    }
+    
+    class OnVentaSelected implements EventHandler<MouseEvent> {
+
+        PedidoItem item;
+
+        public OnVentaSelected(PedidoItem item) {
+            this.item = item;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/DetallesVenta.fxml"));
+            Stage ventaDetalles = new Stage();
+            try {
+                ventaDetalles.setScene(new Scene(loader.load()));
+                new StageDecoratorX(ventaDetalles);
+                ventaDetalles.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            DetallesVentaController controller = loader.getController();
+            controller.setVenta(item.getPedido(),db);
+            cleanVentas();
+            actualizarVentas(); 
+        }
+    }
+    
+    
+    
     @Override
     public String getTextInput(){
         return searchBox.getText();
@@ -210,13 +280,23 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     public void addVentaPendienteItem(PedidoItem item) {
         this.ventasPendientesList.getChildren().add(item);
     }
+    public void addVentaItem(PedidoItem item) {
+        this.historialVentasList.getChildren().add(item);
+    }
     
     public void addProductoItem(ArticuloItem item) {
         this.articulosList.getChildren().add(item);
     }
     
+    public void cleanProductoItem() {
+        this.articulosList.getChildren().clear();
+    }
+    
     public void cleanVentasPendientes(){
         this.ventasPendientesList.getChildren().clear();
+    }
+    public void cleanVentas(){
+        this.historialVentasList.getChildren().clear();
     }
     
     @Override

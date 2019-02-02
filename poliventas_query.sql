@@ -1,4 +1,3 @@
-
 USE POLIVENTAS;
 DROP PROCEDURE IF EXISTS checkUserAndPass;
 DROP PROCEDURE IF EXISTS getUser;
@@ -116,12 +115,17 @@ CREATE PROCEDURE getMisArticulos(IN id_vendedor INTEGER)
 
 CREATE PROCEDURE getVentas(IN id_vendedor INTEGER)
 	BEGIN
-		SELECT p.id, a.nombre, p.cantidad, p.fecha, a.precio*p.cantidad as total, p.estado, p.id_articulo
+		SELECT p.id, a.nombre, p.cantidad, p.fecha, a.precio*p.cantidad as total, p.estado, p.id_articulo, p.id_comprador
         FROM Pedidos p inner join Articulos a on p.id_articulo = a.id
         where a.id_vendedor = id_vendedor;
 	END//
 
-
+CREATE PROCEDURE getVentasPendientes(IN id_vendedor INTEGER)
+	BEGIN
+		SELECT p.id, a.nombre, p.cantidad, p.fecha, a.precio*p.cantidad as total, p.estado, p.id_articulo, p.id_comprador
+        FROM Pedidos p inner join Articulos a on p.id_articulo = a.id
+        where a.id_vendedor = id_vendedor and p.estado = 'P';
+	END//
 
 CREATE PROCEDURE registrarPedido(IN cantidad_t INTEGER, IN fecha_t DATE, IN id_comprador_t INTEGER, IN id_articulo_t INTEGER )
 	BEGIN
@@ -129,4 +133,37 @@ CREATE PROCEDURE registrarPedido(IN cantidad_t INTEGER, IN fecha_t DATE, IN id_c
         VALUES (cantidad_t, fecha_t, id_comprador_t, id_articulo_t) ;
     END//
 
+
     
+CREATE PROCEDURE agregarProducto (IN nom VARCHAR(30), IN cat VARCHAR(10),IN des VARCHAR(80), IN prec DOUBLE, IN tiempo INTEGER, IN id INTEGER)
+BEGIN
+		INSERT INTO
+		Articulos(nombre, id_categoria, descripcion, precio, tiempo_max_entrega, id_vendedor)
+        VALUES
+        (nom,cat,des,prec,tiempo,id);
+	END//
+    
+CREATE PROCEDURE anularVenta(IN id_pedido INTEGER)
+BEGIN
+		UPDATE Pedidos
+			SET
+				estado = 'A' WHERE  id = id_pedido;
+	END//
+    
+CREATE PROCEDURE modificarProducto(IN id_art INTEGER,IN nom VARCHAR(30), IN cat varchar(10),IN des VARCHAR(80), IN prec DOUBLE, IN tiempo INTEGER)
+BEGIN
+    UPDATE Articulos a inner join Categorias c on a.id_categoria = c.id
+    SET 
+		a.nombre= nom,
+        c.nombre_categoria = cat,
+        a.descripcion= des,
+        a.precio= prec,
+        a.tiempo_max_entrega=tiempo
+	WHERE a.id= id_art;
+    END//
+    
+CREATE PROCEDURE getCategorias()
+BEGIN
+		SELECT nombre_categoria
+        FROM Categorias;
+	END//   

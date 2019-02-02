@@ -9,9 +9,11 @@ import models.Articulo;
 public class ArticuloItem extends Item{
 
     Label nombre_vendedor;
+    private Articulo articulo;
+    
     public ArticuloItem(Articulo articulo) {
         super();
-        
+        this.articulo = articulo;
 
         nombre_producto.setText(articulo.getNombre());
         nombre_vendedor = new Label();
@@ -44,5 +46,7 @@ public class ArticuloItem extends Item{
         return precio.getText();
     }
  
-    
+    public Articulo getArticulo(){
+        return this.articulo;
+    }
 }
