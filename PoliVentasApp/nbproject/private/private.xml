@@ -6,9 +6,15 @@
             <file>file:/Users/carlasanchez/NetBeansProjects/disenosoftware/v3/PoliVentas/PoliVentasApp/src/PoliVentas/PoliVentasApp.java</file>
         </group>
         <group>
-            <file>file:/media/miguelps/MiguelPS/T/0_DdS/proyecto2/PoliVentas/PoliVentasApp/src/models/entities/Usuario.java</file>
-            <file>file:/media/miguelps/MiguelPS/T/0_DdS/proyecto2/PoliVentas/PoliVentasApp/src/assets/formregistro.css</file>
-            <file>file:/media/miguelps/MiguelPS/T/0_DdS/proyecto2/PoliVentas/PoliVentasApp/src/controllers/RegistroFormController.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/services/DBConnection.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/assets/menuAdmin.css</file>
+            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/controllers/MenuAdministradorController.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/models/pago/MetodoPago.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/PoliVentas/PoliVentasApp.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/assets/menu_comprador.css</file>
+            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/models/entities/Administrador.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/views/MenuAdministrador.java</file>
+            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/controllers/MenuVendedorController.java</file>
         </group>
     </open-files>
 </project-private>
