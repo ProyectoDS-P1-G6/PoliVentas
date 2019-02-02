@@ -1,6 +1,7 @@
 USE POLIVENTAS;
 DROP PROCEDURE IF EXISTS checkUserAndPass;
 DROP PROCEDURE IF EXISTS getUser;
+DROP PROCEDURE IF EXISTS getAllUser;
 DROP PROCEDURE IF EXISTS buscarArticulo;
 DROP PROCEDURE IF EXISTS getArticulo;
 DROP PROCEDURE IF EXISTS addBusqueda;
@@ -12,6 +13,15 @@ DROP PROCEDURE IF EXISTS setSaldo;
 DROP PROCEDURE IF EXISTS getMisArticulos;
 DROP PROCEDURE IF EXISTS getVentas;
 DROP PROCEDURE IF EXISTS registrarPedido;
+DROP PROCEDURE IF EXISTS createUsuarios;
+DROP PROCEDURE IF EXISTS changeRolUsuario;
+DROP PROCEDURE IF EXISTS updateUsuario;
+DROP PROCEDURE IF EXISTS updateUsuario;
+DROP PROCEDURE IF EXISTS deleteUsuario;
+DROP PROCEDURE IF EXISTS getVentasPendientes;
+DROP PROCEDURE IF EXISTS agregarProducto;
+DROP PROCEDURE IF EXISTS anularVenta;
+DROP PROCEDURE IF EXISTS modificarProducto;
 
 DELIMITER //
 CREATE PROCEDURE checkUserAndPass(IN nickname VARCHAR(10), IN pass VARCHAR(20), OUT id INTEGER)
@@ -29,7 +39,14 @@ CREATE PROCEDURE getUser(IN id_user INTEGER)
         FROM Usuario 
         WHERE Usuario.id = id_user;
     END//
-    
+
+CREATE PROCEDURE getAllUser()
+	BEGIN
+		SELECT * 
+        FROM Usuario
+        ORDER BY apellidos DESC;
+        
+	END//    
     
 CREATE PROCEDURE buscarArticulo(IN entry VARCHAR(20))
 	BEGIN
@@ -167,3 +184,55 @@ BEGIN
 		SELECT nombre_categoria
         FROM Categorias;
 	END//   
+    
+    
+CREATE PROCEDURE deleteUsuario(IN id_user INTEGER)
+	BEGIN
+        DELETE FROM Pedidos WHERE id_articulo = id_user;
+        DELETE FROM Pedidos WHERE id_comprador = id_user;
+        DELETE FROM Articulos WHERE id_vendedor = id_user;
+        DELETE FROM Usuario WHERE id = id_user;
+		
+    END//
+    
+CREATE PROCEDURE updateUsuario(IN id_user INTEGER)
+	BEGIN
+		UPDATE Usuario set nombres="", 
+                           apellidos="",
+                           email="",
+                           telefono="",
+                           usa_whatsapp="",
+                           direccion="",
+                           matricula="",
+                           tipo=""
+		WHERE Usuario.id = id_user;
+    END//
+    
+CREATE PROCEDURE changeRolUsuario(IN id_user INTEGER, IN rol_user CHAR)
+	BEGIN
+		UPDATE Usuario set tipo=rol_user
+		WHERE id = id_user;
+    END//
+
+CREATE PROCEDURE createUsuarios(IN id_user INTEGER,
+							   NOM VARCHAR(50),
+                               APELL VARCHAR(50),
+                               CORREO VARCHAR(40),
+                               TELF VARCHAR(10),
+                               WHATS TINYINT(1),
+                               ADRESS VARCHAR(60),
+                               IDM INT(11),
+                               TYP CHAR(1))
+	BEGIN
+		INSERT INTO Usuario(id,
+						   nombres, 
+                           apellidos,
+                           email,
+                           telefono,
+                           usa_whatsapp,
+                           direccion,
+                           matricula,
+                           tipo)
+		VALUES(id_user,NOM,APELL,CORREO,TELF,WHATS,ADRESS,IDM,TYP);
+        
+	END//
