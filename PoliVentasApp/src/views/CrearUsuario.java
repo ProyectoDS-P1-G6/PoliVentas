@@ -21,7 +21,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.entities.Rol;
-import models.entities.Usuario;
 
 public class CrearUsuario extends Stage {
 
@@ -64,7 +63,7 @@ public class CrearUsuario extends Stage {
         registroPane = new BorderPane();
         sharedPane = new GridPane();
 
-        buttonRegistrar = new Button("Registrar");
+        buttonRegistrar = new Button("Guardar");
         buttonRegistrar.setMinWidth(100);
         buttonClear = new Button("Limpiar");
         buttonClear.setMinWidth(100);
@@ -119,7 +118,6 @@ public class CrearUsuario extends Stage {
         scene = new Scene(root);
         setScene(scene);
         setupView();
-        setupControl();
     }
     
     public TextField getCedula() {
@@ -219,26 +217,28 @@ public class CrearUsuario extends Stage {
 
     }
     
-     public void btnCrearRegistro(EventHandler<ActionEvent> eventHandler){
+    public void btnCrearRegistro(EventHandler<ActionEvent> eventHandler){
         buttonRegistrar.setOnAction(eventHandler);
     }
-
-    private void setupControl() {
-        buttonClear.setOnAction(a -> {
-
-            limpiarCampos();
-        });
-
+    public void btnLimpiarRegistro(EventHandler<ActionEvent> eventHandler){
+        buttonClear.setOnAction(eventHandler);
     }
 
     private void setDisableGuardarEliminar(boolean b) {
         //buttonGuardar.setDisable(b);
     }
 
-    
-
-    private void limpiarCampos() {
-
+    public void limpiarCampos() {
+        cedula.setText(null);
+        nombre.setText(null);
+        apellidos.setText(null);
+        email.setText(null);
+        telefono.setText(null);
+        direccion.setText(null);
+        matricula.setText(null);
+        perfil.setValue(Rol.COMPRADOR);
+        Whatsapp.setValue("SI");
+        
     }
 
     public Parent getRoot() {

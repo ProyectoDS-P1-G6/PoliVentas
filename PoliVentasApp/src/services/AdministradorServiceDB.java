@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import models.entities.Rol;
 import models.entities.Usuario;
 
@@ -78,7 +79,24 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             createUsuario.setString(7, user.getDireccion());
             createUsuario.setInt(8, user.getMatricula());
             createUsuario.setString(9, Rol.inParseRol(user.getRol()));
-            createUsuario.executeQuery();
+            
+            if(!createUsuario.execute()){
+                JOptionPane.showMessageDialog(null, "Se ha registrado: "+user.getNombres()+"correctamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR!, no se ha podido registrar "+user.getNombres());
+            }
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+    }
+    public void deleteUser(Usuario killUser){
+        try {
+            deleteUsuario.setInt(1, killUser.getCedula());
+            if(!deleteUsuario.execute()){
+                JOptionPane.showMessageDialog(null, killUser.getNombres()+" ha sido eliminado definitivamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR!, no se ha podido eliminar "+killUser.getNombres());
+            }
         } catch (SQLException e) {
             e.getStackTrace();
         }

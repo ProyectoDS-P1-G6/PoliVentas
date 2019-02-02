@@ -1,55 +1,51 @@
 package controllers;
 
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import models.Pedido;
 import models.entities.Administrador;
-import models.entities.Comprador;
-import models.entities.Rol;
 import models.entities.Usuario;
 import services.AdministradorServiceDB;
-import services.CompradorServiceDB;
 import utils.StageDecoratorX;
 import views.CrearUsuario;
 import views.MenuAdministrador;
-import views.items.ArticuloItem;
 import views.items.PedidoItem;
 import views.items.UserItem;
-import views.popup.RealizarCompraController;
 
 public final class MenuAdministradorController{
     LoginController login;
     CrearUsuario ventanaRegistro = new CrearUsuario();
     private Administrador administrador;
     private MenuAdministrador menuAdministrador;
-    private UserItem viewUserItem;
     private AdministradorServiceDB db;
-    
+    ArrayList<UserItem> listUser;
+    UserItem userView;
 
+    public MenuAdministradorController(MenuAdministrador view) {
+        this.menuAdministrador=view;
+        db = new AdministradorServiceDB();
+    }
+    
     public MenuAdministradorController(Administrador modelo, MenuAdministrador view) {
         this.administrador = modelo;
         this.menuAdministrador = view;
         db = new AdministradorServiceDB();
-        viewUserItem = new UserItem();
-        //ventanaRegistro =  new Stage();
         
+        menuAdministrador.buscarAction((EventHandler<ActionEvent>) new buscarOperation() );
+        menuAdministrador.productosAction((EventHandler<ActionEvent>) new admProductOperation());
+        menuAdministrador.usersAction((EventHandler<ActionEvent>) new admUserOperation());
+        menuAdministrador.compraAction((EventHandler<ActionEvent>) new admCompraOperation());
+        menuAdministrador.createButtonUserAction(new crearUsuarioButton());
+        menuAdministrador.actualizarBtnAction(new actualizarVistaButton());
         
-        
-        view.buscarAction((EventHandler<ActionEvent>) new buscarOperation() );
-        view.productosAction((EventHandler<ActionEvent>) new admProductOperation());
-        view.usersAction((EventHandler<ActionEvent>) new admUserOperation());
-        view.compraAction((EventHandler<ActionEvent>) new admCompraOperation());
-        view.createButtonUserAction(new crearUsuarioButton());
-        ventanaRegistro.btnCrearRegistro((EventHandler<ActionEvent>) new eventoBtnRegistroUsuario());
+        ventanaRegistro.btnCrearRegistro((EventHandler<ActionEvent>) new eventoBtnGuardarNuevoUsuario());
+        ventanaRegistro.btnLimpiarRegistro((EventHandler<ActionEvent>) new eventoBtnLimpiarRegistro());
         
         cargarPedidos();
         cargarUsuarios();
@@ -65,21 +61,22 @@ public final class MenuAdministradorController{
         nuevoUsuario.setApellidos(ventanaRegistro.getApellidos().getText());
         nuevoUsuario.setMatricula(Integer.parseInt(ventanaRegistro.getMatricula().getText()));
         nuevoUsuario.setRol(ventanaRegistro.getPerfil().getValue());
-        
         return nuevoUsuario;
     }
-    
+    void eliminarUsuario(Usuario killUser){
+        
+    }
     void obtenerDatosPersonales(){
         List<String> dataAdmin = db.getDatosUsuario(administrador);
         for(String o:dataAdmin){
             menuAdministrador.AsignarDatosAdministardor(o);
         }
     }
-    void cargarUsuarios(){
+    public void cargarUsuarios(){
         List<Usuario> usuarios =  db.getUsuarios();
         for(Usuario u: usuarios){
-            System.out.println(u);
-            UserItem userView = new UserItem(u);
+            //System.out.println(u);
+            userView = new UserItem(u);
             menuAdministrador.chargerUsuarios(userView);
         }
     }
@@ -103,11 +100,12 @@ public final class MenuAdministradorController{
             //item.setOnMouseClicked(new MenuAdministradorController.OnPedidoSelected(item));
         }
     }
+
+    
     class buscarOperation implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent actionEvent) {
-             System.out.println("ABRIR BUSQUEDA");
              menuAdministrador.changeViewAdmin("BUSCAR");
             }
         }   
@@ -115,7 +113,6 @@ public final class MenuAdministradorController{
 
         @Override
         public void handle(ActionEvent actionEvent) {
-             System.out.println("ABRIR ADMINISTRACION DE USUARIOS");
              menuAdministrador.changeViewAdmin("USERS");
             }
         }   
@@ -123,7 +120,6 @@ public final class MenuAdministradorController{
 
         @Override
         public void handle(ActionEvent actionEvent) {
-             System.out.println("ABRIR ADMINISTRAR PRODUCTOS");
              menuAdministrador.changeViewAdmin("PRODUCTO");
             }
         }   
@@ -141,7 +137,13 @@ public final class MenuAdministradorController{
     }
     
     
-    
+    class actualizarVistaButton implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent actionEvent) {
+            menuAdministrador.clearPanelUser();
+            cargarUsuarios();
+        }
+    }
     class crearUsuarioButton implements EventHandler<MouseEvent>{
 
         @Override
@@ -156,14 +158,26 @@ public final class MenuAdministradorController{
             }
         }
     }
-     class eventoBtnRegistroUsuario implements EventHandler<ActionEvent>{
+     class eventoBtnGuardarNuevoUsuario implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent actionEvent) {
             
              db.createUser(crearUsuario(new Usuario()));
+             ventanaRegistro.limpiarCampos();
+             ventanaRegistro.close();
+             menuAdministrador.clearPanelUser();
+             cargarUsuarios();
+             
              System.out.println("USUARIO INSERTADO CON EXITO");
              
             }
     }
+    class eventoBtnLimpiarRegistro implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+             ventanaRegistro.limpiarCampos();
+        }
+    }
+
 }

@@ -6,22 +6,28 @@
 package views.items;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.MenuAdministradorController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import models.entities.Usuario;
+import services.AdministradorServiceDB;
+import views.MenuAdministrador;
 
 /**
  *
  * @author Usuario
  */
-public class UserItem extends UserBottomView{
+public final class UserItem extends UserBottomView{
     Usuario user;
     JFXButton editar;
     JFXButton eliminar;
     JFXButton changeRole;
-    public UserItem(){}
+    AdministradorServiceDB db = new AdministradorServiceDB();
+    MenuAdministradorController controlador = new MenuAdministradorController(new MenuAdministrador());
     public UserItem(Usuario usuario) {
         super();
         this.user=usuario;
@@ -50,6 +56,8 @@ public class UserItem extends UserBottomView{
 
         
         cuerpo.getChildren().addAll(foto,informacion,opciones);
+        
+        btnEliminarAction((EventHandler<ActionEvent>) new eventoEliminarUsuario(db));
 
     }
     public Usuario obtenerUser(){
@@ -59,12 +67,42 @@ public class UserItem extends UserBottomView{
         changeRole.setOnAction(eventHandler);
     }
     
-    public void btnEliminarAction(EventHandler<ActionEvent> eventHandler){
-        eliminar.setOnAction(eventHandler);
-        
+    public void btnEliminarAction(EventHandler<ActionEvent> event){
+        eliminar.setOnAction(event);
     }
     public void btnEditarAction(EventHandler<ActionEvent> eventHandler){
         editar.setOnAction(eventHandler);
     }
-   
+
+    public JFXButton getEditar() {
+        return editar;
+    }
+
+    public JFXButton getEliminar() {
+        return eliminar;
+    }
+
+    public JFXButton getChangeRole() {
+        return changeRole;
+    }
+    class eventoEliminarUsuario implements EventHandler<ActionEvent>{
+        AdministradorServiceDB dbl;
+        public eventoEliminarUsuario(AdministradorServiceDB db) {
+            this.dbl = db;
+        }
+        
+        @Override
+        public void handle(ActionEvent event){
+            
+            String botones[]={"Confirmar","Cancelar"};
+            
+            int seleccion = JOptionPane.showOptionDialog(new JFrame(),"¿Está seguro de eliminar este usuario?","",0,0,null,botones,this);
+            if(seleccion==JOptionPane.YES_OPTION){
+                dbl.deleteUser(obtenerUser());
+                System.out.println("Usuario " +obtenerUser().getNombres()+" "+obtenerUser().getCedula()+ " eliminado");
+            }else if(seleccion==JOptionPane.NO_OPTION){
+                JOptionPane.showMessageDialog(null, "Operacion Cancelada");
+            }
+        }
+    }
 }
