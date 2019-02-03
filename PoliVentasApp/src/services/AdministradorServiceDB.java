@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.internet.AddressException;
+import javax.swing.JOptionPane;
+import models.Pedido;
 import models.entities.Rol;
 import models.entities.Usuario;
 
@@ -24,6 +26,7 @@ public class AdministradorServiceDB extends VendedorServiceDB{
     private CallableStatement deleteUsuario;
     private CallableStatement changeRolUsuario;
     
+    private CallableStatement getPedidos;
     private CallableStatement createArticulo;
     private CallableStatement readArticulos;
     private CallableStatement updateArticulo;
@@ -39,7 +42,8 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             readUsuarios  = DBConnection.getInstance().prepareCall("CALL readUsuarios(?)");
             updateUsuario = DBConnection.getInstance().prepareCall("CALL updateUsuario(?)");
             deleteUsuario = DBConnection.getInstance().prepareCall("CALL deleteUsuario(?)");
-
+            
+            getPedidos = DBConnection.getInstance().prepareCall("CALL getPedidos(?)");
             createArticulo = DBConnection.getInstance().prepareCall("CALL createArticulo(?)");
             readArticulos = DBConnection.getInstance().prepareCall("CALL readArticulos(?)");
             updateArticulo = DBConnection.getInstance().prepareCall("CALL updateArticulo(?)");
@@ -58,6 +62,27 @@ public class AdministradorServiceDB extends VendedorServiceDB{
         return articulos;
     }
     
+    public List<Pedido> getPedidos(Usuario usuario){
+        List<Pedido> pedidos = new LinkedList<>();
+        
+        ResultSet  result;
+        
+        try {
+            getPedidos.setInt(1, usuario.getCedula());
+            getPedidos.execute();
+            
+            result = getPedidos.getResultSet();
+            
+            while (result.next()) {  
+                pedidos.add(parsePedido(result));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return pedidos;
+    }
     
     
     public void createUser(Usuario user){
@@ -76,7 +101,18 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             e.getStackTrace();
         }
     }
-    
+    public void deleteUser(Usuario killUser){
+        try {
+            deleteUsuario.setInt(1, killUser.getCedula());
+            if(!deleteUsuario.execute()){
+                JOptionPane.showMessageDialog(null, killUser.getNombres()+" ha sido eliminado definitivamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR!, no se ha podido eliminar "+killUser.getNombres());
+            }
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+    }
     
     public void changeRol(Usuario usuario,Rol rol){
         ResultSet result;

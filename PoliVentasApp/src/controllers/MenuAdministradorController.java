@@ -19,7 +19,7 @@ import views.MenuAdministrador;
 import views.items.PedidoItem;
 import views.items.UserItem;
 
-public final class MenuAdministradorController implements Returnable{
+public final class MenuAdministradorController extends MenuVendedorController implements Returnable{
     LoginController login;
     CrearUsuario ventanaRegistro = new CrearUsuario();
     Returnable previousWindows;
@@ -27,30 +27,27 @@ public final class MenuAdministradorController implements Returnable{
     
     private final Administrador administrador;
     private final MenuAdministrador menuAdministrador;
-    private final UserItem viewUserItem;
     private final AdministradorServiceDB db;
     
-
     public MenuAdministradorController(Administrador modelo, MenuAdministrador view) {
         this.administrador = modelo;
         this.menuAdministrador = view;
         db = new AdministradorServiceDB();
-        viewUserItem = new UserItem();
-        //ventanaRegistro =  new Stage();
         
-        view.buscarAction(new buscarOperation() );
-        view.productosAction( new admProductOperation());
-        view.usersAction(new admUserOperation());
-        view.compraAction(new admCompraOperation());
-        view.createButtonUserAction(new crearUsuarioButton());
+        menuAdministrador.buscarAction(new buscarOperation() );
+        menuAdministrador.productosAction( new admProductOperation());
+        menuAdministrador.usersAction(new admUserOperation());
+        menuAdministrador.compraAction(new admCompraOperation());
+        menuAdministrador.createButtonUserAction(new crearUsuarioButton());
+        menuAdministrador.actualizarBtnAction(new actualizarVistaButton());
         ventanaRegistro.btnCrearRegistro( new eventoBtnRegistroUsuario());
+        ventanaRegistro.btnLimpiarRegistro(new eventoBtnLimpiarRegistro());
+        
         
         cargarPedidos();
         cargarUsuarios();
-        //obtenerDatosPersonales();
     }
-    
-    
+
     Usuario crearUsuario(){
         
         Usuario nuevoUsuario = Usuario.createUserByRol(ventanaRegistro.getPerfil().getValue());
@@ -90,12 +87,11 @@ public final class MenuAdministradorController implements Returnable{
         }
     }
     void cargarPedidos(){
-        List<Pedido> pedidos =  db.getPedidosPendientes(administrador);
-        
-        
+        List<Pedido> pedidos =  db.getPedidos(administrador);
         for(Pedido p: pedidos){
             System.out.println(p);
             PedidoItem item = new PedidoItem(p);
+            item.setOnMouseClicked(new OnPedidoSelected(p));
             switch(p.getEstado()){
                 case PENDIENTE:
                     menuAdministrador.chargerPedidosPendientes(item);
@@ -115,7 +111,6 @@ public final class MenuAdministradorController implements Returnable{
 
         @Override
         public void handle(ActionEvent actionEvent) {
-             System.out.println("ABRIR BUSQUEDA");
              menuAdministrador.changeViewAdmin("BUSCAR");
             }
         }   
@@ -123,7 +118,6 @@ public final class MenuAdministradorController implements Returnable{
 
         @Override
         public void handle(ActionEvent actionEvent) {
-             System.out.println("ABRIR ADMINISTRACION DE USUARIOS");
              menuAdministrador.changeViewAdmin("USERS");
             }
         }   
@@ -131,7 +125,6 @@ public final class MenuAdministradorController implements Returnable{
 
         @Override
         public void handle(ActionEvent actionEvent) {
-             System.out.println("ABRIR ADMINISTRAR PRODUCTOS");
              menuAdministrador.changeViewAdmin("PRODUCTO");
             }
         }   
@@ -139,7 +132,6 @@ public final class MenuAdministradorController implements Returnable{
 
         @Override
         public void handle(ActionEvent actionEvent) {
-             System.out.println("ABRIR ADMINISTRAR COMPRAS");
              menuAdministrador.changeViewAdmin("COMPRA");
             }
         } 
@@ -165,9 +157,27 @@ public final class MenuAdministradorController implements Returnable{
         public void handle(ActionEvent actionEvent) {
             
              db.createUser(crearUsuario());
+             ventanaRegistro.limpiarCampos();ventanaRegistro.close();
+             menuAdministrador.clearPanelUser();
+             cargarUsuarios();
+             
              System.out.println("USUARIO INSERTADO CON EXITO");
              
             }
+    }
+    class eventoBtnLimpiarRegistro implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent actionEvent) {
+             ventanaRegistro.limpiarCampos();
+        }
+    }
+    
+    class actualizarVistaButton implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent actionEvent) {
+            menuAdministrador.clearPanelUser();
+            cargarUsuarios();
+        }
     }
      
      

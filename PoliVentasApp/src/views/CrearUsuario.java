@@ -222,7 +222,9 @@ public class CrearUsuario extends Stage {
      public void btnCrearRegistro(EventHandler<ActionEvent> eventHandler){
         buttonRegistrar.setOnAction(eventHandler);
     }
-
+     public void btnLimpiarRegistro(EventHandler<ActionEvent> eventHandler){
+        buttonClear.setOnAction(eventHandler);
+    }
     private void setupControl() {
         buttonClear.setOnAction(a -> {
 
@@ -237,7 +239,16 @@ public class CrearUsuario extends Stage {
 
     
 
-    private void limpiarCampos() {
+    public void limpiarCampos() {
+        cedula.setText(null);
+        nombre.setText(null);
+        apellidos.setText(null);
+        email.setText(null);
+        telefono.setText(null);
+        direccion.setText(null);
+        matricula.setText(null);
+        perfil.setValue(Rol.COMPRADOR);
+        Whatsapp.setValue("SI");
 
     }
 
