@@ -18,9 +18,9 @@ public class InicioController implements Returnable{
 	private Inicio inicio;
 	
 	public InicioController(Inicio view){
-		this.inicio = view;
-        
-		inicio.addLoginAction((ActionEvent event) -> {
+            this.inicio = view;
+
+            inicio.addLoginAction((ActionEvent event) -> {
             LoginView login = new LoginView();
             new StageDecoratorX(login);
             LoginController controller = new LoginController(new Usuario(), login);
