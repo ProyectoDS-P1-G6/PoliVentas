@@ -58,7 +58,7 @@ public class Usuario {
         return contactInfo;
     }
 
-    public void setContactInfo(String email, Integer telefono, boolean usaWhatsapp) {
+    public void setContactInfo(String email, Integer telefono, boolean usaWhatsapp) throws AddressException {
         this.contactInfo = new ContactInfo(email, telefono, usaWhatsapp);
     }
 
@@ -101,10 +101,6 @@ public class Usuario {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
     public Rol getRol() {
         return rol;
     }
@@ -122,20 +118,18 @@ public class Usuario {
         List<Integer> telefonosEmergencia;
         boolean usaWhatsapp;
 
-        public ContactInfo(String email, Integer telefono, boolean usaWhatsapp) {
-            try {
-                this.email = new InternetAddress(email);
-                this.email.validate();
-            } catch (AddressException e) { 
-                System.out.println(e.getMessage());
-            }
+        public ContactInfo(String email, Integer telefono, boolean usaWhatsapp) throws AddressException {
+    
+            this.email = new InternetAddress(email);
+            this.email.validate();
+        
             this.telefono = telefono;
             this.telefonosEmergencia = new LinkedList<>();
             this.usaWhatsapp = usaWhatsapp;
         }
 
-        public String getEmail() {
-            return email.getAddress();
+        public InternetAddress getEmail() {
+            return email;
         }
 
         public Integer getTelefono() {
@@ -146,15 +140,34 @@ public class Usuario {
             return telefonosEmergencia;
         }
 
-        public boolean isUsaWhatsapp() {
+        public boolean usaWhatsapp() {
             return usaWhatsapp;
         }
+        
         
 
         @Override
         public String toString() {
             return "ContactInfo{" + "email=" + email + ", telefono=" + telefono + ", telefonosEmergencia=" + telefonosEmergencia + ", usaWhatsapp=" + usaWhatsapp + '}';
         } 
+    }
+    
+    
+    public static Usuario createUserByRol(Rol rol){
+        
+        Usuario usuario;
+         switch(rol){
+            case ADMIN:
+                usuario = new Administrador();
+                break;
+            case COMPRADOR:
+                usuario = new Comprador();
+                break;
+            default:
+                usuario = new Vendedor();
+                break;
+        }
+        return usuario;
     }
 
 }

@@ -36,10 +36,15 @@ public class OnSearchInputChanged implements ChangeListener<String> {
             
            List<CustomMenuItem> menuItems = new LinkedList<>();
            
+           
            if(controller.getTextInput().length() < 3 || controller.getTextInput().length() > 20){
                controller.getSugerencias_busqueda().hide();
                return;
            }
+           if(newValue.length() < oldValue.length()){
+               return;
+           }
+               
            //cleanSearchResultItem();
            List<Articulo> articulos = controller.getDB().buscarArticulo(controller.getTextInput().toLowerCase());
            for(Articulo articulo: articulos){

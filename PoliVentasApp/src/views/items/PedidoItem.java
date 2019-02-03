@@ -35,7 +35,7 @@ public class PedidoItem extends Item {
         estado.setText(e.toString());
 
         description.getChildren().addAll(nombre_producto,nombre_vendedor,precio, estado);
-        icon = new ImageView(pedido.getArticulo().getIcon());
+        icon.setImage(articulo.getIcon());
         
         content.getChildren().addAll(icon, description);
     }

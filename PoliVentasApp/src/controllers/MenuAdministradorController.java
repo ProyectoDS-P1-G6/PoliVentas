@@ -1,87 +1,96 @@
 package controllers;
 
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.mail.internet.AddressException;
 import models.Pedido;
 import models.entities.Administrador;
 import models.entities.Usuario;
 import services.AdministradorServiceDB;
+import utils.Returnable;
 import utils.StageDecoratorX;
 import views.CrearUsuario;
 import views.MenuAdministrador;
 import views.items.PedidoItem;
 import views.items.UserItem;
 
-public final class MenuAdministradorController{
+public final class MenuAdministradorController implements Returnable{
     LoginController login;
     CrearUsuario ventanaRegistro = new CrearUsuario();
-    private Administrador administrador;
-    private MenuAdministrador menuAdministrador;
-    private AdministradorServiceDB db;
-    ArrayList<UserItem> listUser;
-    UserItem userView;
-
-    public MenuAdministradorController(MenuAdministrador view) {
-        this.menuAdministrador=view;
-        db = new AdministradorServiceDB();
-    }
+    Returnable previousWindows;
     
+    
+    private final Administrador administrador;
+    private final MenuAdministrador menuAdministrador;
+    private final UserItem viewUserItem;
+    private final AdministradorServiceDB db;
+    
+
     public MenuAdministradorController(Administrador modelo, MenuAdministrador view) {
         this.administrador = modelo;
         this.menuAdministrador = view;
         db = new AdministradorServiceDB();
+        viewUserItem = new UserItem();
+        //ventanaRegistro =  new Stage();
         
-        menuAdministrador.buscarAction((EventHandler<ActionEvent>) new buscarOperation() );
-        menuAdministrador.productosAction((EventHandler<ActionEvent>) new admProductOperation());
-        menuAdministrador.usersAction((EventHandler<ActionEvent>) new admUserOperation());
-        menuAdministrador.compraAction((EventHandler<ActionEvent>) new admCompraOperation());
-        menuAdministrador.createButtonUserAction(new crearUsuarioButton());
-        menuAdministrador.actualizarBtnAction(new actualizarVistaButton());
-        
-        ventanaRegistro.btnCrearRegistro((EventHandler<ActionEvent>) new eventoBtnGuardarNuevoUsuario());
-        ventanaRegistro.btnLimpiarRegistro((EventHandler<ActionEvent>) new eventoBtnLimpiarRegistro());
+        view.buscarAction(new buscarOperation() );
+        view.productosAction( new admProductOperation());
+        view.usersAction(new admUserOperation());
+        view.compraAction(new admCompraOperation());
+        view.createButtonUserAction(new crearUsuarioButton());
+        ventanaRegistro.btnCrearRegistro( new eventoBtnRegistroUsuario());
         
         cargarPedidos();
         cargarUsuarios();
-        obtenerDatosPersonales();
+        //obtenerDatosPersonales();
     }
-    Usuario crearUsuario(Usuario nuevoUsuario){
+    
+    
+    Usuario crearUsuario(){
+        
+        Usuario nuevoUsuario = Usuario.createUserByRol(ventanaRegistro.getPerfil().getValue());
+        
         nuevoUsuario.setNombres(ventanaRegistro.getNombre().getText());
         nuevoUsuario.setApellidos(ventanaRegistro.getApellidos().getText());
         nuevoUsuario.setCedula(Integer.parseInt(ventanaRegistro.getCedula().getText()));
         String value = ventanaRegistro.getWhatsapp().getValue();
-        nuevoUsuario.setContactInfo(ventanaRegistro.getEmail().getText(),Integer.parseInt(ventanaRegistro.getTelefono().getText()),ventanaRegistro.parseBooleanWhatsapp(value));
+        try {
+            nuevoUsuario.setContactInfo(ventanaRegistro.getEmail().getText(),Integer.parseInt(ventanaRegistro.getTelefono().getText()),ventanaRegistro.parseBooleanWhatsapp(value));
+        } catch (AddressException ex) {
+            Logger.getLogger(MenuAdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         nuevoUsuario.setDireccion(ventanaRegistro.getDireccion().getText());
         nuevoUsuario.setApellidos(ventanaRegistro.getApellidos().getText());
         nuevoUsuario.setMatricula(Integer.parseInt(ventanaRegistro.getMatricula().getText()));
-        nuevoUsuario.setRol(ventanaRegistro.getPerfil().getValue());
+
+        
         return nuevoUsuario;
     }
-    void eliminarUsuario(Usuario killUser){
-        
-    }
+    /*
     void obtenerDatosPersonales(){
         List<String> dataAdmin = db.getDatosUsuario(administrador);
         for(String o:dataAdmin){
             menuAdministrador.AsignarDatosAdministardor(o);
         }
-    }
-    public void cargarUsuarios(){
+    }*/
+    
+    
+    
+    void cargarUsuarios(){
         List<Usuario> usuarios =  db.getUsuarios();
         for(Usuario u: usuarios){
-            //System.out.println(u);
-            userView = new UserItem(u);
+            System.out.println(u);
+            UserItem userView = new UserItem(u);
             menuAdministrador.chargerUsuarios(userView);
         }
     }
     void cargarPedidos(){
-        List<Pedido> pedidos =  db.getPedidos(administrador);
+        List<Pedido> pedidos =  db.getPedidosPendientes(administrador);
         
         
         for(Pedido p: pedidos){
@@ -101,11 +110,12 @@ public final class MenuAdministradorController{
         }
     }
 
-    
+
     class buscarOperation implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent actionEvent) {
+             System.out.println("ABRIR BUSQUEDA");
              menuAdministrador.changeViewAdmin("BUSCAR");
             }
         }   
@@ -113,6 +123,7 @@ public final class MenuAdministradorController{
 
         @Override
         public void handle(ActionEvent actionEvent) {
+             System.out.println("ABRIR ADMINISTRACION DE USUARIOS");
              menuAdministrador.changeViewAdmin("USERS");
             }
         }   
@@ -120,6 +131,7 @@ public final class MenuAdministradorController{
 
         @Override
         public void handle(ActionEvent actionEvent) {
+             System.out.println("ABRIR ADMINISTRAR PRODUCTOS");
              menuAdministrador.changeViewAdmin("PRODUCTO");
             }
         }   
@@ -132,18 +144,7 @@ public final class MenuAdministradorController{
             }
         } 
     
-    public void setLoginController(LoginController login) {
-        this.login = login;
-    }
     
-    
-    class actualizarVistaButton implements EventHandler<MouseEvent>{
-        @Override
-        public void handle(MouseEvent actionEvent) {
-            menuAdministrador.clearPanelUser();
-            cargarUsuarios();
-        }
-    }
     class crearUsuarioButton implements EventHandler<MouseEvent>{
 
         @Override
@@ -158,26 +159,25 @@ public final class MenuAdministradorController{
             }
         }
     }
-     class eventoBtnGuardarNuevoUsuario implements EventHandler<ActionEvent>{
+     class eventoBtnRegistroUsuario implements EventHandler<ActionEvent>{
 
         @Override
         public void handle(ActionEvent actionEvent) {
             
-             db.createUser(crearUsuario(new Usuario()));
-             ventanaRegistro.limpiarCampos();
-             ventanaRegistro.close();
-             menuAdministrador.clearPanelUser();
-             cargarUsuarios();
-             
+             db.createUser(crearUsuario());
              System.out.println("USUARIO INSERTADO CON EXITO");
              
             }
     }
-    class eventoBtnLimpiarRegistro implements EventHandler<ActionEvent> {
-        @Override
-        public void handle(ActionEvent actionEvent) {
-             ventanaRegistro.limpiarCampos();
-        }
+     
+     
+    @Override
+    public void setPreviusWindow(Returnable previous) {
+        this.previousWindows = previous;
     }
 
+    @Override
+    public void showWindow() {
+        menuAdministrador.show();
+    }
 }

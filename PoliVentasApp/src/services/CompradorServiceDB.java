@@ -4,6 +4,7 @@ import models.Pedido;
 import models.entities.Comprador;
 
 import java.sql.CallableStatement;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -11,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.internet.AddressException;
 import models.Articulo;
 import models.Estado;
 import models.entities.Administrador;
@@ -25,9 +27,10 @@ public class CompradorServiceDB {
     CallableStatement getArticulosMasBuscados;
     CallableStatement getArticulo;
     CallableStatement getUsuario;
-    CallableStatement getPedidos;
+    CallableStatement getPedidosPendientes;
     CallableStatement getSaldo;
     CallableStatement setSaldo;
+    CallableStatement registrarPedido;
     
     
 
@@ -41,9 +44,10 @@ public class CompradorServiceDB {
             getArticulosMasBuscados = DBConnection.getInstance().prepareCall("{CALL getArticulosMasBuscados(?)}");
             getArticulo     = DBConnection.getInstance().prepareCall("{CALL getArticulo(?)}");
             getUsuario      = DBConnection.getInstance().prepareCall("{CALL getUser(?)}");
-            getPedidos      = DBConnection.getInstance().prepareCall("{CALL getPedidos(?)}");
+            getPedidosPendientes      = DBConnection.getInstance().prepareCall("{CALL getPedidosPendientes(?)}");
             getSaldo        = DBConnection.getInstance().prepareCall("{CALL getSaldo(?,?)}");
             setSaldo        = DBConnection.getInstance().prepareCall("{CALL setSaldo(?,?)}");
+            registrarPedido = DBConnection.getInstance().prepareCall("{CALL registrarPedido(?,?,?,?)}");
         } catch (SQLException e) {
             System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
         }catch (Exception e){
@@ -51,42 +55,24 @@ public class CompradorServiceDB {
         }
     }
     
-    public List<String> getDatosUsuario(Usuario usuario){
-        List<String> datos =  new LinkedList<>();
-        ResultSet result;
-        try {
-            getUsuario.setInt(1, usuario.getCedula());
-            getPedidos.execute();
-            
-            result = getUsuario.getResultSet();
-            
-            while(result.next()){
-                datos.add(result.getString("nombres"));
-            }
-        } catch (Exception e) {
-            System.out.println("error: "+ e);
-        }
-        return datos;
-    }       
 
     
-    public List<Pedido> getPedidos(Usuario usuario){
+    public List<Pedido> getPedidosPendientes(Usuario usuario){
         List<Pedido> pedidos = new LinkedList<>();
         
         ResultSet  result;
         
         try {
-            getPedidos.setInt(1, usuario.getCedula());
-            getPedidos.execute();
+            getPedidosPendientes.setInt(1, usuario.getCedula());
+            getPedidosPendientes.execute();
             
-            result = getPedidos.getResultSet();
+            result = getPedidosPendientes.getResultSet();
             
             while (result.next()) {  
                 pedidos.add(parsePedido(result));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
-            ex.getStackTrace();
         }
         
         
@@ -112,6 +98,8 @@ public class CompradorServiceDB {
         
         return new  Articulo();
     }
+    
+    
     
     
     public List<Articulo> buscarArticulo(String entry){
@@ -191,11 +179,32 @@ public class CompradorServiceDB {
         usuario.setCedula(data.getInt(1));
         usuario.setNombres(data.getString(2));
         usuario.setApellidos(data.getString(3));
-        usuario.setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6));
+        try {
+            usuario.setContactInfo(data.getString(4), data.getInt(5), data.getBoolean(6));
+        } catch (AddressException ex) {
+            Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
         usuario.setDireccion(data.getString(7));
         usuario.setMatricula(data.getInt(8));
 
         return usuario;
+    }
+    
+    public Boolean registrarPedido(Pedido pedido){
+        
+        try {
+            registrarPedido.setInt(1, pedido.getCantidad());
+            registrarPedido.setDate(2, new java.sql.Date(pedido.getFecha().getTime()));
+            registrarPedido.setInt(3, pedido.getComprador().getCedula());
+            registrarPedido.setInt(4, pedido.getArticulo().getId());
+            registrarPedido.execute();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("xxxxxxxxxxxxxxxxxxxxxxx");
+            return false;
+        }
+        return true;
     }
     
     
@@ -210,7 +219,7 @@ public class CompradorServiceDB {
             pedido.setCantidad(data.getInt("cantidad"));
             pedido.setFecha(data.getDate("fecha"));
             pedido.setEstado(Estado.parseEstado(data.getString("estado")));
-            pedido.setComprador((Usuario)LoginServiceDB.getActualLogin().getUsuario());
+            pedido.setComprador(LoginServiceDB.getActualLogin().getUsuario());
             pedido.setArticulo(a);
             return pedido;
         } catch (SQLException ex) {

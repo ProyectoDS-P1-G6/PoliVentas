@@ -53,7 +53,6 @@ public final class MenuAdministrador extends Stage {
     public ScrollPane scrollpaneListUser;
     public VBox paneVerticalListUser;
     public JFXButton btnCreateUser;
-    public JFXButton btnActualizarVista;
     
     public Pane viewAdmCompra;
     public JFXTabPane tapPaneCompras;
@@ -173,7 +172,7 @@ public final class MenuAdministrador extends Stage {
     }
     public void chargeMenuAdminUser(){
         viewAdmUser = new HBox();
-        VBox contenedorBotones = new VBox();
+        
         double altoPane = root.getPrefHeight(); 
         double anchoPane=800-menuLateral.getPrefWidth();
         viewAdmUser.getStyleClass().add("amduser");
@@ -182,10 +181,9 @@ public final class MenuAdministrador extends Stage {
         scrollpaneListUser.setPrefSize(anchoPane-200, altoPane);
         
         btnCreateUser = new JFXButton("Nuevo\nUsuario");
-        btnActualizarVista = new JFXButton("Actualizar");
-        contenedorBotones.getChildren().addAll(btnCreateUser,btnActualizarVista);
+       
         
-        viewAdmUser.getChildren().addAll(scrollpaneListUser,contenedorBotones);
+        viewAdmUser.getChildren().addAll(scrollpaneListUser,btnCreateUser);
                 
     }
     public void chargeMenuBuscar(){
@@ -252,9 +250,7 @@ public final class MenuAdministrador extends Stage {
         viewAdmCompra.getChildren().add(tapPaneCompras);
     }
     
-    public void clearPanelUser(){
-        paneVerticalListUser.getChildren().clear();
-    }
+    
     public void AsignarDatosAdministardor(String dato){
         this.lUserAdminName.setText(dato);
     }
@@ -289,12 +285,8 @@ public final class MenuAdministrador extends Stage {
     }
  
 
-    public void createButtonUserAction(EventHandler<MouseEvent> eventHandler){
+     public void createButtonUserAction(EventHandler<MouseEvent> eventHandler){
         btnCreateUser.setOnMouseClicked(eventHandler);
-    }
-    
-    public void actualizarBtnAction(EventHandler<MouseEvent> eventHandler){
-        btnActualizarVista.setOnMouseClicked(eventHandler);
     }
     
     public void buscarAction(EventHandler<ActionEvent> eventHandler){

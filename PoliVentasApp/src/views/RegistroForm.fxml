@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import java.net.URL?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -14,32 +15,36 @@
         <URL value="@/assets/formregistro.css" />
     </stylesheets>
    <children>
-      <JFXButton layoutX="524.0" layoutY="519.0" text="Registrar" />
-      <JFXButton layoutX="443.0" layoutY="519.0" text="Limpiar" />
-      <JFXComboBox layoutX="219.0" layoutY="65.0" prefHeight="26.0" prefWidth="157.0" promptText="Tipo de usuario">
+      <JFXButton layoutX="524.0" layoutY="519.0" onAction="#registrar" text="Registrar" />
+      <JFXButton layoutX="443.0" layoutY="519.0" onAction="#limpiar" text="Limpiar" />
+      <JFXComboBox fx:id="tipoUsuario" layoutX="45.0" layoutY="67.0" prefHeight="26.0" prefWidth="157.0" promptText="Tipo de usuario">
            <items>
         <FXCollections fx:factory="observableArrayList">
             <Label text="Comprador" />
             <Label text="Vendedor" />
-            <Label text="Administrador" />
         </FXCollections>
     </items>
       </JFXComboBox>
       <Label layoutX="173.0" layoutY="14.0" style="-fx-font-weight: bold; -fx-font-size: 16pt;" text="Formulario de registro." />
       <Label layoutX="45.0" layoutY="128.0" text="Nombres:" />
       <Label layoutX="334.0" layoutY="128.0" text="Apellidos:" />
-      <Label layoutX="57.0" layoutY="186.0" text="Email:" />
-      <Label layoutX="40.0" layoutY="230.0" text="Telefono:" />
+      <Label layoutX="49.0" layoutY="177.0" text="Email:" />
+      <Label layoutX="47.0" layoutY="230.0" text="Telefono:" />
       <Label layoutX="301.0" layoutY="238.0" text="¿Usa WhatsApp?" />
       <Label layoutX="38.0" layoutY="322.0" text="Direccion:" />
-      <Label layoutX="313.0" layoutY="186.0" text="N° Matricula:" />
-      <JFXTextField layoutX="111.0" layoutY="123.0" />
-      <JFXTextField layoutX="399.0" layoutY="123.0" />
-      <JFXTextField layoutX="111.0" layoutY="173.0" />
-      <JFXTextField layoutX="399.0" layoutY="181.0" />
-      <JFXTextField layoutX="111.0" layoutY="225.0" />
-      <JFXRadioButton layoutX="422.0" layoutY="238.0" text="si" />
-      <JFXRadioButton layoutX="470.0" layoutY="238.0" text="no" />
-      <JFXTextField layoutX="113.0" layoutY="317.0" />
+      <Label layoutX="311.0" layoutY="178.0" text="N° Matricula:" />
+      <JFXTextField fx:id="nombres" layoutX="111.0" layoutY="123.0" />
+      <JFXTextField fx:id="apellidos" layoutX="399.0" layoutY="123.0" />
+      <JFXTextField fx:id="email" layoutX="111.0" layoutY="173.0" />
+      <JFXTextField fx:id="nMatricula" layoutX="399.0" layoutY="174.0" />
+      <JFXTextField fx:id="telefono" layoutX="111.0" layoutY="225.0" />
+      <JFXRadioButton fx:id="siUsaWhatsapp" layoutX="422.0" layoutY="238.0" text="si" />
+      <JFXRadioButton fx:id="noUsaWhatsapp" layoutX="470.0" layoutY="238.0" text="no" />
+      <JFXTextField fx:id="direccion" layoutX="113.0" layoutY="317.0" />
+      <JFXTextField fx:id="cedula" layoutX="399.0" layoutY="69.0" />
+      <Label layoutX="340.0" layoutY="73.0" text="Cedula:" />
    </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </AnchorPane>

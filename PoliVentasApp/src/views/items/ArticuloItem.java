@@ -15,8 +15,8 @@ public class ArticuloItem extends Item{
         nombre_producto.setText(articulo.getNombre());
         nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
         precio.setText(articulo.getPrecio().toString());
-        icon = new ImageView(articulo.getIcon());
-        
+        icon.setImage(articulo.getIcon());
+
         Label numero_busquedas = new Label("Busquedas: "+articulo.getNumero_busquedas().toString());
         description.getChildren().addAll(nombre_producto,nombre_vendedor,precio, numero_busquedas);
 

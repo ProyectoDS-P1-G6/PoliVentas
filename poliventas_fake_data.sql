@@ -10,6 +10,7 @@ VALUES
 (1211111112, 'MaxSteel','Reloaded', 'xxxmsr@espol.edu.ec', 985858585, true, 'enrique segoviano 2', 201611112, 'V'),
 (1211111113, 'Jhon','Travolta', 'xxxt@espol.edu.ec', 985858585, true, 'enrique segoviano y la k', 201611113, 'V');
 
+
 INSERT INTO 
 Login(username, contrasena, id_usuario) 
 VALUES

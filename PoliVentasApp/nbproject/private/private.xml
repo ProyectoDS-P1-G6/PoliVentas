@@ -6,12 +6,8 @@
             <file>file:/Users/carlasanchez/NetBeansProjects/disenosoftware/v3/PoliVentas/PoliVentasApp/src/PoliVentas/PoliVentasApp.java</file>
         </group>
         <group>
-            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/controllers/MenuAdministradorController.java</file>
-            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/views/items/UserItem.java</file>
-            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/services/AdministradorServiceDB.java</file>
-            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/models/entities/Usuario.java</file>
-            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/controllers/LoginController.java</file>
-            <file>file:/C:/Users/Usuario/Desktop/UltimaVersion/PoliVentas/PoliVentasApp/src/views/CrearUsuario.java</file>
+            <file>file:/D:/T/0_DdS/proyecto2/PoliVentas/PoliVentasApp/src/controllers/MenuVendedorController.java</file>
+            <file>file:/D:/T/0_DdS/proyecto2/PoliVentas/PoliVentasApp/src/controllers/RealizarCompraController.java</file>
         </group>
     </open-files>
 </project-private>

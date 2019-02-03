@@ -93,7 +93,7 @@ Stage stage = (Stage) cancelarbutton.getScene().getWindow();
         this.vendedor=vendedor;
         List<String> categorias =db.getCategorias();
         for( String cat :categorias){
-        combobox.getItems().add(cat);
+            combobox.getItems().add(cat);
         }
     }
 

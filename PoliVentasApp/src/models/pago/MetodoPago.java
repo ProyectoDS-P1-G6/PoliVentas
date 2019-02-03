@@ -16,7 +16,7 @@ public abstract class MetodoPago{
     CompradorServiceDB db;
     
     public void transferir(Pedido pedido) {
-        //db.registrarPedido(pedido);
+        db.registrarPedido(pedido);
     }
     
     public abstract Boolean confirmar();

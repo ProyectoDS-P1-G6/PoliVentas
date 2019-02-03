@@ -11,7 +11,8 @@ package utils;
  */
 public interface Returnable {
     
-    void setPreviousWindow(Returnable previous);
+    void setPreviusWindow(Returnable previous);
     void showWindow();
+    
     
 }

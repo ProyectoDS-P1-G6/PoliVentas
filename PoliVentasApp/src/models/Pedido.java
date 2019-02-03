@@ -1,7 +1,7 @@
 package models;
 
+import java.text.DecimalFormat;
 import java.util.Date;
-import models.entities.Comprador;
 import models.entities.Usuario;
 import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
@@ -19,7 +19,10 @@ public class Pedido {
     
     
     public Pedido() {
-      
+        this.estado = Estado.PENDIENTE;
+        this.total = Money.of(CurrencyUnit.USD,0);
+        this.cantidad = 0;
+        this.descuento = 0.0F;
     }
 
     public void setId(Integer id) {
@@ -39,7 +42,7 @@ public class Pedido {
     }
 
     public void setTotal(Double total) {
-        this.total = Money.of(CurrencyUnit.USD, total);
+        this.total = Money.of(CurrencyUnit.USD, Double.parseDouble(new DecimalFormat("#.00").format(total)));
     }
 
     public void setCantidad(Integer cantidad) {

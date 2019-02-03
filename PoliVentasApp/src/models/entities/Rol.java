@@ -7,22 +7,23 @@ public enum  Rol {
         switch(rol){
             case "A":
                 return ADMIN;
-            case "C":
-                return COMPRADOR;
             case "V":
                 return VENDEDOR;
         }
         return COMPRADOR;
     }
-    public static String inParseRol(Rol rol){
+    
+    public static String getRolChar(Rol rol){
+        String rolChar = "C";
         switch(rol){
             case ADMIN:
-                return "A";
-            case COMPRADOR:
-                return "C";
+                rolChar = "A";
+                break;
             case VENDEDOR:
-                return "V";
+                rolChar = "V";
+                break;
         }
-        return "C";
+        
+        return rolChar;
     }
 }

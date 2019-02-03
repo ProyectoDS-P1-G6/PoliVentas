@@ -22,6 +22,8 @@ public class LoginController implements Returnable{
 
     private Usuario usuario;
     private LoginView view;
+    
+    Returnable previusWindow;
 
     /*
      * Informacion de autenticacion del usuario.
@@ -40,14 +42,16 @@ public class LoginController implements Returnable{
         view.addLogUpAction(new SignUpAction());
 
         view.setOnCloseRequest(
-                windowEvent -> { DBConnection.shutdownConnection();
-                System.out.println("Cerrada la conección");}
-                );
+            windowEvent -> { DBConnection.shutdownConnection();
+                previusWindow.showWindow();
+                view.close();
+            }
+        );
     }
 
     @Override
-    public void setPreviousWindow(Returnable previous) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void setPreviusWindow(Returnable previous) {
+        this.previusWindow = previous;
     }
 
     @Override
@@ -60,8 +64,7 @@ public class LoginController implements Returnable{
         @Override
         public void handle(ActionEvent actionEvent){
             try {
-                System.out.println("iniciar sesión....");
-                System.out.printf("user: %s password: %s\n", view.getUsuarioInput(), view.getContrasenaInput() );
+
                 authInfo = ls.authUser(view.getUsuarioInput(), view.getContrasenaInput());
                 
                 if(!authInfo.isLoggeoExitoso()){
@@ -77,7 +80,8 @@ public class LoginController implements Returnable{
                     case ADMIN:
                         MenuAdministrador menuAdministrador = new MenuAdministrador();
                         new StageDecoratorX(menuAdministrador);
-                        new MenuAdministradorController((Administrador) authInfo.getUsuario(), menuAdministrador);
+                        new MenuAdministradorController((Administrador) authInfo.getUsuario(), menuAdministrador)
+                                .setPreviusWindow(LoginController.this);
                         menuAdministrador.show();
                         break;
                         
@@ -85,7 +89,7 @@ public class LoginController implements Returnable{
 
                         loader = new FXMLLoader(getClass().getResource("/views/MenuVendedor.fxml"));
                         stage.setScene(new Scene(loader.load()));
-                        loader.<MenuVendedorController>getController().setPreviousWindow(LoginController.this);
+                        loader.<MenuVendedorController>getController().setPreviusWindow(LoginController.this);
                         new StageDecoratorX(stage);
                         stage.show();
                         break;
@@ -93,7 +97,7 @@ public class LoginController implements Returnable{
                     case COMPRADOR:
                         loader = new FXMLLoader(getClass().getResource("/views/MenuComprador.fxml"));
                         stage.setScene(new Scene(loader.load()));
-                        loader.<MenuCompradorController>getController().setPreviousWindow(LoginController.this);
+                        loader.<MenuCompradorController>getController().setPreviusWindow(LoginController.this);
                         new StageDecoratorX(stage);
                         stage.show();
                         break;
