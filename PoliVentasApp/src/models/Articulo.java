@@ -24,6 +24,7 @@ public class Articulo {
     private Image icon;
     Vendedor vendedor;
     Integer numero_busquedas;
+    private Boolean estado;
 
     public Articulo() {
 
@@ -105,6 +106,14 @@ public class Articulo {
     @Override
     public String toString() {
         return nombre + "  "+ categoria +"  " +precio ;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
     
     

@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javax.mail.internet.AddressException;
+import models.Articulo;
 import models.Pedido;
 import models.entities.Administrador;
 import models.entities.Usuario;
@@ -16,6 +17,8 @@ import utils.Returnable;
 import utils.StageDecoratorX;
 import views.CrearUsuario;
 import views.MenuAdministrador;
+import views.items.ArticuloItem;
+import views.items.ArticuloItemAdm;
 import views.items.PedidoItem;
 import views.items.UserItem;
 
@@ -39,13 +42,15 @@ public final class MenuAdministradorController extends MenuVendedorController im
         menuAdministrador.usersAction(new admUserOperation());
         menuAdministrador.compraAction(new admCompraOperation());
         menuAdministrador.createButtonUserAction(new crearUsuarioButton());
-        menuAdministrador.actualizarBtnAction(new actualizarVistaButton());
+        menuAdministrador.actualizarBtnAction(new actualizarVistaUsuarios());
+        menuAdministrador.actualizarBtnProductAction(new actualizarVistaProducto());
         ventanaRegistro.btnCrearRegistro( new eventoBtnRegistroUsuario());
         ventanaRegistro.btnLimpiarRegistro(new eventoBtnLimpiarRegistro());
         
         
         cargarPedidos();
         cargarUsuarios();
+        cargarProductos();
     }
 
     Usuario crearUsuario(){
@@ -68,27 +73,21 @@ public final class MenuAdministradorController extends MenuVendedorController im
         
         return nuevoUsuario;
     }
-    /*
-    void obtenerDatosPersonales(){
-        List<String> dataAdmin = db.getDatosUsuario(administrador);
-        for(String o:dataAdmin){
-            menuAdministrador.AsignarDatosAdministardor(o);
-        }
-    }*/
-    
-    
     
     void cargarUsuarios(){
         List<Usuario> usuarios =  db.getUsuarios();
         for(Usuario u: usuarios){
+            if(!u.getEstado()){
             System.out.println(u);
             UserItem userView = new UserItem(u);
             menuAdministrador.chargerUsuarios(userView);
+            }
         }
     }
     void cargarPedidos(){
         List<Pedido> pedidos =  db.getPedidos(administrador);
         for(Pedido p: pedidos){
+            
             System.out.println(p);
             PedidoItem item = new PedidoItem(p);
             item.setOnMouseClicked(new OnPedidoSelected(p));
@@ -102,7 +101,16 @@ public final class MenuAdministradorController extends MenuVendedorController im
                 case ANULADO:
                     menuAdministrador.chargerPedidosAnulados(item);
             }
-            //item.setOnMouseClicked(new MenuAdministradorController.OnPedidoSelected(item));
+        }
+    }
+    void cargarProductos(){
+        List<Articulo> articulos = db.getArticulos();
+        for(Articulo a: articulos){
+            if(!a.getEstado()){
+            System.out.println(a);
+            ArticuloItemAdm articuloView = new ArticuloItemAdm(a);
+            menuAdministrador.chargerProductos(articuloView);
+            }
         }
     }
 
@@ -172,11 +180,18 @@ public final class MenuAdministradorController extends MenuVendedorController im
         }
     }
     
-    class actualizarVistaButton implements EventHandler<MouseEvent>{
+    class actualizarVistaUsuarios implements EventHandler<MouseEvent>{
         @Override
         public void handle(MouseEvent actionEvent) {
             menuAdministrador.clearPanelUser();
             cargarUsuarios();
+        }
+    }
+    class actualizarVistaProducto implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent actionEvent) {
+            menuAdministrador.paneVerticalListProduct.getChildren().clear();
+            cargarProductos();
         }
     }
      

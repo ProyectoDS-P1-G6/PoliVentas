@@ -24,6 +24,7 @@ public class Usuario {
     protected String direccion;
     protected Integer matricula;
     protected Money saldo;
+    protected Boolean estado;
 
     Rol rol;
 
@@ -99,6 +100,14 @@ public class Usuario {
 
     public boolean comprobarUsuario(Usuario usuario) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public Rol getRol() {

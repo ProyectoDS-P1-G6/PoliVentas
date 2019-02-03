@@ -233,8 +233,6 @@ public class CompradorServiceDB {
     public Articulo parseArticulo(ResultSet data){
         Articulo articulo = new Articulo();
         try {
-
-            articulo = new Articulo();
             articulo.setId(data.getInt(1));
             articulo.setNombre(data.getString(2));
             articulo.setCategoria(data.getString(3));
@@ -244,6 +242,7 @@ public class CompradorServiceDB {
             articulo.setIcon(data.getString(7));
             articulo.setVendedor((Vendedor) loadUsuario(data.getInt(8), Rol.VENDEDOR));
             articulo.setNumero_busquedas(data.getInt(9));
+            articulo.setEstado(data.getBoolean(10));
 
             return articulo;
         } catch (SQLException ex) {

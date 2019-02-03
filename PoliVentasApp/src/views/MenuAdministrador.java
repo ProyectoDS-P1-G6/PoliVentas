@@ -20,6 +20,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import views.items.ArticuloItem;
+import views.items.ArticuloItemAdm;
 import views.items.PedidoItem;
 import views.items.UserItem;
 
@@ -200,7 +202,6 @@ public final class MenuAdministrador extends Stage {
         contenedorBusquedas = new VBox(15);
         contenedorBusquedas.setPrefWidth(400);
         contenedorBusquedas.setPrefHeight(400);
-        //contenedorBusquedas.setPrefSize(anchoPane-300, altoPane-100);
         contenedorBusquedas.getStyleClass().add("colorpanelicon");
         
         viewBusqueda.getChildren().addAll(tituloBusqueda,barraBusqueda,contenedorBusquedas);
@@ -288,6 +289,9 @@ public final class MenuAdministrador extends Stage {
     public void chargerUsuarios(UserItem userView){
         this.paneVerticalListUser.getChildren().add(userView);
     }
+    public void chargerProductos(ArticuloItemAdm articuloView){
+        this.paneVerticalListProduct.getChildren().add(articuloView);
+    }
     public void chargerPedidosPendientes(PedidoItem item){
         this.comprasPendientesList.getChildren().add(item);
     }
@@ -303,6 +307,12 @@ public final class MenuAdministrador extends Stage {
     }
     public void actualizarBtnAction(EventHandler<MouseEvent> eventHandler){
         btnActualizarVista.setOnMouseClicked(eventHandler);
+    }
+    public void createButtonProducAction(EventHandler<MouseEvent> eventHandler){
+        btnCrearProducto.setOnMouseClicked(eventHandler);
+    }
+    public void actualizarBtnProductAction(EventHandler<MouseEvent> eventHandler){
+        btnActualizarVistaProducto.setOnMouseClicked(eventHandler);
     }
     public void buscarAction(EventHandler<ActionEvent> eventHandler){
         btnBusqueda.setOnAction(eventHandler);

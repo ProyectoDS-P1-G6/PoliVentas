@@ -2,16 +2,14 @@ package views.items;
 
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import models.Articulo;
 
 public class ArticuloItem extends Item{
-
+    
     public ArticuloItem(Articulo articulo) {
         super();
         
-
         nombre_producto.setText(articulo.getNombre());
         nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
         precio.setText(articulo.getPrecio().toString());

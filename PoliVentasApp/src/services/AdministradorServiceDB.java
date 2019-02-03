@@ -19,11 +19,13 @@ import models.entities.Usuario;
 public class AdministradorServiceDB extends VendedorServiceDB{
 
     CallableStatement getAllUser;
+    CallableStatement getArticulos;
     
     private CallableStatement createUsuario;
     private CallableStatement readUsuarios;
     private CallableStatement updateUsuario;
     private CallableStatement deleteUsuario;
+    private CallableStatement deleteUsuarioLogic;
     private CallableStatement changeRolUsuario;
     
     private CallableStatement getPedidos;
@@ -38,10 +40,13 @@ public class AdministradorServiceDB extends VendedorServiceDB{
         try {
             getAllUser      = DBConnection.getInstance().prepareCall("{CALL getAllUser()}");
             changeRolUsuario = DBConnection.getInstance().prepareCall("CALL changeRolUsuario(?,?)");
+            getArticulos = DBConnection.getInstance().prepareCall("{CALL getAllArticulos()}");
+            
             createUsuario = DBConnection.getInstance().prepareCall("CALL createUsuarios(?,?,?,?,?,?,?,?,?)");
             readUsuarios  = DBConnection.getInstance().prepareCall("CALL readUsuarios(?)");
             updateUsuario = DBConnection.getInstance().prepareCall("CALL updateUsuario(?)");
             deleteUsuario = DBConnection.getInstance().prepareCall("CALL deleteUsuario(?)");
+            deleteUsuarioLogic = DBConnection.getInstance().prepareCall("CALL deleteUsuarioLogic(?)");
             
             getPedidos = DBConnection.getInstance().prepareCall("CALL getPedidos(?)");
             createArticulo = DBConnection.getInstance().prepareCall("CALL createArticulo(?)");
@@ -58,7 +63,21 @@ public class AdministradorServiceDB extends VendedorServiceDB{
 
     public List<Articulo> getArticulos(){
         List<Articulo> articulos = new ArrayList<>();
-
+        ResultSet  result;
+        
+        try {
+            getArticulos.execute();
+            
+            result = getArticulos.getResultSet();
+            
+            while (result.next()) {  
+                articulos.add(parseArticulo(result));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
+            ex.getStackTrace();
+        }
+        
         return articulos;
     }
     
@@ -103,11 +122,23 @@ public class AdministradorServiceDB extends VendedorServiceDB{
     }
     public void deleteUser(Usuario killUser){
         try {
-            deleteUsuario.setInt(1, killUser.getCedula());
-            if(!deleteUsuario.execute()){
+            deleteUsuarioLogic.setInt(1, killUser.getCedula());
+            if(!deleteUsuarioLogic.execute()){
                 JOptionPane.showMessageDialog(null, killUser.getNombres()+" ha sido eliminado definitivamente");
             }else{
                 JOptionPane.showMessageDialog(null, "ERROR!, no se ha podido eliminar "+killUser.getNombres());
+            }
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+    }
+    public void deleteProducto (Articulo killArticulo){
+        try {
+            deleteArticulo.setInt(1, killArticulo.getId());
+            if(!deleteArticulo.execute()){
+                JOptionPane.showMessageDialog(null, killArticulo.getNombre()+" ha sido eliminado definitivamente");
+            }else{
+                JOptionPane.showMessageDialog(null, "ERROR!, no se ha podido eliminar "+killArticulo.getNombre());
             }
         } catch (SQLException e) {
             e.getStackTrace();
@@ -169,7 +200,7 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             }
             
             user.setDireccion(data.getString("direccion"));
-            
+            user.setEstado(data.getBoolean("eliminado"));
             return user;
         } catch (SQLException ex) {
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
