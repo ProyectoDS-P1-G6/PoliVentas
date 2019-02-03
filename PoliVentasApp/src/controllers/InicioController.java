@@ -7,35 +7,38 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import models.Articulo;
 import models.entities.Usuario;
+import services.CompradorServiceDB;
 import utils.Returnable;
 import utils.StageDecoratorX;
 import views.Inicio;
 import views.LoginView;
+import views.items.ArticuloItem;
 
 public class InicioController implements Returnable{
     
-	private Inicio inicio;
-	
-	public InicioController(Inicio view){
-            this.inicio = view;
+    private Inicio inicioView;
 
-            inicio.addLoginAction((ActionEvent event) -> {
+    public InicioController(Inicio view){
+        this.inicioView = view;
+
+        inicioView.addLoginAction((ActionEvent event) -> {
             LoginView login = new LoginView();
             new StageDecoratorX(login);
             LoginController controller = new LoginController(new Usuario(), login);
             controller.setPreviusWindow(this);
-            inicio.hide();
+            inicioView.hide();
             login.setOnCloseRequest((e)->{
-                inicio.show();
+                inicioView.show();
             });
             login.show();
         });	
-        
-        
-		inicio.addregisterinAction((ActionEvent event) -> {
-            Stage stage = new Stage();
-            
+
+
+        inicioView.addregisterinAction((ActionEvent event) -> {
+        Stage stage = new Stage();
+
             try {
                 FXMLLoader loader;
                 loader = new FXMLLoader(getClass().getResource("/views/RegistroForm.fxml"));
@@ -45,12 +48,26 @@ public class InicioController implements Returnable{
             } catch (IOException ex) {
                 Logger.getLogger(InicioController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            stage.show();
-            inicio.close();
-        });
-	}
 
+            stage.show();
+            inicioView.close();
+        });
+    }
+
+    void populateList(){
+        CompradorServiceDB db = new CompradorServiceDB();
+        for(Articulo a: db.getArticulosMasBuscados()){
+            inicioView.addMasBuscado(new ArticuloItem(a));
+        }
+        
+        int i = 0;
+        for(Articulo a: db.getArticulosMasBuscados()){
+            if(i%2 == 0){
+                inicioView.addNuevoArticulo(new ArticuloItem(a));
+            }
+            i++;
+        }
+    }
     @Override
     public void setPreviusWindow(Returnable previous) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -58,6 +75,6 @@ public class InicioController implements Returnable{
 
     @Override
     public void showWindow() {
-        this.inicio.show();
+        this.inicioView.show();
     }
 }
