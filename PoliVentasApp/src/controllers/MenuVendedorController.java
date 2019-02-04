@@ -49,7 +49,7 @@ import views.items.*;
 public class MenuVendedorController implements Initializable, Returnable, MakeSearch {
 
     Returnable login;
-    private VendedorServiceDB db;
+    VendedorServiceDB db;
 
     @FXML
     private Label logout;
@@ -105,7 +105,7 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     void logOutAction(MouseEvent event) {
         Alert logoutAlert = new Alert(Alert.AlertType.CONFIRMATION);
         logoutAlert.setContentText("¿Está seguro de cerrar la sesión?");
-
+     
         Optional<ButtonType> result = logoutAlert.showAndWait();
         if (result.isPresent()) {
             if (result.get() == ButtonType.OK) {
@@ -233,7 +233,6 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     }
 
     class agregarProductoAction implements EventHandler<MouseEvent> {
-
         @Override
         public void handle(MouseEvent event) {
 
@@ -247,7 +246,7 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
                 Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
             }
             AgregarProductoController controller = loader.getController();
-            controller.setVendedorCon(db, (Vendedor) LoginServiceDB.getActualLogin().getUsuario());
+            controller.setVendedorCon(db, LoginServiceDB.getActualLogin().getUsuario());
 
         }
     }

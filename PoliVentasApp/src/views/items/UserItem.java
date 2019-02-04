@@ -52,7 +52,7 @@ public class UserItem extends UserBottomView{
         editar.setPrefWidth(opciones.getPrefWidth());
         eliminar.setPrefWidth(opciones.getPrefWidth());
         changeRole.setPrefWidth(opciones.getPrefWidth());
-        opciones.getChildren().addAll(editar,eliminar,changeRole);
+        opciones.getChildren().addAll(editar,eliminar);
 
         
         cuerpo.getChildren().addAll(foto,informacion,opciones);
@@ -117,7 +117,7 @@ public class UserItem extends UserBottomView{
              if(!ventanaRegistro.isShowing()){
                 System.out.println("registrarse....");
                 ventanaRegistro.setUser(user);
-                
+                ventanaRegistro.getButtonRegistrar().setText("Guardar");
                 ventanaRegistro.getNombre().setText(obtenerUser().getNombres());
                 ventanaRegistro.getApellidos().setText(obtenerUser().getApellidos());
                 ventanaRegistro.getCedula().setText(obtenerUser().getCedula().toString());

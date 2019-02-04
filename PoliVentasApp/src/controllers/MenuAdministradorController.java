@@ -2,18 +2,25 @@ package controllers;
 
 
 import controllers.handlers.OnPedidoSelected;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javax.mail.internet.AddressException;
 import models.Articulo;
 import models.Pedido;
 import models.entities.Administrador;
 import models.entities.Usuario;
+import models.entities.Vendedor;
 import services.AdministradorServiceDB;
+import services.LoginServiceDB;
+import services.VendedorServiceDB;
 import utils.Returnable;
 import utils.StageDecoratorX;
 import views.CrearUsuario;
@@ -30,13 +37,14 @@ public final class MenuAdministradorController extends MenuVendedorController im
     
     private final Administrador administrador;
     private final MenuAdministrador menuAdministrador;
-    private final AdministradorServiceDB db;
+    private final AdministradorServiceDB dbAdm;
     
     public MenuAdministradorController(Administrador modelo, MenuAdministrador view){
+        super();
         this.administrador = modelo;
         this.menuAdministrador = view;
-        db = new AdministradorServiceDB();
-        
+        dbAdm = new AdministradorServiceDB();
+        db = new VendedorServiceDB();
         menuAdministrador.buscarAction(new buscarOperation() );
         menuAdministrador.productosAction( new admProductOperation());
         menuAdministrador.usersAction(new admUserOperation());
@@ -76,7 +84,7 @@ public final class MenuAdministradorController extends MenuVendedorController im
     }
     
     void cargarUsuarios(){
-        List<Usuario> usuarios =  db.getUsuarios();
+        List<Usuario> usuarios =  dbAdm.getUsuarios();
         for(Usuario u: usuarios){
             if(!u.getEstado()){
             System.out.println(u);
@@ -86,7 +94,7 @@ public final class MenuAdministradorController extends MenuVendedorController im
         }
     }
     void cargarPedidos(){
-        List<Pedido> pedidos =  db.getPedidos(administrador);
+        List<Pedido> pedidos =  dbAdm.getPedidos(administrador);
         for(Pedido p: pedidos){
             
             System.out.println(p);
@@ -105,7 +113,7 @@ public final class MenuAdministradorController extends MenuVendedorController im
         }
     }
     void cargarProductos(){
-        List<Articulo> articulos = db.getArticulos();
+        List<Articulo> articulos = dbAdm.getArticulos();
         for(Articulo a: articulos){
             if(!a.getEstado()){
             System.out.println(a);
@@ -165,7 +173,7 @@ public final class MenuAdministradorController extends MenuVendedorController im
         @Override
         public void handle(ActionEvent actionEvent) {
             
-             db.createUser(crearUsuario());
+             dbAdm.createUser(crearUsuario());
              ventanaRegistro.limpiarCampos();ventanaRegistro.close();
              menuAdministrador.clearPanelUser();
              cargarUsuarios();
@@ -195,7 +203,22 @@ public final class MenuAdministradorController extends MenuVendedorController im
             cargarProductos();
         }
     }
-     
+    class agregarProducto implements EventHandler<MouseEvent>{
+        @Override
+        public void handle(MouseEvent actionEvent) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/AgregarProducto.fxml"));
+            Stage agregar = new Stage();
+            try {
+                agregar.setScene(new Scene(loader.load()));
+                new StageDecoratorX(agregar);
+                agregar.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            AgregarProductoController controller = loader.getController();
+            controller.setVendedorCon(dbAdm, (Vendedor) LoginServiceDB.getActualLogin().getUsuario());
+        }
+    }
     @Override
     public void setPreviusWindow(Returnable previous) {
         this.previousWindows = previous;

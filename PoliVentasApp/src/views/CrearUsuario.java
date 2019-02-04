@@ -64,6 +64,10 @@ public class CrearUsuario extends Stage {
     MenuAdministradorController menu;
     MenuAdministrador menuviw;
     Usuario user;
+
+    public Button getButtonRegistrar() {
+        return buttonRegistrar;
+    }
     
     public CrearUsuario() {
         super();

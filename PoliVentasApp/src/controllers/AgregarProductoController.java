@@ -20,6 +20,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Articulo;
+import models.entities.Usuario;
 import models.entities.Vendedor;
 import services.VendedorServiceDB;
 
@@ -75,7 +76,7 @@ public class AgregarProductoController implements Initializable {
     private ComboBox<String> combobox;
     Articulo articulo;
     private VendedorServiceDB db;
-    private Vendedor vendedor;
+    private Usuario vendedor;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -89,7 +90,7 @@ public class AgregarProductoController implements Initializable {
         stage.close();
     }
 
-    public void setVendedorCon(VendedorServiceDB DB,Vendedor vendedor) {
+    public void setVendedorCon(VendedorServiceDB DB,Usuario vendedor) {
         this.db = DB;
         this.vendedor=vendedor;
         List<String> categorias =db.getCategorias();
