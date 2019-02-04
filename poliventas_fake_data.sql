@@ -6,7 +6,7 @@ Usuario(id, nombres , apellidos, email, telefono, usa_whatsapp, direccion, matri
 VALUES
 (1299999999, 'Miguelx','ax', 'mapatino@espol.edu.ec', 985858585, true, 'enrique segoviano', 201608148, 'A'),
 (1200000000, 'Neythanx','ax', 'xxx@espol.edu.ec', 985858585, true, 'enrique segoviano', 201600000, 'C'),
-(1211111111, 'Carlax','ax', 'xxx@espol.edu.ec', 985858585, true, 'enrique segoviano y la h', 201611111, 'V'),
+(1211111111, 'Carlax','ax', 'carmsanc@espol.edu.ec', 985858585, true, 'enrique segoviano y la h', 201611111, 'V'),
 (1211111112, 'MaxSteel','Reloaded', 'xxxmsr@espol.edu.ec', 985858585, true, 'enrique segoviano 2', 201611112, 'V'),
 (1211111113, 'Jhon','Travolta', 'xxxt@espol.edu.ec', 985858585, true, 'enrique segoviano y la k', 201611113, 'V');
 
