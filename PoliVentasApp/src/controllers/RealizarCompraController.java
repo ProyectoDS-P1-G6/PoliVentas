@@ -30,6 +30,7 @@ import models.pago.PagoEfectivo;
 import models.pago.PagoVirtual;
 import services.CompradorServiceDB;
 import services.LoginServiceDB;
+import utils.NotificarVenta;
 /**
  * FXML Controller class
  *
@@ -65,7 +66,7 @@ public class RealizarCompraController implements Initializable {
     
     CompradorServiceDB db;
 
-    
+    private NotificarVenta nv;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,7 +79,7 @@ public class RealizarCompraController implements Initializable {
                 (ObservableValue<? extends Number> ov, Number old_val, Number new_val) -> {
                     cantidad.setText(String.valueOf(new_val.intValue()));
                 });
-        
+        nv = new NotificarVenta();
    }
    
    @FXML
@@ -90,7 +91,9 @@ public class RealizarCompraController implements Initializable {
         pedido.setArticulo(articulo);
         pedido.setComprador(LoginServiceDB.getActualLogin().getUsuario());
         pedido.setCantidad(Integer.parseInt(cantidad.getText()));
-        pedido.setTotal(articulo.getPrecio().getAmount().doubleValue()*pedido.getCantidad());
+        double tot = articulo.getPrecio().getAmount().doubleValue()*pedido.getCantidad();
+        
+        //pedido.setTotal((Double)tot);
         pedido.setFecha(Calendar.getInstance().getTime());
         
         if(pago_efectivo.isSelected()){
@@ -107,6 +110,9 @@ public class RealizarCompraController implements Initializable {
             metodoPago.transferir(pedido);
             ((Stage)nombre.getScene().getWindow()).close();
         }
+        String msj =  pedido.getArticulo().getNombre() + " por el comprador "+ pedido.getComprador().getNombres()+" "+ pedido.getComprador().getApellidos()+ "\n"+"El total del pedido es "+ Double.toString(tot);
+        nv.SendMail(pedido.getArticulo().getVendedor().getContactInfo().getEmail().getAddress(),msj);
+
    }
     
     public void setArticulo(Articulo a){
