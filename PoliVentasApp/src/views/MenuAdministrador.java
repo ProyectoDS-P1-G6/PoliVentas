@@ -3,12 +3,16 @@ package views;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
+import controllers.MakeSearch;
+import controllers.handlers.OnSearchInputChanged;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -20,12 +24,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import services.CompradorServiceDB;
 import views.items.ArticuloItem;
 import views.items.ArticuloItemAdm;
 import views.items.PedidoItem;
 import views.items.UserItem;
 
-public final class MenuAdministrador extends Stage {
+public final class MenuAdministrador extends Stage{
 
     BorderPane root;
     public Pane viewSubMenu;
@@ -33,10 +38,15 @@ public final class MenuAdministrador extends Stage {
     
     //Controles de vista Busqueda
     public Label tituloBusqueda;
-    public VBox viewBusqueda;
+    public HBox viewBusqueda;
     public JFXTextField barraBusqueda;
     public JFXButton btnSearch;
     public VBox contenedorBusquedas;
+    public VBox contenedorResultados;
+    public VBox contenedorMasBuscados;
+    public VBox contenedorResultadosMasBuscados;
+    public ScrollPane scrollpaneResults;
+    public ScrollPane scrollpaneResultsMasBuscados;
     
     //Controles de vista del menu lateral principal
     AnchorPane anchorMenuLateral;
@@ -193,24 +203,37 @@ public final class MenuAdministrador extends Stage {
                 
     }
     public void chargeMenuBuscar(){
-        viewBusqueda = new VBox(15);
+        viewBusqueda = new HBox(15);
+        scrollpaneResults = new ScrollPane();
+        scrollpaneResultsMasBuscados = new ScrollPane();
         double altoPane = root.getPrefHeight(); 
         double anchoPane=800-menuLateral.getPrefWidth(); 
         viewBusqueda.getStyleClass().add("amdbusqueda");
         viewBusqueda.setPrefSize(anchoPane,altoPane);
         
         tituloBusqueda = new Label("Busqueda de Articulos");
+        
+        HBox contenedorSeachr = new HBox(10);
         barraBusqueda = new JFXTextField();
         barraBusqueda.setPrefWidth(300);
+        btnSearch = new JFXButton("Buscar");
+        contenedorSeachr.getChildren().addAll(barraBusqueda,btnSearch);
         
-        btnSearch = new JFXButton();
-        
+        contenedorResultados = new VBox(15);
         contenedorBusquedas = new VBox(15);
-        contenedorBusquedas.setPrefWidth(400);
-        contenedorBusquedas.setPrefHeight(400);
-        contenedorBusquedas.getStyleClass().add("colorpanelicon");
+        scrollpaneResults.setContent(contenedorResultados);
+        contenedorBusquedas.getChildren().addAll(contenedorSeachr,scrollpaneResults);
+        contenedorResultados.setPrefSize(anchoPane-400,altoPane);
         
-        viewBusqueda.getChildren().addAll(tituloBusqueda,barraBusqueda,contenedorBusquedas);
+        contenedorResultadosMasBuscados = new VBox(15);
+        contenedorMasBuscados = new VBox(15);
+        scrollpaneResultsMasBuscados.setContent(contenedorResultadosMasBuscados);
+        contenedorMasBuscados.getChildren().addAll(new Label("Artículos más Buscados"),scrollpaneResultsMasBuscados);
+        contenedorResultadosMasBuscados.setPrefWidth((viewBusqueda.getPrefWidth()-contenedorResultados.getPrefWidth())-30);
+        contenedorResultadosMasBuscados.setPrefHeight(altoPane);
+        contenedorResultadosMasBuscados.getStyleClass().add("colorpanelicon");
+        
+        viewBusqueda.getChildren().addAll(contenedorBusquedas,contenedorMasBuscados);
         
     }
     public void chargeMenuProduc(){
@@ -365,5 +388,4 @@ public final class MenuAdministrador extends Stage {
 //        this.masBuscadosList.getChildren().remove(item);
 //    }
 
-    
 }

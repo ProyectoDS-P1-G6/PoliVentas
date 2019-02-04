@@ -28,9 +28,6 @@ public class OnSearchInputChanged implements ChangeListener<String> {
     public OnSearchInputChanged(MakeSearch makeSearchController) {
         this.controller = makeSearchController;
     }
-    
-    
-    
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             
