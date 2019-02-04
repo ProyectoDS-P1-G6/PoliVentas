@@ -28,12 +28,11 @@ public final class MenuAdministradorController extends MenuVendedorController im
     CrearUsuario ventanaRegistro = new CrearUsuario();
     Returnable previousWindows;
     
-    
     private final Administrador administrador;
     private final MenuAdministrador menuAdministrador;
     private final AdministradorServiceDB db;
     
-    public MenuAdministradorController(Administrador modelo, MenuAdministrador view) {
+    public MenuAdministradorController(Administrador modelo, MenuAdministrador view){
         this.administrador = modelo;
         this.menuAdministrador = view;
         db = new AdministradorServiceDB();
@@ -43,6 +42,7 @@ public final class MenuAdministradorController extends MenuVendedorController im
         menuAdministrador.usersAction(new admUserOperation());
         menuAdministrador.compraAction(new admCompraOperation());
         menuAdministrador.createButtonUserAction(new crearUsuarioButton());
+        menuAdministrador.createButtonProducAction(new agregarProductoAction());
         menuAdministrador.actualizarBtnAction(new actualizarVistaUsuarios());
         menuAdministrador.actualizarBtnProductAction(new actualizarVistaProducto());
         ventanaRegistro.btnCrearRegistro( new eventoBtnRegistroUsuario());
@@ -195,7 +195,6 @@ public final class MenuAdministradorController extends MenuVendedorController im
             cargarProductos();
         }
     }
-     
      
     @Override
     public void setPreviusWindow(Returnable previous) {

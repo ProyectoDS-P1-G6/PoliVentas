@@ -1,8 +1,11 @@
 package views;
 
+import controllers.MenuAdministradorController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -20,8 +23,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javax.mail.internet.AddressException;
 import models.entities.Rol;
 import models.entities.Usuario;
+import services.AdministradorServiceDB;
 
 public class CrearUsuario extends Stage {
 
@@ -55,8 +60,11 @@ public class CrearUsuario extends Stage {
     private final Label matriculalabel;
 
     private final List<Node> nodos;
+    AdministradorServiceDB db = new AdministradorServiceDB();
+    MenuAdministradorController menu;
+    MenuAdministrador menuviw;
+    Usuario user;
     
-
     public CrearUsuario() {
         super();
         container = new VBox();
@@ -119,7 +127,8 @@ public class CrearUsuario extends Stage {
         scene = new Scene(root);
         setScene(scene);
         setupView();
-        setupControl();
+        btnCrearRegistro( new eventoUpDateUsuario());
+        btnLimpiarRegistro(new eventoLimpiar());
     }
     
     public TextField getCedula() {
@@ -167,6 +176,14 @@ public class CrearUsuario extends Stage {
     public TextField getMatricula() {
         return matricula;
     }
+
+    public Usuario getUser() {
+        return user;
+    }
+
+    public void setUser(Usuario user) {
+        this.user = user;
+    }
     
 
     private void setupView() {
@@ -207,7 +224,6 @@ public class CrearUsuario extends Stage {
         Whatsapp.getItems().addAll("SI","NO");
         Whatsapp.getSelectionModel().selectFirst();
 
-        setDisableGuardarEliminar(true);
         Label title = new Label("Formulario de Registro");
         title.getStyleClass().add("title");
         title.setLayoutX(100);
@@ -225,19 +241,48 @@ public class CrearUsuario extends Stage {
      public void btnLimpiarRegistro(EventHandler<ActionEvent> eventHandler){
         buttonClear.setOnAction(eventHandler);
     }
-    private void setupControl() {
-        buttonClear.setOnAction(a -> {
+     
+    class eventoLimpiar implements EventHandler<ActionEvent>{
 
-            limpiarCampos();
-        });
-
+        @Override
+        public void handle(ActionEvent actionEvent) {
+             limpiarCampos();
+             
+            }
     }
 
-    private void setDisableGuardarEliminar(boolean b) {
-        //buttonGuardar.setDisable(b);
-    }
+    class eventoUpDateUsuario implements EventHandler<ActionEvent>{
 
-    
+        @Override
+        public void handle(ActionEvent actionEvent) {
+             db.updateUser(crearUsuario());
+             close();
+             System.out.println("USUARIO EDITADO CON EXITO");
+             
+            }
+    }
+    Usuario crearUsuario(){
+        
+        Usuario nuevoUsuario = Usuario.createUserByRol(getPerfil().getValue());
+        
+        nuevoUsuario.setNombres(getNombre().getText());
+        nuevoUsuario.setApellidos(getApellidos().getText());
+        nuevoUsuario.setCedula(Integer.parseInt(getCedula().getText()));
+        String value = getWhatsapp().getValue();
+        try {
+            nuevoUsuario.setContactInfo(getEmail().getText(),
+                    Integer.parseInt(getTelefono().getText()),
+                    parseBooleanWhatsapp(value));
+        } catch (AddressException ex) {
+            Logger.getLogger(MenuAdministradorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        nuevoUsuario.setDireccion(getDireccion().getText());
+        nuevoUsuario.setApellidos(getApellidos().getText());
+        //nuevoUsuario.setMatricula(Integer.parseInt(getMatricula().getText()));
+
+        
+        return nuevoUsuario;
+    }
 
     public void limpiarCampos() {
         cedula.setText(null);
@@ -251,8 +296,9 @@ public class CrearUsuario extends Stage {
         Whatsapp.setValue("SI");
 
     }
-
+    
     public Parent getRoot() {
         return root;
     }
+    
 }

@@ -29,6 +29,7 @@ public final class MenuAdministrador extends Stage {
 
     BorderPane root;
     public Pane viewSubMenu;
+    public Label logout;
     
     //Controles de vista Busqueda
     public Label tituloBusqueda;
@@ -110,6 +111,7 @@ public final class MenuAdministrador extends Stage {
         lUserAdminName =  new Label("User Admin");
         iconUserAdmin.getStyleClass().add("colorLabel");
         lineuser = new Line();
+        logout = new Label("Log Out");
         
         btnUsuarios = new JFXButton("Usuarios");
         btnUsuarios.getStyleClass().add("colorlabel");
@@ -142,6 +144,9 @@ public final class MenuAdministrador extends Stage {
         
         iconUserAdmin.setLayoutX(60);
         iconUserAdmin.setLayoutY(10);
+        logout.setLayoutX(110);
+        logout.setLayoutY(25);
+        logout.getStyleClass().add("colorlabel");
         lUserAdminName.setLayoutX(60);
         lUserAdminName.getStyleClass().add("colorlabel");
         lUserAdminName.setLayoutY(70);
@@ -149,7 +154,8 @@ public final class MenuAdministrador extends Stage {
         lineuser.setLayoutY(lUserAdminName.getLayoutY()+20);
         lineuser.getStyleClass().add("linecolor");
         
-        menuLateral.getChildren().addAll(anchorMenuIcon,iconUserAdmin,lUserAdminName,lineuser,btnBusqueda,btnUsuarios,btnProductos,btnComprar);
+        
+        menuLateral.getChildren().addAll(anchorMenuIcon,iconUserAdmin,lUserAdminName,lineuser,btnBusqueda,btnUsuarios,btnProductos,btnComprar,logout);
         menuLateral.setPrefWidth(250);
         menuLateral.setPrefHeight(root.getPrefHeight());
         menuLateral.getStyleClass().add("vbox");
@@ -300,6 +306,10 @@ public final class MenuAdministrador extends Stage {
     }
     public void chargerPedidosAnulados(PedidoItem item){
         this.compraseAnuladasList.getChildren().add(item);
+    }
+    
+    public void cerrarSesion(EventHandler<MouseEvent> eventHandler){
+        logout.setOnMouseClicked(eventHandler);
     }
 
     public void createButtonUserAction(EventHandler<MouseEvent> eventHandler){

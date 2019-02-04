@@ -44,7 +44,7 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             
             createUsuario = DBConnection.getInstance().prepareCall("CALL createUsuarios(?,?,?,?,?,?,?,?,?)");
             readUsuarios  = DBConnection.getInstance().prepareCall("CALL readUsuarios(?)");
-            updateUsuario = DBConnection.getInstance().prepareCall("CALL updateUsuario(?)");
+            updateUsuario = DBConnection.getInstance().prepareCall("CALL updateUsuario(?,?,?,?,?,?,?,?)");
             deleteUsuario = DBConnection.getInstance().prepareCall("CALL deleteUsuario(?)");
             deleteUsuarioLogic = DBConnection.getInstance().prepareCall("CALL deleteUsuarioLogic(?)");
             
@@ -104,6 +104,21 @@ public class AdministradorServiceDB extends VendedorServiceDB{
     }
     
     
+    public void updateUser(Usuario user){
+        try {
+            updateUsuario.setInt(1,user.getCedula());
+            updateUsuario.setString(2, user.getNombres());
+            updateUsuario.setString(3, user.getApellidos());
+            updateUsuario.setString(4, user.getContactInfo().getEmail().toString());
+            updateUsuario.setString(5, user.getContactInfo().getTelefono().toString());
+            updateUsuario.setBoolean(6, user.getContactInfo().usaWhatsapp());
+            updateUsuario.setString(7, user.getDireccion());
+            updateUsuario.setString(8, Rol.getRolChar(user.getRol()));
+            updateUsuario.executeQuery();
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+    }
     public void createUser(Usuario user){
         try {
             createUsuario.setInt(1,user.getCedula());
@@ -113,7 +128,7 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             createUsuario.setString(5, user.getContactInfo().getTelefono().toString());
             createUsuario.setBoolean(6, user.getContactInfo().usaWhatsapp());
             createUsuario.setString(7, user.getDireccion());
-            createUsuario.setInt(8, user.getMatricula());
+            createUsuario.setString(8, user.getMatricula().toString());
             createUsuario.setString(9, Rol.getRolChar(user.getRol()));
             createUsuario.executeQuery();
         } catch (SQLException e) {

@@ -14,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import models.entities.Usuario;
 import services.AdministradorServiceDB;
+import utils.StageDecoratorX;
+import views.CrearUsuario;
 /**
  *
  * @author Usuario
@@ -23,10 +25,12 @@ public class UserItem extends UserBottomView{
     JFXButton editar;
     JFXButton eliminar;
     JFXButton changeRole;
+    CrearUsuario ventanaRegistro;
     AdministradorServiceDB db = new AdministradorServiceDB();
     public UserItem(Usuario usuario) {
         super();
         this.user=usuario;
+        this.ventanaRegistro= new CrearUsuario();
         foto = new ImageView(new Image("file:src/assets/iconUsermale.png"));
         foto.setFitHeight(50); foto.setFitWidth(50);
         
@@ -53,6 +57,7 @@ public class UserItem extends UserBottomView{
         
         cuerpo.getChildren().addAll(foto,informacion,opciones);
         btnEliminarAction((EventHandler<ActionEvent>) new eventoEliminarUsuario(db));
+        btnEditarAction((EventHandler<ActionEvent>) new eventoEditarUsuario(db));
 
     }
     public Usuario obtenerUser(){
@@ -80,6 +85,7 @@ public class UserItem extends UserBottomView{
     public JFXButton getChangeRole() {
         return changeRole;
     }
+    
     class eventoEliminarUsuario implements EventHandler<ActionEvent>{
         AdministradorServiceDB dbl;
         public eventoEliminarUsuario(AdministradorServiceDB db) {
@@ -97,6 +103,34 @@ public class UserItem extends UserBottomView{
                 System.out.println("Usuario " +obtenerUser().getNombres()+" "+obtenerUser().getCedula()+ " eliminado");
             }else if(seleccion==JOptionPane.NO_OPTION){
                 JOptionPane.showMessageDialog(null, "Operacion Cancelada");
+            }
+        }
+    }
+    class eventoEditarUsuario implements EventHandler<ActionEvent>{
+        AdministradorServiceDB dbl;
+        public eventoEditarUsuario(AdministradorServiceDB db) {
+            this.dbl = db;
+        }
+        
+        @Override
+        public void handle(ActionEvent event){
+             if(!ventanaRegistro.isShowing()){
+                System.out.println("registrarse....");
+                ventanaRegistro.setUser(user);
+                
+                ventanaRegistro.getNombre().setText(obtenerUser().getNombres());
+                ventanaRegistro.getApellidos().setText(obtenerUser().getApellidos());
+                ventanaRegistro.getCedula().setText(obtenerUser().getCedula().toString());
+                ventanaRegistro.getCedula().setDisable(true);
+                ventanaRegistro.getDireccion().setText(obtenerUser().getDireccion());
+                ventanaRegistro.getEmail().setText(obtenerUser().getContactInfo().getEmail().toString());
+                ventanaRegistro.getTelefono().setText(obtenerUser().getContactInfo().getTelefono().toString());
+                ventanaRegistro.getMatricula().setDisable(true);
+                ventanaRegistro.getWhatsapp().setValue(obtenerUser().getContactInfo().getSWhatsapp());
+                ventanaRegistro.getPerfil().setValue(obtenerUser().getRol());
+                
+                new StageDecoratorX(ventanaRegistro);
+                ventanaRegistro.show();
             }
         }
     }

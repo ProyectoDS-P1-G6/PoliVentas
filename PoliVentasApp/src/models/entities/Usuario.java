@@ -98,10 +98,6 @@ public class Usuario {
         this.matricula = matricula;
     }
 
-    public boolean comprobarUsuario(Usuario usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public Boolean getEstado() {
         return estado;
     }
@@ -153,7 +149,13 @@ public class Usuario {
             return usaWhatsapp;
         }
         
-        
+        public String getSWhatsapp(){
+            if(usaWhatsapp){               
+                return "SI";
+            }else{
+                return "NO";
+            }
+        }
 
         @Override
         public String toString() {

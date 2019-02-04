@@ -76,6 +76,7 @@ public class AgregarProductoController implements Initializable {
     Articulo articulo;
     private VendedorServiceDB db;
     private Vendedor vendedor;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -83,7 +84,7 @@ public class AgregarProductoController implements Initializable {
 
     @FXML
     void cancelarAction(ActionEvent event) {
-Stage stage = (Stage) cancelarbutton.getScene().getWindow();
+        Stage stage = (Stage) cancelarbutton.getScene().getWindow();
 
         stage.close();
     }
