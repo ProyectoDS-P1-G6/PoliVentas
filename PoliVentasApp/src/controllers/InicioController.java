@@ -29,7 +29,7 @@ public class InicioController implements Returnable{
             LoginController controller = new LoginController(new Usuario(), login);
             controller.setPreviusWindow(this);
             inicioView.hide();
-            login.setOnCloseRequest((e)->{
+            login.setOnCloseRequest(e->{
                 inicioView.show();
             });
             login.show();

@@ -93,7 +93,7 @@ public class RealizarCompraController implements Initializable {
         pedido.setCantidad(Integer.parseInt(cantidad.getText()));
         double tot = articulo.getPrecio().getAmount().doubleValue()*pedido.getCantidad();
         
-        //pedido.setTotal((Double)tot);
+        pedido.setTotal((Double)tot);
         pedido.setFecha(Calendar.getInstance().getTime());
         
         if(pago_efectivo.isSelected()){
@@ -106,7 +106,7 @@ public class RealizarCompraController implements Initializable {
         }
         
         Optional<ButtonType> result = transactionMessage.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.isPresent() && result.get() == ButtonType.OK){
             metodoPago.transferir(pedido);
             ((Stage)nombre.getScene().getWindow()).close();
         }
@@ -128,5 +128,12 @@ public class RealizarCompraController implements Initializable {
     public void setDBService(CompradorServiceDB db){
         this.db = db;
     };
+
+    public CompradorServiceDB getDb() {
+        return db;
+    }
     
+    public Articulo getArticulo(){
+    return this.articulo;
+    }
 }

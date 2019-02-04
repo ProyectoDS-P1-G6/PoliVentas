@@ -20,7 +20,7 @@ public interface MakeSearch {
     String getTextInput();
     void cleanPedidosPendientes();
     void actualizarPedidosPendientes();
-    ContextMenu getSugerencias_busqueda();
+    ContextMenu getSugerenciasBusqueda();
     TextField getSearchBox();
     CompradorServiceDB getDB();
     void addArticulosMasBuscados();

@@ -16,90 +16,87 @@ import models.Pedido;
 import models.entities.Rol;
 import models.entities.Usuario;
 
-public class AdministradorServiceDB extends VendedorServiceDB{
+public class AdministradorServiceDB extends VendedorServiceDB {
 
     CallableStatement getAllUser;
     CallableStatement getArticulos;
-    
+
     private CallableStatement createUsuario;
     private CallableStatement updateUsuario;
     //private CallableStatement deleteUsuario;
     private CallableStatement deleteUsuarioLogic;
     private CallableStatement changeRolUsuario;
-    
+
     private CallableStatement getPedidos;
-    
+
     private CallableStatement deleteArticulo;
 
-
-    public AdministradorServiceDB(){
+    public AdministradorServiceDB() {
 
         try {
-            getAllUser      = DBConnection.getInstance().prepareCall("{CALL getAllUser()}");
+            getAllUser = DBConnection.getInstance().prepareCall("{CALL getAllUser()}");
             changeRolUsuario = DBConnection.getInstance().prepareCall("CALL changeRolUsuario(?,?)");
             getArticulos = DBConnection.getInstance().prepareCall("{CALL getAllArticulos()}");
-            
+
             createUsuario = DBConnection.getInstance().prepareCall("CALL createUsuarios(?,?,?,?,?,?,?,?,?)");
             updateUsuario = DBConnection.getInstance().prepareCall("CALL updateUsuario(?,?,?,?,?,?,?,?)");
             //deleteUsuario = DBConnection.getInstance().prepareCall("CALL deleteUsuario(?)");
             deleteUsuarioLogic = DBConnection.getInstance().prepareCall("CALL deleteUsuarioLogic(?)");
-            
+
             getPedidos = DBConnection.getInstance().prepareCall("CALL getPedidos(?)");
             deleteArticulo = DBConnection.getInstance().prepareCall("CALL deleteArticulo(?)");
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
-        }catch (Exception e){
-            System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
+        } catch (Exception e) {
+            System.out.printf("Error %s %s\n", e.getMessage(), e.getCause());
         }
     }
 
-    public List<Articulo> getArticulos(){
+    public List<Articulo> getArticulos() {
         List<Articulo> articulos = new ArrayList<>();
-        ResultSet  result;
-        
+        ResultSet result;
+
         try {
             getArticulos.execute();
-            
+
             result = getArticulos.getResultSet();
-            
-            while (result.next()) {  
+
+            while (result.next()) {
                 articulos.add(parseArticulo(result));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
             ex.getStackTrace();
         }
-        
+
         return articulos;
     }
-    
-    public List<Pedido> getPedidos(Usuario usuario){
+
+    public List<Pedido> getPedidos(Usuario usuario) {
         List<Pedido> pedidos = new LinkedList<>();
-        
-        ResultSet  result;
-        
+
+        ResultSet result;
+
         try {
             getPedidos.setInt(1, usuario.getCedula());
             getPedidos.execute();
-            
+
             result = getPedidos.getResultSet();
-            
-            while (result.next()) {  
+
+            while (result.next()) {
                 pedidos.add(parsePedido(result));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
         return pedidos;
     }
-    
-    
-    public void updateUser(Usuario user){
+
+    public void updateUser(Usuario user) {
         try {
-            updateUsuario.setInt(1,user.getCedula());
+            updateUsuario.setInt(1, user.getCedula());
             updateUsuario.setString(2, user.getNombres());
             updateUsuario.setString(3, user.getApellidos());
             updateUsuario.setString(4, user.getContactInfo().getEmail().toString());
@@ -112,9 +109,10 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             e.getStackTrace();
         }
     }
-    public void createUser(Usuario user){
+
+    public void createUser(Usuario user) {
         try {
-            createUsuario.setInt(1,user.getCedula());
+            createUsuario.setInt(1, user.getCedula());
             createUsuario.setString(2, user.getNombres());
             createUsuario.setString(3, user.getApellidos());
             createUsuario.setString(4, user.getContactInfo().getEmail().toString());
@@ -128,72 +126,56 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             e.getStackTrace();
         }
     }
-    public void deleteUser(Usuario killUser){
+
+    public void deleteUser(Usuario killUser) {
         try {
             deleteUsuarioLogic.setInt(1, killUser.getCedula());
-            if(!deleteUsuarioLogic.execute()){
-                JOptionPane.showMessageDialog(null, killUser.getNombres()+" ha sido eliminado definitivamente");
-            }else{
-                JOptionPane.showMessageDialog(null, "ERROR!, no se ha podido eliminar "+killUser.getNombres());
+            if (!deleteUsuarioLogic.execute()) {
+                JOptionPane.showMessageDialog(null, killUser.getNombres() + " ha sido eliminado definitivamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR!, no se ha podido eliminar " + killUser.getNombres());
             }
         } catch (SQLException e) {
             e.getStackTrace();
         }
     }
-    public void deleteProducto (Articulo killArticulo){
+
+    public void deleteProducto(Articulo killArticulo) {
         try {
             deleteArticulo.setInt(1, killArticulo.getId());
-            if(!deleteArticulo.execute()){
-                JOptionPane.showMessageDialog(null, killArticulo.getNombre()+" ha sido eliminado definitivamente");
-            }else{
-                JOptionPane.showMessageDialog(null, "ERROR!, no se ha podido eliminar "+killArticulo.getNombre());
+            if (!deleteArticulo.execute()) {
+                JOptionPane.showMessageDialog(null, killArticulo.getNombre() + " ha sido eliminado definitivamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "ERROR!, no se ha podido eliminar " + killArticulo.getNombre());
             }
         } catch (SQLException e) {
             e.getStackTrace();
         }
     }
-    
-    public void changeRol(Usuario usuario,Rol rol){
-        ResultSet result;
-        try {
-            
-            changeRolUsuario.setString(usuario.getCedula(),Rol.getRolChar(rol));
-            changeRolUsuario.execute();
-        } catch (SQLException e) {
-            Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, e);
-            e.getStackTrace();
-        }
-    }
-    
-    
-    
+
     public List<Usuario> getUsuarios() {
         List<Usuario> usuarios = new LinkedList<>();
-        
-        ResultSet  result;
-        
+
+        ResultSet result;
+
         try {
             getAllUser.execute();
-            
+
             result = getAllUser.getResultSet();
-            
-            while (result.next()) {  
+
+            while (result.next()) {
                 usuarios.add(parseUsuario(result));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
-            ex.getStackTrace();
+        } finally {
+            return usuarios;
         }
-        
-        
-        return usuarios;
+
     }
-    
-    
-    
-    public Usuario parseUsuario(ResultSet data){
-        
-        
+
+    public Usuario parseUsuario(ResultSet data) {
+
         try {
             Usuario user = Usuario.createUserByRol(Rol.parseRol(data.getString("tipo")));
             user.setCedula(data.getInt("id"));
@@ -206,16 +188,16 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             } catch (AddressException ex) {
                 Logger.getLogger(AdministradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             user.setDireccion(data.getString("direccion"));
             user.setEstado(data.getBoolean("eliminado"));
             return user;
         } catch (SQLException ex) {
             Logger.getLogger(CompradorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return new Usuario();
-        
+
     }
-    
+
 }

@@ -35,7 +35,7 @@ import views.popup.*;
  *
  * @author carlasanchez
  */
-public class DetallesVentaController implements Initializable {
+public class DetallesVentaController {
 
     @FXML
     VBox vBox;
@@ -63,13 +63,8 @@ public class DetallesVentaController implements Initializable {
     Pedido venta;
     private VendedorServiceDB db;
 
-    public DetallesVentaController() {
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-    }
+   
+    
 
     public void setVenta(Pedido venta, VendedorServiceDB db) {
         this.db = db;
@@ -102,7 +97,6 @@ public class DetallesVentaController implements Initializable {
 
     @FXML
     public void anularAction() {
-        System.out.println("Anular");
         ButtonType buttonYes = new ButtonType("Si", ButtonBar.ButtonData.YES);
         ButtonType buttonNO = new ButtonType("No", ButtonBar.ButtonData.NO);
 
@@ -114,10 +108,9 @@ public class DetallesVentaController implements Initializable {
         alert.setTitle("Confirmar anulación de venta");
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == buttonYes) {
+        if (result.isPresent() && result.get() == buttonYes) {
             db.anularVenta(this.venta);
             this.venta.setEstado(Estado.ANULADO);
-            System.out.println(venta.getEstado());
             Stage stage = (Stage) anular_button.getScene().getWindow();
             stage.close();
         }
@@ -126,7 +119,6 @@ public class DetallesVentaController implements Initializable {
 
     @FXML
     public void verMapaAction(javafx.event.ActionEvent actionEvent) {
-        System.out.println("ver mapa");
         Stage stage = (Stage) verMapa_button.getScene().getWindow();
         stage.close();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/VerMapa.fxml"));

@@ -21,9 +21,9 @@ import javax.mail.internet.MimeMessage;
  */
 public class NotificarVenta {
 
-    private final static String GMAIL_HOST = "smtp.gmail.com";
-    public static String Username = "appespolncml@gmail.com";
-    public static String PassWord = "passComprador";
+    private static final String GMAIL_HOST = "smtp.gmail.com";
+    public static final String Username = "appespolncml@gmail.com";
+    public static final String PassWord = "passComprador";
 
     public void SendMail(String To, String msg) {
         Properties props = new Properties();
@@ -43,8 +43,8 @@ public class NotificarVenta {
         try {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(Username));
-            message.setText("Se ha realizado el pedido del siguiente producto:\n" + msg);
-            message.setSubject("[POLIVENTAS APP] Tienes una nueva venta");
+            message.setText("Se ha realizado el pedido del siguiente producto: " + msg);
+            message.setSubject("[POLIVENTAS APP] Tienes un nuevo pedido.");
             message.addRecipients(Message.RecipientType.TO, new InternetAddress[]{new InternetAddress(To)});
             try (Transport t = session.getTransport("smtp")) {
                 t.connect(GMAIL_HOST, Username, PassWord);

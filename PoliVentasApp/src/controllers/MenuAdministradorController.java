@@ -25,7 +25,6 @@ import utils.Returnable;
 import utils.StageDecoratorX;
 import views.CrearUsuario;
 import views.MenuAdministrador;
-import views.items.ArticuloItem;
 import views.items.ArticuloItemAdm;
 import views.items.PedidoItem;
 import views.items.UserItem;
@@ -89,7 +88,7 @@ public final class MenuAdministradorController extends MenuVendedorController im
         List<Usuario> usuarios =  dbAdm.getUsuarios();
         for(Usuario u: usuarios){
             if(!u.getEstado()){
-            System.out.println(u);
+            
             UserItem userView = new UserItem(u);
             menuAdministrador.chargerUsuarios(userView);
             }
@@ -99,7 +98,6 @@ public final class MenuAdministradorController extends MenuVendedorController im
         List<Pedido> pedidos =  dbAdm.getPedidos(administrador);
         for(Pedido p: pedidos){
             
-            System.out.println(p);
             PedidoItem item = new PedidoItem(p);
             item.setOnMouseClicked(new OnPedidoSelected(p));
             switch(p.getEstado()){
@@ -118,7 +116,6 @@ public final class MenuAdministradorController extends MenuVendedorController im
         List<Articulo> articulos = dbAdm.getArticulos();
         for(Articulo a: articulos){
             if(!a.getEstado()){
-            System.out.println(a);
             ArticuloItemAdm articuloView = new ArticuloItemAdm(a);
             menuAdministrador.chargerProductos(articuloView);
             }
@@ -161,12 +158,9 @@ public final class MenuAdministradorController extends MenuVendedorController im
         @Override
         public void handle(MouseEvent actionEvent) {
             if(!ventanaRegistro.isShowing()){
-                System.out.println("registrarse....");
                 new StageDecoratorX(ventanaRegistro);
                 ventanaRegistro.show();
                
-            }else{
-                System.out.println("CULMINE EL ACTUAL REGISTRO");
             }
         }
     }
@@ -180,7 +174,6 @@ public final class MenuAdministradorController extends MenuVendedorController im
              menuAdministrador.clearPanelUser();
              cargarUsuarios();
              
-             System.out.println("USUARIO INSERTADO CON EXITO");
              
             }
     }

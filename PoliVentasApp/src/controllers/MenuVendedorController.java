@@ -82,7 +82,6 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     public void initialize(URL url, ResourceBundle rb) {
 
         db = new VendedorServiceDB();
-        //vendedor = (Vendedor) LoginServiceDB.getActualLogin().getUsuario();
         logout.setOnMouseClicked(new LogOutAction());
         agregarProducto.setOnMouseClicked(new agregarProductoAction());
         searchBox.setText("");
@@ -107,11 +106,11 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
         logoutAlert.setContentText("¿Está seguro de cerrar la sesión?");
      
         Optional<ButtonType> result = logoutAlert.showAndWait();
-        if (result.isPresent()) {
-            if (result.get() == ButtonType.OK) {
+        
+            if (result.isPresent() && result.get() == ButtonType.OK) {
                 ((Stage) logout.getScene().getWindow()).close();
                 login.showWindow();
-            }
+            
         }
     }
 
@@ -204,12 +203,12 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
             logoutAlert.setContentText("¿Está seguro de cerrar la sesión?");
 
             Optional<ButtonType> result = logoutAlert.showAndWait();
-            if (result.isPresent()) {
-                if (result.get() == ButtonType.OK) {
+           
+                if (result.isPresent() && result.get() == ButtonType.OK) {
                     ((Stage) logout.getScene().getWindow()).close();
                     login.showWindow();
                 }
-            }
+            
         }
     }
 
@@ -326,7 +325,7 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     }
 
     @Override
-    public ContextMenu getSugerencias_busqueda() {
+    public ContextMenu getSugerenciasBusqueda() {
         return sugerencias_busqueda;
     }
 

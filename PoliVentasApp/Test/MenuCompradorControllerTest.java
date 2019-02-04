@@ -13,15 +13,10 @@ import static org.junit.Assert.*;
  * @author Luis
  */
 import controllers.MenuCompradorController;
+import services.DBConnection;
 public class MenuCompradorControllerTest extends TestCase{
     
-    public void testPedidosActualizadosDB(){
-        MenuCompradorController con = new MenuCompradorController();
-        con.actualizarPedidosPendientes();
-        assertNotNull(con.getDB());
-        
-        
-    }
+    
   
     
 }

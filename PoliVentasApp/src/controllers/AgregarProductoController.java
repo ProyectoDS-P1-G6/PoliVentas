@@ -21,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import models.Articulo;
 import models.entities.Usuario;
-import models.entities.Vendedor;
 import services.VendedorServiceDB;
 
 /**
@@ -38,7 +37,7 @@ public class AgregarProductoController implements Initializable {
     private Label titulo;
 
     @FXML
-    private Label nombre_producto;
+    private Label nombreProducto;
 
     @FXML
     private Label precio;
@@ -50,28 +49,28 @@ public class AgregarProductoController implements Initializable {
     private Label categoria;
 
     @FXML
-    private Label tiempo_entrega;
+    private Label tiempoEntrega;
 
     @FXML
-    private TextField nombre_field;
+    private TextField nombreField;
 
     @FXML
-    private TextField precio_field;
+    private TextField precioField;
 
     @FXML
-    private TextField descripcion_field;
+    private TextField descripcionField;
 
     @FXML
-    private TextField categoria_field;
+    private TextField categoriaField;
 
     @FXML
-    private TextField tiempo_field;
+    private TextField tiempoField;
 
     @FXML
-    private Button cancelarbutton;
+    private Button cancelarButton;
 
     @FXML
-    private Button guardarbutton;
+    private Button guardarButton;
     @FXML
     private ComboBox<String> combobox;
     Articulo articulo;
@@ -85,7 +84,7 @@ public class AgregarProductoController implements Initializable {
 
     @FXML
     void cancelarAction(ActionEvent event) {
-        Stage stage = (Stage) cancelarbutton.getScene().getWindow();
+        Stage stage = (Stage) cancelarButton.getScene().getWindow();
 
         stage.close();
     }
@@ -104,8 +103,8 @@ public class AgregarProductoController implements Initializable {
     @FXML
     void guardarAction(ActionEvent event) {
         
-        db.agregarProducto(nombre_field.getText(),(combobox.getSelectionModel().getSelectedIndex()+1),descripcion_field.getText(),
-                Double.parseDouble(precio_field.getText()),Integer.parseInt(tiempo_field.getText()),vendedor.getCedula());
+        db.agregarProducto(nombreField.getText(),(combobox.getSelectionModel().getSelectedIndex()+1),descripcionField.getText(),
+                Double.parseDouble(precioField.getText()),Integer.parseInt(tiempoField.getText()),vendedor.getCedula());
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION,
                 "El articulo agregó con exito.",
@@ -114,7 +113,7 @@ public class AgregarProductoController implements Initializable {
         alert.setTitle("Modificación de producto");
         alert.show();
         
-        Stage stage = (Stage) guardarbutton.getScene().getWindow();
+        Stage stage = (Stage) guardarButton.getScene().getWindow();
 
         stage.close();
     }

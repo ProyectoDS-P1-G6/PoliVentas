@@ -111,7 +111,7 @@ public class RegistroFormController implements Initializable, Returnable{
         a.setContentText("se regitraran los siguentes datos\n"+ usuario);
         
         Optional<ButtonType> result = a.showAndWait();
-        if (result.get() == ButtonType.OK){
+        if (result.isPresent() && result.get() == ButtonType.OK){
             Alert msg;
             if(!db.registerUser(usuario)){
                 msg = new Alert(Alert.AlertType.INFORMATION);

@@ -16,7 +16,7 @@ import services.CompradorServiceDB;
  *
  * @author Luis
  */
-public class RealizarCompraControllerTest extends TestCase{
+    public class RealizarCompraControllerTest extends TestCase{
 
     public RealizarCompraControllerTest() {
         Articulo a = new Articulo();

@@ -20,7 +20,6 @@ import views.*;
 
 public class LoginController implements Returnable{
 
-    private Usuario usuario;
     private LoginView view;
     
     Returnable previusWindow;
@@ -33,7 +32,6 @@ public class LoginController implements Returnable{
     LoginServiceDB ls;
 
     public LoginController(Usuario usuario, LoginView view) {
-        this.usuario = usuario;
         this.view = view;
 
         ls = new LoginServiceDB();

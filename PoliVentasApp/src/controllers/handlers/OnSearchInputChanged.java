@@ -35,7 +35,7 @@ public class OnSearchInputChanged implements ChangeListener<String> {
            
            
            if(controller.getTextInput().length() < 3 || controller.getTextInput().length() > 20){
-               controller.getSugerencias_busqueda().hide();
+               controller.getSugerenciasBusqueda().hide();
                return;
            }
            if(newValue.length() < oldValue.length()){
@@ -50,7 +50,7 @@ public class OnSearchInputChanged implements ChangeListener<String> {
                     controller.cleanSearchResultItem();
                     String nombre = ((Label) sugerenciaItem.getContent()).getText();
                     controller.getSearchBox().setText(articulo.getNombre().toLowerCase());
-                    controller.getSugerencias_busqueda().hide();
+                    controller.getSugerenciasBusqueda().hide();
                     ArticuloItem item = new ArticuloItem(articulo);
                     item.setOnMouseClicked(new OnSearchItemSelected(articulo, controller));
                     controller.addSearchResultItem(item);
@@ -60,9 +60,9 @@ public class OnSearchInputChanged implements ChangeListener<String> {
                });
                menuItems.add(sugerenciaItem);
            }
-            controller.getSugerencias_busqueda().show(controller.getSearchBox(), Side.BOTTOM, 0, 0);
-            controller.getSugerencias_busqueda().getItems().clear();
-            controller.getSugerencias_busqueda().getItems().addAll(menuItems);
+            controller.getSugerenciasBusqueda().show(controller.getSearchBox(), Side.BOTTOM, 0, 0);
+            controller.getSugerenciasBusqueda().getItems().clear();
+            controller.getSugerenciasBusqueda().getItems().addAll(menuItems);
    
         } 
 }
