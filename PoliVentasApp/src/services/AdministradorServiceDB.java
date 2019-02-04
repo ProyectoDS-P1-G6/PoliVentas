@@ -22,16 +22,13 @@ public class AdministradorServiceDB extends VendedorServiceDB{
     CallableStatement getArticulos;
     
     private CallableStatement createUsuario;
-    private CallableStatement readUsuarios;
     private CallableStatement updateUsuario;
-    private CallableStatement deleteUsuario;
+    //private CallableStatement deleteUsuario;
     private CallableStatement deleteUsuarioLogic;
     private CallableStatement changeRolUsuario;
     
     private CallableStatement getPedidos;
-    private CallableStatement createArticulo;
-    private CallableStatement readArticulos;
-    private CallableStatement updateArticulo;
+    
     private CallableStatement deleteArticulo;
 
 
@@ -43,15 +40,11 @@ public class AdministradorServiceDB extends VendedorServiceDB{
             getArticulos = DBConnection.getInstance().prepareCall("{CALL getAllArticulos()}");
             
             createUsuario = DBConnection.getInstance().prepareCall("CALL createUsuarios(?,?,?,?,?,?,?,?,?)");
-            readUsuarios  = DBConnection.getInstance().prepareCall("CALL readUsuarios(?)");
             updateUsuario = DBConnection.getInstance().prepareCall("CALL updateUsuario(?,?,?,?,?,?,?,?)");
-            deleteUsuario = DBConnection.getInstance().prepareCall("CALL deleteUsuario(?)");
+            //deleteUsuario = DBConnection.getInstance().prepareCall("CALL deleteUsuario(?)");
             deleteUsuarioLogic = DBConnection.getInstance().prepareCall("CALL deleteUsuarioLogic(?)");
             
             getPedidos = DBConnection.getInstance().prepareCall("CALL getPedidos(?)");
-            createArticulo = DBConnection.getInstance().prepareCall("CALL createArticulo(?)");
-            readArticulos = DBConnection.getInstance().prepareCall("CALL readArticulos(?)");
-            updateArticulo = DBConnection.getInstance().prepareCall("CALL updateArticulo(?)");
             deleteArticulo = DBConnection.getInstance().prepareCall("CALL deleteArticulo(?)");
             
         } catch (SQLException e) {
