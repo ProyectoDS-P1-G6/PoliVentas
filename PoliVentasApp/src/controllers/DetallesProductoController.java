@@ -84,7 +84,7 @@ public class DetallesProductoController {
     }
 
     @FXML
-    void modificarAction(ActionEvent event) {
+    public void modificarAction(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/ModificarProducto.fxml"));
         Stage modificar = new Stage();
         try {

@@ -52,7 +52,7 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     VendedorServiceDB db;
 
     @FXML
-    private Label logout;
+    Label logout;
 
     @FXML
     private Label agregarProducto;

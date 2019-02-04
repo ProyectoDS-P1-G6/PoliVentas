@@ -45,6 +45,8 @@ public final class MenuAdministradorController extends MenuVendedorController im
         this.menuAdministrador = view;
         dbAdm = new AdministradorServiceDB();
         db = new VendedorServiceDB();
+        
+        menuAdministrador.cerrarSesion(new LogOutAction());
         menuAdministrador.buscarAction(new buscarOperation() );
         menuAdministrador.productosAction( new admProductOperation());
         menuAdministrador.usersAction(new admUserOperation());

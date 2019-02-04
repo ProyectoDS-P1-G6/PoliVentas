@@ -286,6 +286,7 @@ public final class MenuAdministrador extends Stage {
 
         }
     }
+    
     public void clearPanelUser(){
         paneVerticalListUser.getChildren().clear();
     }

@@ -6,16 +6,29 @@
 package views.items;
 
 import com.jfoenix.controls.JFXButton;
+import controllers.DetallesProductoController;
+import controllers.MenuCompradorController;
+import controllers.ModificarProductoController;
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import models.Articulo;
 import services.AdministradorServiceDB;
+import services.VendedorServiceDB;
+import utils.StageDecoratorX;
 
 /**
  *
@@ -27,8 +40,12 @@ public class ArticuloItemAdm extends Item{
     JFXButton editar;
     JFXButton eliminar;
     AdministradorServiceDB db = new AdministradorServiceDB();
+    VendedorServiceDB dbv = new VendedorServiceDB();
+    ModificarProductoController modProducControler;
+    
     public ArticuloItemAdm(Articulo art) {
         super();
+        this.modProducControler = new ModificarProductoController();
         this.articulo = art;
         nombre_producto.setText(articulo.getNombre());
         nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
@@ -57,6 +74,7 @@ public class ArticuloItemAdm extends Item{
         content.getChildren().addAll(icon, description,opciones);
         
         btnEliminarAction((EventHandler<ActionEvent>) new eventoEliminarProducto(db));
+        btnEditarAction((EventHandler<ActionEvent>) new eventoEditarArticulo());
     }
 
     public Image getIcon() {
@@ -103,4 +121,25 @@ public class ArticuloItemAdm extends Item{
             }
         }
     }
+    
+    
+     class eventoEditarArticulo implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent event) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/ModificarProducto.fxml"));
+            Stage agregar = new Stage();
+            try {
+                agregar.setScene(new Scene(loader.load()));
+                new StageDecoratorX(agregar);
+                agregar.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            ModificarProductoController controller = loader.getController();
+            controller.setArticulo(obtenerArticulo(), dbv);
+            
+        }
+     }
 }
