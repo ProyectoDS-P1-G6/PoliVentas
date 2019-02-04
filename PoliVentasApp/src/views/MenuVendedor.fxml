@@ -45,6 +45,8 @@
                         <Label layoutX="14.0" layoutY="14.0" styleClass="title" text="Mis Articulos" />
                         <Label layoutX="278.0" layoutY="14.0" styleClass="title" text="Historial Ventas" />
                         <Label layoutX="522.0" layoutY="14.0" styleClass="title" text="Mis Ventas Pendientes" />
+                        <JFXButton fx:id="updateArticulos" buttonType="RAISED" layoutX="202.0" layoutY="9.0" onAction="#updateActiculosAction" ripplerFill="#328d94" text="Update" />
+                        <JFXButton fx:id="updateVentasPendientes" buttonType="RAISED" layoutX="686.0" layoutY="9.0" onAction="#updateVentasPendientesAction" ripplerFill="#328d94" text="Update"/>
                      </children></AnchorPane>
               </content>
             </Tab>

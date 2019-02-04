@@ -131,9 +131,9 @@ CREATE PROCEDURE setSaldo(IN id_user INTEGER, IN saldo_t DOUBLE)
 
 CREATE PROCEDURE getMisArticulos(IN id_vendedor INTEGER)
 	BEGIN
-		Select a.id,a.nombre,c.nombre_categoria,a.descripcion,a.precio,a.tiempo_max_entrega,a.image_path,a.id_vendedor,a.numero_busquedas
+		Select a.id,a.nombre,c.nombre_categoria,a.descripcion,a.precio,a.tiempo_max_entrega,a.image_path,a.id_vendedor,a.numero_busquedas,a.eliminado
         from Articulos a inner join Categorias c on a.id_categoria = c.id
-        where id_vendedor = a.id_vendedor;
+        where id_vendedor = a.id_vendedor and a.eliminado = false;
 	END//
     
 

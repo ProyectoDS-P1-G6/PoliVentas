@@ -5,18 +5,20 @@ import javafx.scene.image.Image;
 
 import models.Articulo;
 
-public class ArticuloItem extends Item{
-    
+public class ArticuloItem extends Item {
+
+    private Articulo articulo;
+
     public ArticuloItem(Articulo articulo) {
         super();
-        
+        this.articulo = articulo;
         nombre_producto.setText(articulo.getNombre());
-        nombre_vendedor.setText(articulo.getVendedor().getNombres() +" "+ articulo.getVendedor().getApellidos());
+        nombre_vendedor.setText(articulo.getVendedor().getNombres() + " " + articulo.getVendedor().getApellidos());
         precio.setText(articulo.getPrecio().toString());
         icon.setImage(articulo.getIcon());
 
-        Label numero_busquedas = new Label("Busquedas: "+articulo.getNumero_busquedas().toString());
-        description.getChildren().addAll(nombre_producto,nombre_vendedor,precio, numero_busquedas);
+        Label numero_busquedas = new Label("Busquedas: " + articulo.getNumero_busquedas().toString());
+        description.getChildren().addAll(nombre_producto, nombre_vendedor, precio, numero_busquedas);
 
         content.getChildren().addAll(icon, description);
     }
@@ -36,6 +38,9 @@ public class ArticuloItem extends Item{
     public String getPrecio() {
         return precio.getText();
     }
- 
-    
+
+    public Articulo getArticulo() {
+        return this.articulo;
+    }
+
 }

@@ -5,7 +5,9 @@
  */
 package controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import controllers.handlers.OnPedidoSelected;
 import controllers.handlers.OnSearchInputChanged;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -38,7 +40,6 @@ import services.VendedorServiceDB;
 import utils.Returnable;
 import utils.StageDecoratorX;
 import views.items.*;
-import views.popup.*;
 
 /**
  * FXML Controller class
@@ -47,71 +48,85 @@ import views.popup.*;
  */
 public class MenuVendedorController implements Initializable, Returnable, MakeSearch {
 
-    Returnable previusWindow;
+    Returnable login;
     private VendedorServiceDB db;
-    
+
     @FXML
     private Label logout;
 
     @FXML
+    private Label agregarProducto;
+
+    @FXML
     private HBox misComprasList;
-    
+
     @FXML
     private VBox articulosList;
     @FXML
     private VBox historialVentasList;
     @FXML
     private VBox ventasPendientesList;
-    
-    
+
     @FXML
     private JFXTextField searchBox;
     @FXML
     private ContextMenu sugerencias_busqueda;
     @FXML
     private VBox searchResultList;
+    @FXML
+    private JFXButton updateArticulos;
+    @FXML
+    private JFXButton updateVentasPendientes;
 
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         db = new VendedorServiceDB();
-        
+        //vendedor = (Vendedor) LoginServiceDB.getActualLogin().getUsuario();
         logout.setOnMouseClicked(new LogOutAction());
-        searchBox.clear();
+        agregarProducto.setOnMouseClicked(new agregarProductoAction());
+        searchBox.setText("");
         searchBox.textProperty().addListener(new OnSearchInputChanged(this));
-        
+
         actualizarVentas();
         addMisProductos();
+        actualizarPedidosPendientes();
+        actualizarVentasPendientes();
+    }
+
+   
+
+    @Override
+    public void showWindow() {
+        ((Stage) logout.getScene().getWindow()).show();
+    }
+
+    @FXML
+    void logOutAction(MouseEvent event) {
+        Alert logoutAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        logoutAlert.setContentText("¿Está seguro de cerrar la sesión?");
+
+        Optional<ButtonType> result = logoutAlert.showAndWait();
+        if (result.isPresent()) {
+            if (result.get() == ButtonType.OK) {
+                ((Stage) logout.getScene().getWindow()).close();
+                login.showWindow();
+            }
+        }
+    }
+
+    @FXML
+    void search(ActionEvent event) {
 
     }
 
     @Override
     public void setPreviusWindow(Returnable previous) {
-        this.previusWindow = previous;
+        this.login = previous;
     }
 
-    @Override
-    public void showWindow() {
-        ((Stage)logout.getScene().getWindow()).show();
-    }
-    
-    @FXML
-    void logOutAction(MouseEvent event){
-        Alert logoutAlert = new Alert(Alert.AlertType.CONFIRMATION);
-            logoutAlert.setContentText("¿Está seguro de cerrar la sesión?");
-        
-            Optional<ButtonType> result = logoutAlert.showAndWait();
-            if (result.get() == ButtonType.OK){
-                ((Stage)logout.getScene().getWindow()).close();
-                previusWindow.showWindow();
-            }
-    }
-    
-       
-    
     class OnMiProductoSelected implements EventHandler<MouseEvent> {
+
         ArticuloItem item;
 
         public OnMiProductoSelected(ArticuloItem item) {
@@ -120,101 +135,159 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
 
         @Override
         public void handle(MouseEvent event) {
-            ProductosView pv = new ProductosView(item);
-            new StageDecoratorX(pv);
-            pv.show();         
-        }
-    }
-
-    class OnPedidoSelected implements  EventHandler<MouseEvent>{
-
-        Pedido pedido;
-
-        public OnPedidoSelected(Pedido p) {
-            this.pedido = p;
-        }
-
-        @Override
-        public void handle(MouseEvent event) {
-            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/DetallesProducto.fxml"));
+            Stage detalles = new Stage();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/DetallePedido.fxml"));
-                Stage stage = new Stage();
-                stage.setScene(new Scene(loader.load()));
-                loader.<DetallePedidoController>getController().setPedido(pedido);
-                new StageDecoratorX(stage); 
-                stage.showAndWait();
-                
+                detalles.setScene(new Scene(loader.load()));
+                new StageDecoratorX(detalles);
+                detalles.show();
             } catch (IOException ex) {
-                Logger.getLogger(MenuVendedorController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
             }
+            DetallesProductoController controller = loader.getController();
+            controller.setArticulo(item.getArticulo(), db);
 
         }
+
     }
-    
-    
-   void actualizarPedidos(){
-       cleanPedidosPendientes();
-        List<Pedido> pedidos =  db.getPedidosPendientes(LoginServiceDB.getActualLogin().getUsuario());
-        
-        for(Pedido p: pedidos){
+
+    @Override
+    public void actualizarPedidosPendientes() {
+        cleanPedidosPendientes();
+        List<Pedido> pedidos = db.getPedidosPendientes(LoginServiceDB.getActualLogin().getUsuario());
+
+        for (Pedido p : pedidos) {
             PedidoItem item = new PedidoItem(p);
             item.setOnMouseClicked(new OnPedidoSelected(p));
             addPedidoItem(item);
         }
     }
-    
-
 
     private void actualizarVentas() {
-        List<Pedido> ventas = db.getVentas((Vendedor)LoginServiceDB.getActualLogin().getUsuario());
+        List<Pedido> ventas = db.getVentas((Vendedor) LoginServiceDB.getActualLogin().getUsuario());
 
         for (Pedido p : ventas) {
             PedidoItem item = new PedidoItem(p);
-            item.setOnMouseClicked(new OnPedidoSelected(p));
+            item.setOnMouseClicked(new OnVentaSelected(item));
+            addVentaItem(item);
+        }
+
+    }
+
+    private void actualizarVentasPendientes() {
+        List<Pedido> ventas = db.getVentasPendientes((Vendedor) LoginServiceDB.getActualLogin().getUsuario());
+
+        for (Pedido p : ventas) {
+            PedidoItem item = new PedidoItem(p);
+            item.setOnMouseClicked(new OnVentaSelected(item));
             addVentaPendienteItem(item);
         }
+
     }
 
     private void addMisProductos() {
-        List<Articulo> misArticulos = db.getMisArticulos((Vendedor)LoginServiceDB.getActualLogin().getUsuario());
-        
-        for(Articulo a: misArticulos){
+        List<Articulo> misArticulos = db.getMisArticulos((Vendedor) LoginServiceDB.getActualLogin().getUsuario());
+
+        for (Articulo a : misArticulos) {
             ArticuloItem item = new ArticuloItem(a);
             item.setOnMouseClicked(new OnMiProductoSelected(item));
             addProductoItem(item);
         }
 
     }
-    
-    
-    
-    class LogOutAction implements EventHandler<MouseEvent>{
+
+    class LogOutAction implements EventHandler<MouseEvent> {
 
         @Override
         public void handle(MouseEvent event) {
             Alert logoutAlert = new Alert(Alert.AlertType.CONFIRMATION);
             logoutAlert.setContentText("¿Está seguro de cerrar la sesión?");
-        
-                    Optional<ButtonType> result = logoutAlert.showAndWait();
-                    if (result.get() == ButtonType.OK){
-                        ((Stage)logout.getScene().getWindow()).close();
-                        previusWindow.showWindow();
-                    }
+
+            Optional<ButtonType> result = logoutAlert.showAndWait();
+            if (result.isPresent()) {
+                if (result.get() == ButtonType.OK) {
+                    ((Stage) logout.getScene().getWindow()).close();
+                    login.showWindow();
+                }
+            }
         }
     }
-    
-    
-        
+
+    @FXML
+    void updateActiculosAction(ActionEvent event) {
+
+        cleanProductoItem();
+        addMisProductos();
+
+    }
+
+    @FXML
+    void updateVentasPendientesAction(ActionEvent event) {
+
+        cleanVentas();
+        cleanVentasPendientes();
+
+        actualizarVentas();
+        actualizarVentasPendientes();
+
+    }
+
+    class agregarProductoAction implements EventHandler<MouseEvent> {
+
+        @Override
+        public void handle(MouseEvent event) {
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/AgregarProducto.fxml"));
+            Stage agregar = new Stage();
+            try {
+                agregar.setScene(new Scene(loader.load()));
+                new StageDecoratorX(agregar);
+                agregar.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            AgregarProductoController controller = loader.getController();
+            controller.setVendedorCon(db, (Vendedor) LoginServiceDB.getActualLogin().getUsuario());
+
+        }
+    }
+
+    class OnVentaSelected implements EventHandler<MouseEvent> {
+
+        PedidoItem item;
+
+        public OnVentaSelected(PedidoItem item) {
+            this.item = item;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/popup/DetallesVenta.fxml"));
+            Stage ventaDetalles = new Stage();
+            try {
+                ventaDetalles.setScene(new Scene(loader.load()));
+                new StageDecoratorX(ventaDetalles);
+                ventaDetalles.show();
+            } catch (IOException ex) {
+                Logger.getLogger(MenuCompradorController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            DetallesVentaController controller = loader.getController();
+            controller.setVenta(item.getPedido(), db);
+            
+        }
+    }
+
     @Override
-    public String getTextInput(){
+    public String getTextInput() {
         return searchBox.getText();
     }
+
     @Override
     public void cleanSearchResultItem() {
         this.searchResultList.getChildren().clear();
     }
-    
+
     @Override
     public void addSearchResultItem(ArticuloItem item) {
         this.searchResultList.getChildren().add(item);
@@ -223,38 +296,44 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     public void addVentaPendienteItem(PedidoItem item) {
         this.ventasPendientesList.getChildren().add(item);
     }
-    
+
+    public void addVentaItem(PedidoItem item) {
+        this.historialVentasList.getChildren().add(item);
+    }
+
     public void addProductoItem(ArticuloItem item) {
         this.articulosList.getChildren().add(item);
     }
-    
-    public void cleanVentasPendientes(){
+
+    public void cleanProductoItem() {
+        this.articulosList.getChildren().clear();
+    }
+
+    public void cleanVentasPendientes() {
         this.ventasPendientesList.getChildren().clear();
     }
-    
-    @Override
-     public void cleanPedidosPendientes(){
-        this.misComprasList.getChildren().clear();
-    }
-     
-      @FXML
-    void search(ActionEvent event){
-        
+
+    public void cleanVentas() {
+        this.historialVentasList.getChildren().clear();
     }
 
     @Override
-    public void actualizarPedidosPendientes() {
-        actualizarPedidos();
+    public void cleanPedidosPendientes() {
+        this.misComprasList.getChildren().clear();
+    }
+
+    public void addPedidoItem(PedidoItem item) {
+        this.misComprasList.getChildren().add(item);
     }
 
     @Override
     public ContextMenu getSugerencias_busqueda() {
-        return this.sugerencias_busqueda;
+        return sugerencias_busqueda;
     }
 
     @Override
     public TextField getSearchBox() {
-       return this.searchBox;
+        return searchBox;
     }
 
     @Override
@@ -265,12 +344,5 @@ public class MenuVendedorController implements Initializable, Returnable, MakeSe
     @Override
     public void addArticulosMasBuscados() {
     }
-     
-     public void addPedidoItem(PedidoItem item) {
-        this.misComprasList.getChildren().add(item);
-    }
-    
+
 }
-
-
-

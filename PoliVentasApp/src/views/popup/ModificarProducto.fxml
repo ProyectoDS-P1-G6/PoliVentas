@@ -41,7 +41,7 @@
                   <Label fx:id="tiempo_entrega" styleClass="nombre_label" text="Tiempo máximo de entrega:" GridPane.rowIndex="4" />
                   <TextField fx:id="nombre_field" GridPane.columnIndex="1" />
                   <TextField fx:id="precio_field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="descripcion_field" alignment="CENTER" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="descripcion_field" alignment="TOP_LEFT" prefHeight="40.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="tiempo_field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <ComboBox fx:id="combobox" prefHeight="27.0" prefWidth="257.0" style="-fx-background-color: white; -fx-border-color: grey; -fx-border-radius: 5px;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>

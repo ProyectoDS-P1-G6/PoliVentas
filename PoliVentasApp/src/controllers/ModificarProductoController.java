@@ -94,6 +94,7 @@ public class ModificarProductoController implements Initializable {
         for (String cat : categorias) {
             combobox.getItems().add(cat);
         }
+        combobox.getSelectionModel().select(articulo.getCategoria());
         nombre_field.setText(articulo.getNombre());
         precio_field.setText(articulo.getPrecio().getAmount().toString());
         tiempo_field.setText(Integer.toString(articulo.getTiempo_max_entrega()));

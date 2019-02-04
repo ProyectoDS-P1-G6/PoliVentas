@@ -93,13 +93,15 @@ Stage stage = (Stage) cancelarbutton.getScene().getWindow();
         this.vendedor=vendedor;
         List<String> categorias =db.getCategorias();
         for( String cat :categorias){
-            combobox.getItems().add(cat);
+        combobox.getItems().add(cat);
         }
+        combobox.getSelectionModel().selectFirst();
+
     }
 
     @FXML
     void guardarAction(ActionEvent event) {
-        System.out.println(combobox.getValue() );
+        
         db.agregarProducto(nombre_field.getText(),(combobox.getSelectionModel().getSelectedIndex()+1),descripcion_field.getText(),
                 Double.parseDouble(precio_field.getText()),Integer.parseInt(tiempo_field.getText()),vendedor.getCedula());
 

@@ -17,7 +17,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextArea;
@@ -69,7 +71,16 @@ public class DetallesProductoController {
 
     @FXML
     void eliminarAction(ActionEvent event) {
-        System.out.println("eliminar");
+        db.deleteArticulo(articulo);
+        Alert alert = new Alert(Alert.AlertType.WARNING,
+                "El articulo se eliminó con exito.",
+                ButtonType.OK);
+
+        alert.setTitle("Eliminación de producto");
+        alert.show();
+        Stage stage = (Stage) eliminar_button.getScene().getWindow();
+
+        stage.close();
     }
 
     @FXML

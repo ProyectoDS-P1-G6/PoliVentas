@@ -14,7 +14,6 @@ import models.*;
 import models.entities.Comprador;
 import models.entities.Rol;
 
-
 public class VendedorServiceDB extends CompradorServiceDB {
 
     CallableStatement getVentas;
@@ -24,9 +23,10 @@ public class VendedorServiceDB extends CompradorServiceDB {
     CallableStatement agregarProducto;
     CallableStatement getCategorias;
     CallableStatement getVentasPendientes;
-        
+    CallableStatement deleteArticulo;
+
     public VendedorServiceDB() {
-        
+
         try {
             getVentas = DBConnection.getInstance().prepareCall("{CALL getVentas(?)}");
             getMisArticulos = DBConnection.getInstance().prepareCall("{CALL getMisArticulos(?)}");
@@ -35,79 +35,75 @@ public class VendedorServiceDB extends CompradorServiceDB {
             modificarProducto = DBConnection.getInstance().prepareCall("{CALL modificarProducto(?,?,?,?,?,?)}");
             getCategorias = DBConnection.getInstance().prepareCall("{CALL getCategorias()}");
             getVentasPendientes = DBConnection.getInstance().prepareCall("{CALL getVentasPendientes(?)}");
-
+            deleteArticulo = DBConnection.getInstance().prepareCall("{CALL deleteArticulo(?)}");
         } catch (SQLException e) {
-            System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
-        }catch (Exception e){
-            System.out.printf("Error %s %s\n",e.getMessage(), e.getCause());
+            System.out.printf("Error %s %s\n", e.getMessage(), e.getCause());
+        } catch (Exception e) {
+            System.out.printf("Error %s %s\n", e.getMessage(), e.getCause());
         }
     }
 
-    public List<Pedido> getVentas(Vendedor vendedor){
+    public List<Pedido> getVentas(Vendedor vendedor) {
         List<Pedido> ventas = new LinkedList<>();
-        try{
-            getVentas.setInt(1,vendedor.getCedula());
+        try {
+            getVentas.setInt(1, vendedor.getCedula());
             getVentas.execute();
-            
+
             ResultSet result = getVentas.getResultSet();
-            
-            while(result.next()){
+
+            while (result.next()) {
                 ventas.add(parseVenta(result));
             }
-        }
-        catch (SQLException ex){
-             Logger.getLogger(VendedorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(VendedorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
 
-    }
+        }
         return ventas;
     }
-    
-    public List<Pedido> getVentasPendientes(Vendedor vendedor){
+
+    public List<Pedido> getVentasPendientes(Vendedor vendedor) {
         List<Pedido> ventaspendientes = new LinkedList<>();
-        try{
-            getVentasPendientes.setInt(1,vendedor.getCedula());
+        try {
+            getVentasPendientes.setInt(1, vendedor.getCedula());
             getVentasPendientes.execute();
-            
+
             ResultSet result = getVentasPendientes.getResultSet();
-            
-            while(result.next()){
+
+            while (result.next()) {
                 ventaspendientes.add(parseVenta(result));
             }
-        }
-        catch (SQLException ex){
-             Logger.getLogger(VendedorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(VendedorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
 
-    }
+        }
         return ventaspendientes;
     }
-    
-    
-    public List<Articulo> getMisArticulos(Vendedor vendedor){
+
+    public List<Articulo> getMisArticulos(Vendedor vendedor) {
         List<Articulo> misArticulos = new LinkedList<>();
         try {
             getMisArticulos.setInt(1, vendedor.getCedula());
             getMisArticulos.execute();
-            
+
             ResultSet result = getMisArticulos.getResultSet();
-            
-            while (result.next()) {                
+
+            while (result.next()) {
                 misArticulos.add(parseArticulo(result));
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(VendedorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return misArticulos;
     }
-    
-    
-    public Pedido parseVenta(ResultSet data){
+
+    public Pedido parseVenta(ResultSet data) {
         Pedido venta = new Pedido();
-        
+
         try {
             Articulo a = getArticulo(data.getInt("id_articulo"));
-            
+
             venta.setId(data.getInt("id"));
             venta.setCantidad(data.getInt("cantidad"));
             venta.setFecha(data.getDate("fecha"));
@@ -120,26 +116,27 @@ public class VendedorServiceDB extends CompradorServiceDB {
         }
         return venta;
     }
-    
+
     public int anularVenta(Pedido venta) {
 
         try {
             anularVenta.setInt(1, venta.getId());
             anularVenta.execute();
 
-            ResultSet result = anularVenta.getResultSet();
+            anularVenta.getResultSet();
+
             return 1;
         } catch (SQLException ex) {
             Logger.getLogger(VendedorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
             return 0;
         }
     }
-    
-    public Articulo modificarProducto(Articulo articulo){
-    try {
+
+    public Articulo modificarProducto(Articulo articulo) {
+        try {
             modificarProducto.setInt(1, articulo.getId());
             modificarProducto.setString(2, articulo.getNombre());
-            modificarProducto.setString(3,articulo.getCategoria());
+            modificarProducto.setString(3, articulo.getCategoria());
             modificarProducto.setString(4, articulo.getDescripción());
             modificarProducto.setDouble(5, articulo.getPrecio().getAmountMinorLong());
             modificarProducto.setInt(6, articulo.getTiempo_max_entrega());
@@ -153,8 +150,8 @@ public class VendedorServiceDB extends CompradorServiceDB {
         }
         return articulo;
     }
-    
-    public boolean agregarProducto(String nombre, Integer categoria, String descripcion, Double precio, Integer tiempo, Integer vendedor){
+
+    public boolean agregarProducto(String nombre, Integer categoria, String descripcion, Double precio, Integer tiempo, Integer vendedor) {
         try {
             agregarProducto.setString(1, nombre);
             agregarProducto.setInt(2, categoria);
@@ -172,11 +169,11 @@ public class VendedorServiceDB extends CompradorServiceDB {
         }
         return false;
     }
-    
+
     public List<String> getCategorias() {
         List<String> categorias = new LinkedList<>();
         try {
-           
+
             getCategorias.execute();
 
             ResultSet result = getCategorias.getResultSet();
@@ -189,5 +186,19 @@ public class VendedorServiceDB extends CompradorServiceDB {
 
         }
         return categorias;
+    }
+
+    public int deleteArticulo(Articulo articulo) {
+        try {
+            deleteArticulo.setInt(1, articulo.getId());
+            deleteArticulo.execute();
+            deleteArticulo.getResultSet();
+            return 1;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(VendedorServiceDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
     }
 }
