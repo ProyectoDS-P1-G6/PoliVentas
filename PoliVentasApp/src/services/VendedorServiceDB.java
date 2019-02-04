@@ -37,9 +37,9 @@ public class VendedorServiceDB extends CompradorServiceDB {
             getVentasPendientes = DBConnection.getInstance().prepareCall("{CALL getVentasPendientes(?)}");
             deleteArticulo = DBConnection.getInstance().prepareCall("{CALL deleteArticulo(?)}");
         } catch (SQLException e) {
-            System.out.printf("Error %s %s\n", e.getMessage(), e.getCause());
+                Logger.getLogger(VendedorServiceDB.class.getName()).log(Level.SEVERE,"Error: "+ e.getMessage()+ " causa: "+ e.getCause() );
         } catch (Exception e) {
-            System.out.printf("Error %s %s\n", e.getMessage(), e.getCause());
+                Logger.getLogger(VendedorServiceDB.class.getName()).log(Level.SEVERE,"Error: "+ e.getMessage()+ " causa: "+ e.getCause() );
         }
     }
 

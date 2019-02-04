@@ -1,6 +1,8 @@
 package services;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class DBConnection {
@@ -25,10 +27,9 @@ public class DBConnection {
             try {
                 connection = DriverManager.getConnection(DATABASE_PATH ,USER ,PASS );
             } catch (SQLException e){
-                System.out.println("Problema al crear la conexión con la base de datos");
-                e.printStackTrace();
+                Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, "Problema al crear la conexión con la base de datos");
             } catch (Exception e){
-                System.out.printf("Error: %s  causa: %s", e.getMessage() ,e.getCause() );
+                Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,"Error: "+ e.getMessage()+ " causa: "+ e.getCause() );
             }
         }
     }
@@ -46,7 +47,7 @@ public class DBConnection {
             try {
                 connection.close();
             } catch (SQLException e) {
-                System.out.printf("Error al cerrar la coneccion (%s): %s ", e.getMessage(), e.getCause());
+                Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE,"Error: "+ e.getMessage()+ " causa: "+ e.getCause() );
             }
         }
     }
